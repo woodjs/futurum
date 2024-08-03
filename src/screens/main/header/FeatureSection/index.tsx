@@ -11,15 +11,14 @@ import TicketIcon from './icons/ticket.png';
 import BlogIcon from './icons/blog.png';
 import YetiIcon from './icons/yeti.png';
 import MessageIcon from './icons/message.png';
+import {GradientTypography} from "@/shared/ui";
 
 interface FeatureSectionProps {}
 
 const FeatureSection: FC<FeatureSectionProps> = () => {
 	return (
 		<div>
-			<h1 className="text-6xl font-bold bg-gradient-to-r from-gradient-accent-start to-gradient-accent-end inline-block text-transparent bg-clip-text">
-				Маркетплейс цифровых активов
-			</h1>
+			<GradientTypography content={'Маркетплейс цифровых активов'}/>
 
 			<p className="text-[22px] font-normal mt-[8px]">
 				Масштабируй бизнес, совершай покупки и зарабатывай вместе с FUTURUM

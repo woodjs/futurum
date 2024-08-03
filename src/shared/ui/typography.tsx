@@ -9,6 +9,8 @@ export interface TypographyProps extends React.ComponentPropsWithoutRef<"p"> {
 }
 
 const textVariants = {
+    'h2': 'font-bold text-[42px] leading-[44px]',//42 700
+    'subtitle-1': 'font-bold text-[20px] leading-[26px]',//20 700
     'p-large': 'font-normal text-[20px] leading-[26px]', //20 400
     'p': 'font-normal text-[16px] leading-[20px]', //16 400
     'p-small': 'font-normal text-[12px] leading-[16px]', //12 400
