@@ -10,6 +10,11 @@ const config = {
 	],
 	prefix: '',
 	theme: {
+		fontSize: {
+			'p-large': ['20px', '26px'],
+			'p': ['16px', '20px'],
+			'p-small': ['12px', '16px'],
+		},
 		container: {
 			center: true,
 			padding: '2rem',
@@ -24,6 +29,7 @@ const config = {
 				'gradient-accent-end': '#2DEDD7',
 				'light-gray': '#F5F5F5',
 				'primary-red': '#FB5757',
+				white: '#FFFFFF',
 				// end figma
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',

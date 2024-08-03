@@ -4,6 +4,7 @@ import IconLabelBadge from '@/screens/main/header/IconLabelBadge';
 import Menu from '@/screens/main/header/Menu';
 import { Button, Container, Input } from '@/shared/ui';
 import { Heart, Search, ShoppingCart, UserRound } from 'lucide-react';
+import Footer from "@/screens/main/footer";
 
 export default function Home() {
 	return (
@@ -76,6 +77,7 @@ export default function Home() {
 
 				<CarouselHeader />
 			</Container>
+			<Footer />
 		</>
 	);
 }
