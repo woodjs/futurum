@@ -19,7 +19,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 				{leftSection && <div className="mr-[16px]">{leftSection}</div>}
 				<input
 					type={type}
-					className={cn('w-full h-full outline-none bg-transparent', className)}
+					className={cn('w-full h-full outline-none bg-transparent border-none')}
 					ref={ref}
 					{...props}
 				/>
