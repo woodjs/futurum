@@ -30,6 +30,7 @@ const config = {
 				'light-gray': '#F5F5F5',
 				'primary-red': '#FB5757',
 				white: '#FFFFFF',
+				black: '#2D3748',
 				// end figma
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',

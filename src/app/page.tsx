@@ -5,6 +5,7 @@ import Menu from '@/screens/main/header/Menu';
 import { Button, Container, Input } from '@/shared/ui';
 import { Heart, Search, ShoppingCart, UserRound } from 'lucide-react';
 import Footer from "@/screens/main/footer";
+import GameSection from "@/screens/main/game-section";
 
 export default function Home() {
 	return (
@@ -76,6 +77,7 @@ export default function Home() {
 				</div>
 
 				<CarouselHeader />
+				<GameSection />
 			</Container>
 			<Footer />
 		</>
