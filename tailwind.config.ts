@@ -10,11 +10,6 @@ const config = {
 	],
 	prefix: '',
 	theme: {
-		fontSize: {
-			'p-large': ['20px', '26px'],
-			'p': ['16px', '20px'],
-			'p-small': ['12px', '16px'],
-		},
 		container: {
 			center: true,
 			padding: '2rem',
@@ -23,6 +18,9 @@ const config = {
 			},
 		},
 		extend: {
+			boxShadow: {
+				'custom-inset': 'inset 0px 0px 100px 0px rgba(34, 60, 80, 0.2)',
+			},
 			colors: {
 				// figma
 				'gradient-accent-start': '#0098F1',
@@ -31,6 +29,9 @@ const config = {
 				'primary-red': '#FB5757',
 				white: '#FFFFFF',
 				black: '#2D3748',
+				gray: '#F8F9FB',
+				gray2: '#E2E8F0',
+				'white-transparent': '#FFFFFFB3',
 				// end figma
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
