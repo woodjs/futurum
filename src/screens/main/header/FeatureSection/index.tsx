@@ -11,29 +11,33 @@ import TicketIcon from './icons/ticket.png';
 import BlogIcon from './icons/blog.png';
 import YetiIcon from './icons/yeti.png';
 import MessageIcon from './icons/message.png';
-import {GradientTypography} from "@/shared/ui";
+import { GradientTypography } from '@/shared/ui';
 
 interface FeatureSectionProps {}
 
 const FeatureSection: FC<FeatureSectionProps> = () => {
 	return (
 		<div>
-			<GradientTypography content={'Маркетплейс цифровых активов'}/>
+			<div className="hidden lg:block">
+				<GradientTypography content={'Маркетплейс цифровых активов'} />
+				<p className="text-[22px] font-normal mt-[8px]">
+					Масштабируй бизнес, совершай покупки и зарабатывай вместе с FUTURUM
+				</p>
+			</div>
 
-			<p className="text-[22px] font-normal mt-[8px]">
-				Масштабируй бизнес, совершай покупки и зарабатывай вместе с FUTURUM
-			</p>
-
-			<div className="mt-[55px]">
-				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+			<div className="mt-0 lg:mt-[55px]">
+				<div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-[8px] lg:gap-[24px] mb-[8px] lg:mb-[24px]">
 					<FeatureCard
+						isActive
 						Title={
-							<span className="block font-bold text-[20px]">Получай доход</span>
+							<span className="block font-bold lg:text-[18px] xl:text-[20px]">
+								Получай доход
+							</span>
 						}
 						subtitle="от действующих бизнесов"
 						// image={<img src={IncomeIcon.src} alt="" />}
 						Image={
-							<div className="absolute right-0 top-0 z-1 w-[120px]">
+							<div className="absolute right-0 top-0 z-1 w-[120px] hidden lg:block">
 								<img
 									src={IncomeIcon.src}
 									alt=""
@@ -44,15 +48,15 @@ const FeatureSection: FC<FeatureSectionProps> = () => {
 					/>
 					<FeatureCard
 						Title={
-							<span className="block font-bold text-[20px]">
+							<span className="block font-bold lg:text-[18px] xl:text-[20px]">
 								Стань сооснователем
 							</span>
 						}
 						subtitle="инновационного стартапа"
 						Image={
-							<div className="absolute right-0 top-0 z-1 w-[120px]">
+							<div className="absolute right-[26px] bottom-0 z-1 w-[74px] h-[74px] hidden lg:block">
 								<img
-									src={CoinIcon.src}
+									src="/images/features/coin.png"
 									alt=""
 									className="object-contain w-full h-full"
 								/>
@@ -61,134 +65,192 @@ const FeatureSection: FC<FeatureSectionProps> = () => {
 					/>
 					<FeatureCard
 						Title={
-							<span className="block font-bold text-[20px] max-w-[171px]">
+							<span className="block font-bold lg:text-[18px] xl:text-[20px] max-w-[171px]">
 								Цифровая барахолка
 							</span>
 						}
 						Image={
-							<div className="absolute right-0 top-0 z-1 w-[180px]">
+							<>
+								<div className="absolute right-0 top-0 z-1 w-[160px] hidden lg:block">
+									<img
+										src={ComputerCoin.src}
+										alt=""
+										className="object-contain w-full h-full"
+									/>
+								</div>
 								<img
-									src={ComputerCoin.src}
+									src="/images/features/sell-mobile.png"
 									alt=""
-									className="object-contain w-full h-full"
+									className="w-[60px] h-[48px] lg:hidden"
 								/>
-							</div>
+							</>
 						}
 					/>
 					<FeatureCard
 						Title={
-							<span className="block font-bold text-[20px] max-w-[171px]">
+							<span className="block font-bold lg:text-[18px] xl:text-[20px] max-w-[171px]">
 								Помощь животным
 							</span>
 						}
 						Image={
-							<div className="absolute right-0 top-[12px] z-1 w-[80px]">
+							<>
+								<div className="absolute right-[-8px] top-[12px] z-1 w-[80px] hidden lg:block">
+									<img
+										src={AnimalCoin.src}
+										alt=""
+										className="object-contain w-full h-full"
+									/>
+								</div>
 								<img
-									src={AnimalCoin.src}
+									src="/images/features/animal-mobile.png"
 									alt=""
-									className="object-contain w-full h-full"
+									className="w-[48px] h-[48px] lg:hidden"
 								/>
-							</div>
+							</>
 						}
 						className="lg:col-span-1 lg:col-start-4" // Последний элемент занимает одну колонку
 					/>
 				</div>
 
-				<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+				<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-[8px] lg:gap-[24px]">
 					<FeatureCard
 						Title={
-							<span className="block font-bold text-[20px] max-w-[105px]">
+							<span className="block font-bold lg:text-[18px] xl:text-[20px] max-w-[105px]">
 								Помощь людям
 							</span>
 						}
 						Image={
-							<div className="absolute right-0 top-0 z-1 w-[90px]">
+							<>
+								<div className="absolute right-0 top-0 z-1 w-[90px] hidden lg:block">
+									<img
+										src={HelpIcon.src}
+										alt=""
+										className="object-contain w-full h-full"
+									/>
+								</div>
 								<img
-									src={HelpIcon.src}
+									src="/images/features/heart-mobile.png"
 									alt=""
-									className="object-contain w-full h-full"
+									className="block lg:hidden"
 								/>
-							</div>
+							</>
 						}
 					/>
 					<FeatureCard
 						Title={
-							<span className="block font-bold text-[20px] max-w-[105px]">
+							<span className="block font-bold lg:text-[18px] xl:text-[20px] max-w-[105px]">
 								Книги и музыка
 							</span>
 						}
 						Image={
-							<div className="absolute right-0 top-0 z-1 w-[90px]">
+							<>
+								<div className="absolute right-0 top-0 z-1 w-[90px] hidden lg:block">
+									<img
+										src={BookIcon.src}
+										alt=""
+										className="object-contain w-full h-full"
+									/>
+								</div>
 								<img
-									src={BookIcon.src}
+									src="/images/features/book-mobile.png"
 									alt=""
-									className="object-contain w-full h-full"
+									className="w-[48px] h-[48px] block lg:hidden"
 								/>
-							</div>
+							</>
 						}
 					/>
 					<FeatureCard
+						className="pb-0 justify-end"
 						Title={
-							<span className="block font-bold text-[20px] max-w-[179px]">
+							<span className="block font-bold lg:text-[18px] xl:text-[20px] max-w-[179px]">
 								Билеты на мероприятия
 							</span>
 						}
 						Image={
-							<div className="absolute right-0 top-0 z-1 w-[90px]">
+							<>
+								<div className="absolute right-0 top-0 z-1 w-[90px] hidden lg:block">
+									<img
+										src={TicketIcon.src}
+										alt=""
+										className="object-contain w-full h-full"
+									/>
+								</div>
 								<img
-									src={TicketIcon.src}
+									src="/images/features/movie-mobile.png"
 									alt=""
-									className="object-contain w-full h-full"
+									className="w-[48px] h-[48px] lg:hidden block"
 								/>
-							</div>
+							</>
 						}
 					/>
 					<FeatureCard
 						Title={
-							<span className="block font-bold text-[20px] max-w-[156]">
+							<span className="block font-bold lg:text-[18px] xl:text-[20px] max-w-[156]">
 								Обучающие курсы
 							</span>
 						}
 						Image={
-							<div className="absolute right-0 top-0 z-1 w-[120px]">
+							<>
+								<div className="absolute right-0 top-0 z-1 w-[120px] hidden lg:block">
+									<img
+										src={BlogIcon.src}
+										alt=""
+										className="object-contain w-full h-full"
+									/>
+								</div>
 								<img
-									src={BlogIcon.src}
+									src="/images/features/blog-mobile.png"
 									alt=""
-									className="object-contain w-full h-full"
+									className="w-[72px] h-[48px block lg:hidden"
 								/>
-							</div>
+							</>
 						}
 					/>
 					<FeatureCard
+						className="pb-0 justify-end"
 						Title={
-							<span className="block font-bold text-[20px] max-w-[115px]">
+							<span className="block font-bold lg:text-[18px] xl:text-[20px] max-w-[115px]">
 								Искусство в NFT
 							</span>
 						}
 						Image={
-							<div className="absolute right-0 top-0 z-1 w-[90px]">
+							<>
+								<div className="absolute right-0 top-0 z-1 w-[90px] hidden lg:block">
+									<img
+										src={YetiIcon.src}
+										alt=""
+										className="object-contain w-full h-full"
+									/>
+								</div>
 								<img
-									src={YetiIcon.src}
+									src="/images/features/nft-mobile.png"
 									alt=""
-									className="object-contain w-full h-full"
+									className="w-[48px] h-[48px] block lg:hidden"
 								/>
-							</div>
+							</>
 						}
 					/>
 					<FeatureCard
 						Title={
-							<span className="block font-bold text-[20px] max-w-[141px]">
+							<span className="block font-bold lg:text-[18px] xl:text-[20px] max-w-[141px]">
 								Реферальные программы
 							</span>
 						}
 						Image={
-							<div className="absolute right-0 top-0 z-1 w-[90px]">
+							<>
+								<div className="absolute right-0 top-0 z-1 w-[90px] hidden lg:block">
+									<img
+										src={MessageIcon.src}
+										alt=""
+										className="object-contain w-full h-full"
+									/>
+								</div>
 								<img
-									src={MessageIcon.src}
+									src="/images/features/message-mobile.png"
 									alt=""
-									className="object-contain w-full h-full"
+									className="w-[60px] h-[48px] block lg:hidden"
 								/>
-							</div>
+							</>
 						}
 					/>
 				</div>

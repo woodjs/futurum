@@ -18,10 +18,15 @@ export default function CarouselHeader() {
 			// onMouseEnter={plugin.current.stop}
 			// onMouseLeave={plugin.current.reset}
 		>
-			<CarouselContent className="h-[320px]">
+			<CarouselContent className="">
 				<CarouselItem>
-					<div className="p-1 pl-[50px] bg-[url('/images/sliders/slide_1.png')] bg-contain rounded-2xl h-full flex items-center">
-						<div>
+					<div className="p-1">
+						<img
+							src="/images/sliders/slide-1.jpg"
+							alt=""
+							className="h-[120px] object-fill"
+						/>
+						{/* <div>
 							<p className="text-6xl font-bold text-white">NFT</p>
 							<p className="font-bold text-5xl text-white max-w-[500px] my-[20px]">
 								с гарантированной доходностью
@@ -29,51 +34,71 @@ export default function CarouselHeader() {
 							<p className="font-normal text-xl text-white">
 								Зарабатывай вместе с лучшими в своём деле
 							</p>
-						</div>
+						</div> */}
 					</div>
 				</CarouselItem>
 				<CarouselItem>
-					<div className="p-1 pl-[50px] bg-[url('/images/sliders/slide_2.jpg')] bg-contain rounded-2xl h-full flex items-center">
-						<div>
-							<p className="text-6xl font-bold text-white">x100</p>
-							<p className="font-bold text-3xl text-white max-w-[687px] my-[20px]">
-								Первый токен экосистемы TON с фундаментальной капитализацией
-							</p>
-							<Button variant="outline">Подробнее</Button>
-						</div>
+					<div className="p-1">
+						<picture>
+							<source
+								className="w-full"
+								srcSet="/images/sliders/slide-2-mobile.jpg"
+								media="(max-width: 991px)"
+							/>
+							<img
+								className="w-full"
+								src="/images/sliders/slide-2.jpg"
+								alt=""
+							/>
+						</picture>
 					</div>
 				</CarouselItem>
 				<CarouselItem>
-					<div className="p-1 pl-[50px] bg-[url('/images/sliders/slide_3.jpg')] bg-contain rounded-2xl h-full flex items-center">
-						<div>
+					<div className="p-1">
+						<img
+							src="/images/sliders/slide-3.jpg"
+							alt=""
+							className="h-[120px] object-fill"
+						/>
+						{/* <div>
 							<p className="text-6xl font-bold text-white">Цифровые активы</p>
 							<p className="font-bold text-3xl text-white max-w-[687px] my-[20px]">
 								Покупай обучающие курсы, книги, музыку, билеты на мероприятия,
 								IT-технологии и многое другое...
 							</p>
-						</div>
+						</div> */}
 					</div>
 				</CarouselItem>
 				<CarouselItem>
-					<div className="p-1 pl-[50px] bg-[url('/images/sliders/slide_4.png')] bg-contain rounded-2xl h-full flex items-center">
-						<div>
+					<div className="p-1 ">
+						<img
+							src="/images/sliders/slide-4.jpg"
+							alt=""
+							className="h-[120px] object-fill"
+						/>
+						{/* <div>
 							<p className="text-6xl font-bold text-white">
 								Токенизация бизнеса
 							</p>
 							<p className="font-bold text-3xl text-white max-w-[687px] my-[20px]">
 								Привлекай инвестиции со всего мира
 							</p>
-						</div>
+						</div> */}
 					</div>
 				</CarouselItem>
 				<CarouselItem>
-					<div className="p-1 pl-[50px] bg-[url('/images/sliders/slide_5.jpg')] bg-contain rounded-2xl h-full flex items-center">
-						<div>
+					<div className="p-1 ">
+						<img
+							src="/images/sliders/slide-5.jpg"
+							alt=""
+							className="h-[120px] object-fill"
+						/>
+						{/* <div>
 							<p className="text-6xl font-bold text-white">Добрые дела</p>
 							<p className="font-bold text-3xl text-white max-w-[687px] my-[20px]">
 								Принимай участие в благотворительных акциях
 							</p>
-						</div>
+						</div> */}
 					</div>
 				</CarouselItem>
 			</CarouselContent>
