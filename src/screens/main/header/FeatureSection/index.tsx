@@ -2,7 +2,6 @@ import { FC } from 'react';
 import FeatureCard from './FeatureCard';
 
 import IncomeIcon from './icons/income.png';
-import CoinIcon from './icons/coin.png';
 import ComputerCoin from './icons/computer.png';
 import AnimalCoin from './icons/animal.png';
 import HelpIcon from './icons/help.png';
@@ -17,15 +16,15 @@ interface FeatureSectionProps {}
 
 const FeatureSection: FC<FeatureSectionProps> = () => {
 	return (
-		<div>
+		<div className="mt-[24px] lg:mt-[64px] ">
 			<div className="hidden lg:block">
-				<GradientTypography content={'Маркетплейс цифровых активов'} />
+				<GradientTypography>Маркетплейс цифровых активов</GradientTypography>
 				<p className="text-[22px] font-normal mt-[8px]">
 					Масштабируй бизнес, совершай покупки и зарабатывай вместе с FUTURUM
 				</p>
 			</div>
 
-			<div className="mt-0 lg:mt-[55px]">
+			<div className="lg:mt-[52px]">
 				<div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-[8px] lg:gap-[24px] mb-[8px] lg:mb-[24px]">
 					<FeatureCard
 						isActive
@@ -52,6 +51,7 @@ const FeatureSection: FC<FeatureSectionProps> = () => {
 								Стань сооснователем
 							</span>
 						}
+						className="px-[10px]"
 						subtitle="инновационного стартапа"
 						Image={
 							<div className="absolute right-[26px] bottom-0 z-1 w-[74px] h-[74px] hidden lg:block">

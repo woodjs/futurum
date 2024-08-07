@@ -14,7 +14,7 @@ export const Container = ({
 				'w-full mx-auto',
 				// Адаптивные стили
 				'xs:px-4', // Отступы по бокам для небольших экранов
-				'max-w-[95%] xl:max-w-[1110px] 2xl:max-w-[1296px] border-red-700 border-solid border',
+				'max-w-[95%] xl:max-w-[1110px] 2xl:max-w-[1296px]',
 				className
 			)}
 		>

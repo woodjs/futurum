@@ -1,20 +1,86 @@
-import {Typography} from "@/shared/ui";
-import Link from "next/link";
+import { Typography } from '@/shared/ui';
+import Link from 'next/link';
 
 const FooterCategories = () => {
-    return <div className={'flex flex-col items-center md:items-start'}>
-        <Link href={'#'}><Typography content={'Категории'} className={'text-white font-semibold mb-[15px]'}/></Link>
-        <Link href={'#'}><Typography content={'Купить NFT'} className={'text-white font-semibold text-opacity-50 mb-[5px]'}/></Link>
-        <Link href={'#'}><Typography content={'Купить токен х100'} className={'text-white font-semibold text-opacity-50 mb-[5px]'}/></Link>
-        <Link href={'#'}><Typography content={'Цифровая барахолка'} className={'text-white font-semibold text-opacity-50 mb-[5px]'}/></Link>
-        <Link href={'#'}><Typography content={'Помощь животным'} className={'text-white font-semibold text-opacity-50 mb-[5px]'}/></Link>
-        <Link href={'#'}><Typography content={'Помощь людям'} className={'text-white font-semibold text-opacity-50 mb-[5px]'}/></Link>
-        <Link href={'#'}><Typography content={'Книги и музыка'} className={'text-white font-semibold text-opacity-50 mb-[5px]'}/></Link>
-        <Link href={'#'}><Typography content={'Билеты на мероприятия'} className={'text-white font-semibold text-opacity-50 mb-[5px]'}/></Link>
-        <Link href={'#'}><Typography content={'Обучающие курсы'} className={'text-white font-semibold text-opacity-50 mb-[5px]'}/></Link>
-        <Link href={'#'}><Typography content={'Искусство в NFT'} className={'text-white font-semibold text-opacity-50 mb-[5px]'}/></Link>
-        <Link href={'#'}><Typography content={'Реферальные программы'} className={'text-white font-semibold text-opacity-50 mb-[5px]'}/></Link>
-    </div>
+	return (
+		<div className={'flex flex-col items-center md:items-start'}>
+			<Link href={'#'}>
+				<Typography className={'text-white font-semibold mb-[15px]'}>
+					Категория
+				</Typography>
+			</Link>
+			<Link href={'#'}>
+				<Typography
+					className={'text-white font-semibold text-opacity-50 mb-[5px]'}
+				>
+					Купить NFT
+				</Typography>
+			</Link>
+			<Link href={'#'}>
+				<Typography
+					className={'text-white font-semibold text-opacity-50 mb-[5px]'}
+				>
+					Купить токен х100
+				</Typography>
+			</Link>
+			<Link href={'#'}>
+				<Typography
+					className={'text-white font-semibold text-opacity-50 mb-[5px]'}
+				>
+					Цифровая барахолка
+				</Typography>
+			</Link>
+			<Link href={'#'}>
+				<Typography
+					className={'text-white font-semibold text-opacity-50 mb-[5px]'}
+				>
+					Помощь животным
+				</Typography>
+			</Link>
+			<Link href={'#'}>
+				<Typography
+					className={'text-white font-semibold text-opacity-50 mb-[5px]'}
+				>
+					Помощь людям
+				</Typography>
+			</Link>
+			<Link href={'#'}>
+				<Typography
+					className={'text-white font-semibold text-opacity-50 mb-[5px]'}
+				>
+					Книги и музыка
+				</Typography>
+			</Link>
+			<Link href={'#'}>
+				<Typography
+					className={'text-white font-semibold text-opacity-50 mb-[5px]'}
+				>
+					Билеты на мероприятия
+				</Typography>
+			</Link>
+			<Link href={'#'}>
+				<Typography
+					className={'text-white font-semibold text-opacity-50 mb-[5px]'}
+				>
+					Обучающие курсы
+				</Typography>
+			</Link>
+			<Link href={'#'}>
+				<Typography
+					className={'text-white font-semibold text-opacity-50 mb-[5px]'}
+				>
+					Искусство в NFT
+				</Typography>
+			</Link>
+			<Link href={'#'}>
+				<Typography
+					className={'text-white font-semibold text-opacity-50 mb-[5px]'}
+				>
+					Реферальные программы
+				</Typography>
+			</Link>
+		</div>
+	);
 };
 
 export default FooterCategories;
