@@ -2,7 +2,7 @@ import {Typography} from "@/shared/ui";
 import Link from "next/link";
 
 const FooterCategories = () => {
-    return <div className={'flex flex-col'}>
+    return <div className={'flex flex-col items-center md:items-start'}>
         <Link href={'#'}><Typography content={'Категории'} className={'text-white font-semibold mb-[15px]'}/></Link>
         <Link href={'#'}><Typography content={'Купить NFT'} className={'text-white font-semibold text-opacity-50 mb-[5px]'}/></Link>
         <Link href={'#'}><Typography content={'Купить токен х100'} className={'text-white font-semibold text-opacity-50 mb-[5px]'}/></Link>

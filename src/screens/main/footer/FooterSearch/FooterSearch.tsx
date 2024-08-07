@@ -7,7 +7,7 @@ import DiscordIcon from "@/shared/icons/DiscordIcon";
 import Link from "next/link";
 
 const FooterSearch = () => {
-    return <div className={'flex flex-col'}>
+    return <div className={'flex flex-col items-center'}>
         <div className={'mb-[20px]'}><LogoIcon /></div>
         <div className={'mb-[26px]'}>
             <Input className={'bg-primary border border-solid border-white'} placeholder="Поиск по названию..."

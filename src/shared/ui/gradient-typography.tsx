@@ -17,12 +17,12 @@ const textVariants = {
 };
 
 const GradientTypography: FC<TypographyProps> = ({content, variant = 'h1', className, ...props}) => {
-    return <p className={cn(
+    return <span className={cn(
         textVariants[variant],
         className,
     )}{...props}>
         {content}
-    </p>
+    </span>
 };
 
 export { GradientTypography };
