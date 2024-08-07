@@ -13,6 +13,7 @@ import React from "react";
 import NftFooter from "@/shared/ui/nft-footer";
 import {landingImages} from "@/shared/images";
 import NftImage from "@/shared/ui/nft-image";
+import CommunitySection from "@/screens/main/community-section";
 
 export default function Home() {
     return (
@@ -82,6 +83,7 @@ export default function Home() {
                 <div className="my-[64px]">
                     <FeatureSection/>
                 </div>
+                <CommunitySection />
                 <div className={'flex gap-1'}>
                     <Nftcard
                         Content={<NftInnerContent content={[{title: 'Цель', value: '3 000 USDT'}, {title: 'Собрано', value: '13%'}]}/>}
