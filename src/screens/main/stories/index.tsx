@@ -10,17 +10,14 @@ import {
 import Image from 'next/image';
 
 import Section from '../section';
-import Yeti from '../header/FeatureSection/icons/yeti.png';
-import Income from '../header/FeatureSection/icons/income.png';
-import Blog from '../header/FeatureSection/icons/blog.png';
 
 const data = [
 	{ id: 1, title: 'Что такое Futurum', image: '/images/stories/1.png' },
 	{ id: 2, title: 'Идеология проекта', image: '/images/stories/2.png' },
 	{ id: 3, title: 'Почему TON?', image: '/images/stories/3.png' },
-	{ id: 4, title: 'Плюсы платформы', image: Yeti.src },
-	{ id: 5, title: 'Для инвесторов', image: Blog.src },
-	{ id: 6, title: 'Для бизнеса', image: Income.src },
+	{ id: 4, title: 'Плюсы платформы', image: '/images/stories/4.png' },
+	{ id: 5, title: 'Для инвесторов', image: '/images/stories/5.png' },
+	{ id: 6, title: 'Для бизнеса', image: '/images/stories/6.png' },
 ];
 
 export default function Stories() {
@@ -48,14 +45,15 @@ export default function Stories() {
 								<div className="h-[132px]">
 									<div className="  overflow-hidden h-full w-[132px] mx-auto rounded-[20px] bg-gradient-to-r from-gradient-accent-start to-gradient-accent-end p-[1px]">
 										<div className="bg-white w-full h-full rounded-[20px] p-[6px]">
-											<div className="rounded-[16px] h-full w-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 flex justify-center items-center">
-												<Image
-													alt=""
-													src={item.image}
-													width={100}
-													height={100}
-												/>
-											</div>
+											{/* <div className="rounded-[16px] h-full w-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 flex justify-center items-center"> */}
+											<Image
+												alt=""
+												src={item.image}
+												className="object-cover rounded-[15px]"
+												width={132}
+												height={132}
+											/>
+											{/* </div> */}
 										</div>
 									</div>
 								</div>

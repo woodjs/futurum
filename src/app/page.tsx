@@ -13,6 +13,8 @@ import Stories from '@/screens/main/stories';
 import JoinUs from '@/screens/main/join';
 import CarouselToday from '@/screens/main/carousel-today';
 import CarouselDigital from '@/screens/main/carousel-digital';
+import CarouselTop from '@/screens/main/carousel-top';
+import CarouselProfit from '@/screens/main/carousel-profit';
 
 export default function Home() {
 	return (
@@ -81,8 +83,10 @@ export default function Home() {
 				<FeatureSection />
 
 				<CarouselHeader />
+				<CarouselTop />
 				<Exchange />
 				<Stories />
+				<CarouselProfit />
 				<JoinUs />
 				<CarouselDigital />
 				<CommunitySection />

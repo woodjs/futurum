@@ -1,33 +1,35 @@
 import * as React from 'react';
-import { FC } from 'react';
 import { cn } from '@/shared/lib/utils';
 
-export interface TypographyProps extends React.ComponentPropsWithoutRef<'p'> {
+type TypographyProps<T extends React.ElementType = 'p'> = {
+	as?: T;
 	children: React.ReactNode;
 	variant?: keyof typeof textVariants;
 	className?: string;
-}
+} & React.ComponentPropsWithoutRef<T>;
 
 const textVariants = {
 	h2: 'font-bold text-[24px] lg:text-[42px] leading-[44px]', //42 700
 	'subtitle-1': 'font-bold text-[20px] leading-[26px]', //20 700
 	'p-large': 'font-normal text-[20px] leading-[26px]', //20 400
-	h5: 'text-[18px] font-bold leading-[24px',
+	h5: 'text-[18px] font-bold leading-[24px]',
 	p: 'font-normal text-[16px] leading-[20px]', //16 400
 	'p-small': 'font-normal text-[12px] leading-[16px]', //12 400
 	'p-small2': 'font-bold text-[12px] leading-[16px]', //12 700
 };
 
-const Typography: FC<TypographyProps> = ({
+const Typography = <T extends React.ElementType = 'p'>({
 	children,
+	as,
 	variant = 'p',
 	className,
 	...props
-}) => {
+}: TypographyProps<T>) => {
+	const Component = as || 'p';
 	return (
-		<p className={cn(textVariants[variant], className)} {...props}>
+		<Component className={cn(textVariants[variant], className)} {...props}>
 			{children}
-		</p>
+		</Component>
 	);
 };
 
