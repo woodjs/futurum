@@ -15,15 +15,14 @@ import CarouselToday from '@/screens/main/carousel-today';
 import CarouselDigital from '@/screens/main/carousel-digital';
 import CarouselTop from '@/screens/main/carousel-top';
 import CarouselProfit from '@/screens/main/carousel-profit';
-import ScrollToTop from "@/shared/ui/scroll-to-top";
-
+import ScrollToTop from '@/shared/ui/scroll-to-top';
 
 export default function Home() {
 	return (
 		<div className={'relative'}>
 			<Menu />
-			<Container>
-				<div className="flex items-center w-full gap-[28px] sticky left-0 top-[52px] z-50 bg-white pt-[24px]">
+			<Container className=" sticky z-50 left-0 top-[52px]">
+				<div className="flex items-center w-full gap-[28px]   bg-white py-[24px]">
 					<div className="hidden lg:block">
 						<svg
 							width="148"
@@ -81,7 +80,8 @@ export default function Home() {
 						/>
 					</div>
 				</div>
-
+			</Container>
+			<Container>
 				<FeatureSection />
 
 				<CarouselHeader />

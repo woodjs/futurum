@@ -10,7 +10,7 @@ export default function BurgerMenu({
 	return (
 		<div
 			className={cn(
-				'w-full sticky top-[52px] left-0 bg-primary z-50 h-[100svh] overflow-y-auto',
+				'w-full sticky top-[52px] left-0 bg-primary z-[100] h-[100svh] overflow-y-auto',
 				isOpen ? 'block' : 'hidden'
 			)}
 		>
