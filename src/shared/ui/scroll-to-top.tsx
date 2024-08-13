@@ -39,7 +39,7 @@ const ScrollToTop = () => {
 	return (
 		<div
 			className={cn(
-				'hidden lg:block lg:w-[96px] lg:h-[96px] bg-gray rounded-[50%] justify-center items-center right-[44px] left-auto fixed',
+				'hidden lg:flex lg:w-[96px] lg:h-[96px] bg-gray rounded-[50%] justify-center items-center right-[44px] left-auto fixed',
 				scrollPosition ? 'lg:flex' : 'hidden'
 			)}
 			style={{ bottom: `${40 + visibleFooterHeight}px` }}
