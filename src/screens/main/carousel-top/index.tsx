@@ -40,17 +40,7 @@ const data = [
 		category: '#бизнес',
 		price: `3 000`,
 	},
-	{
-		id: 3,
-		image: '/images/nfts/top-3.jpg',
-		params: [
-			{ title: 'Доходность', value: '70%' },
-			{ title: 'Доход за год', value: '4 200 USDT' },
-			{ title: 'Доход за период', value: '350 USDT' },
-		],
-		category: '#бизнес',
-		price: `6 000`,
-	},
+
 	{
 		id: 4,
 		image: '/images/nfts/top-4.jpg',
@@ -61,6 +51,17 @@ const data = [
 		],
 		category: '#бизнес',
 		price: `3 500`,
+	},
+	{
+		id: 3,
+		image: '/images/nfts/top-3.jpg',
+		params: [
+			{ title: 'Доходность', value: '70%' },
+			{ title: 'Доход за год', value: '4 200 USDT' },
+			{ title: 'Доход за период', value: '350 USDT' },
+		],
+		category: '#бизнес',
+		price: `6 000`,
 	},
 	{
 		id: 5,
