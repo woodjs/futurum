@@ -18,7 +18,7 @@ const CommunitySection = () => {
 		>
 			<div
 				className={
-					'flex-col flex gap-[16px] xl:gap-[24px] xl:flex-row 2xl:gap-[32px]'
+					'flex-col flex gap-[16px] xl:gap-[24px] md:flex-row 2xl:gap-[32px]'
 				}
 			>
 				<CommunityCart>

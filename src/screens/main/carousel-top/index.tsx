@@ -19,8 +19,19 @@ import NftImage from '@/shared/ui/nft-image';
 
 const data = [
 	{
-		id: 1,
-		image: '/images/nfts/top-1.jpg',
+		id: 4,
+		image: '/images/nfts/top-4.jpg',
+		params: [
+			{ title: 'Доходность', value: '65%' },
+			{ title: 'Доход за год', value: '6 500 USDT' },
+			{ title: 'Доход за период', value: '541,6 USDT' },
+		],
+		category: '#бизнес',
+		price: `10 000`,
+	},
+	{
+		id: 2,
+		image: '/images/nfts/top-2.jpg',
 		params: [
 			{ title: 'Доходность', value: '70%' },
 			{ title: 'Доход за год', value: '10 500 USDT' },
@@ -30,49 +41,37 @@ const data = [
 		price: `15 000`,
 	},
 	{
-		id: 2,
-		image: '/images/nfts/top-2.jpg',
-		params: [
-			{ title: 'Доходность', value: '60%' },
-			{ title: 'Доход за год', value: '1 800 USDT' },
-			{ title: 'Доход за период', value: '150 USDT' },
-		],
-		category: '#бизнес',
-		price: `3 000`,
-	},
-
-	{
-		id: 4,
-		image: '/images/nfts/top-4.jpg',
-		params: [
-			{ title: 'Доходность', value: '75%' },
-			{ title: 'Доход за год', value: '2 625 USDT' },
-			{ title: 'Доход за период', value: '219 USDT' },
-		],
-		category: '#бизнес',
-		price: `3 500`,
-	},
-	{
 		id: 3,
 		image: '/images/nfts/top-3.jpg',
 		params: [
-			{ title: 'Доходность', value: '70%' },
-			{ title: 'Доход за год', value: '4 200 USDT' },
-			{ title: 'Доход за период', value: '350 USDT' },
+			{ title: 'Доходность', value: '75%' },
+			{ title: 'Доход за год', value: '22 500 USDT' },
+			{ title: 'Доход за период', value: '1 875 USDT' },
 		],
 		category: '#бизнес',
-		price: `6 000`,
+		price: `30 000`,
+	},
+	{
+		id: 1,
+		image: '/images/nfts/top-1.jpg',
+		params: [
+			{ title: 'Доходность', value: '80%' },
+			{ title: 'Доход за год', value: '40 000 USDT' },
+			{ title: 'Доход за период', value: '3 333,3 USDT' },
+		],
+		category: '#бизнес',
+		price: `50 000`,
 	},
 	{
 		id: 5,
 		image: '/images/nfts/top-5.jpg',
 		params: [
 			{ title: 'Доходность', value: '90%' },
-			{ title: 'Доход за год', value: '36 000 USDT' },
-			{ title: 'Доход за период', value: '3 000 USDT' },
+			{ title: 'Доход за год', value: '72 000 USDT' },
+			{ title: 'Доход за период', value: '6 000 USDT' },
 		],
 		category: '#бизнес',
-		price: `40 000`,
+		price: `80 000`,
 	},
 ];
 
@@ -82,7 +81,7 @@ export default function CarouselTop() {
 		<Section
 			Title={
 				<Typography variant="h2">
-					<GradientTypography variant="h2">Топ</GradientTypography> предложении
+					<GradientTypography variant="h2">Топ</GradientTypography> предложений
 				</Typography>
 			}
 		>

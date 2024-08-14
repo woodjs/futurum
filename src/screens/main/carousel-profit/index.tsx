@@ -42,7 +42,7 @@ const data = [
 	},
 	{
 		id: 4,
-		image: '/images/nfts/top-4.jpg',
+		image: '/images/nfts/profit-3.jpg',
 		params: [
 			{ title: 'Доходность', value: '75%' },
 			{ title: 'Доход за год', value: '2 625 USDT' },
@@ -53,7 +53,7 @@ const data = [
 	},
 	{
 		id: 3,
-		image: '/images/nfts/profit-3.jpg',
+		image: '/images/nfts/profit-4.jpg',
 		params: [
 			{ title: 'Доходность', value: '70%' },
 			{ title: 'Доход за год', value: '4 200 USDT' },
