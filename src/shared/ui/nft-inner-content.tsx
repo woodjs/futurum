@@ -8,7 +8,7 @@ const NftInnerContent: FC<IProps> = ({ content }) => {
 	return (
 		<div
 			className={
-				'rounded-lg bg-white-transparent w-full py-[10px] pl-[15px] pr-[19px] shadow-custom-inset'
+				'rounded-lg bg-white-transparent w-full p-[10px] shadow-custom-inset'
 			}
 		>
 			{content?.map((row, index) => (

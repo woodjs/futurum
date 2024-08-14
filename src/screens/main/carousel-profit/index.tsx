@@ -44,23 +44,23 @@ const data = [
 		id: 4,
 		image: '/images/nfts/profit-3.jpg',
 		params: [
-			{ title: 'Доходность', value: '75%' },
-			{ title: 'Доход за год', value: '2 625 USDT' },
-			{ title: 'Доход за период', value: '219 USDT' },
-		],
-		category: '#бизнес',
-		price: `3 500`,
-	},
-	{
-		id: 3,
-		image: '/images/nfts/profit-4.jpg',
-		params: [
 			{ title: 'Доходность', value: '70%' },
 			{ title: 'Доход за год', value: '4 200 USDT' },
 			{ title: 'Доход за период', value: '350 USDT' },
 		],
 		category: '#бизнес',
 		price: `6 000`,
+	},
+	{
+		id: 3,
+		image: '/images/nfts/profit-4.jpg',
+		params: [
+			{ title: 'Доходность', value: '75%' },
+			{ title: 'Доход за год', value: '2 625 USDT' },
+			{ title: 'Доход за период', value: '219 USDT' },
+		],
+		category: '#бизнес',
+		price: `3 500`,
 	},
 
 	{

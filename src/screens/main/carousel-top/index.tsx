@@ -20,18 +20,7 @@ import NftImage from '@/shared/ui/nft-image';
 const data = [
 	{
 		id: 4,
-		image: '/images/nfts/top-4.jpg',
-		params: [
-			{ title: 'Доходность', value: '65%' },
-			{ title: 'Доход за год', value: '6 500 USDT' },
-			{ title: 'Доход за период', value: '541,6 USDT' },
-		],
-		category: '#бизнес',
-		price: `10 000`,
-	},
-	{
-		id: 2,
-		image: '/images/nfts/top-2.jpg',
+		image: '/images/nfts/top-1.jpg',
 		params: [
 			{ title: 'Доходность', value: '70%' },
 			{ title: 'Доход за год', value: '10 500 USDT' },
@@ -39,6 +28,17 @@ const data = [
 		],
 		category: '#бизнес',
 		price: `15 000`,
+	},
+	{
+		id: 2,
+		image: '/images/nfts/top-2.jpg',
+		params: [
+			{ title: 'Доходность', value: '65%' },
+			{ title: 'Доход за год', value: '6 500 USDT' },
+			{ title: 'Доход за период', value: '541,6 USDT' },
+		],
+		category: '#бизнес',
+		price: `10 000`,
 	},
 	{
 		id: 3,
@@ -53,9 +53,8 @@ const data = [
 	},
 	{
 		id: 1,
-		image: '/images/nfts/top-1.jpg',
+		image: '/images/nfts/top-4.jpg',
 		params: [
-			{ title: 'Доходность', value: '80%' },
 			{ title: 'Доход за год', value: '40 000 USDT' },
 			{ title: 'Доход за период', value: '3 333,3 USDT' },
 		],
