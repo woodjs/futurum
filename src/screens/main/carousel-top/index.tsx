@@ -55,7 +55,7 @@ const data = [
 		id: 1,
 		image: '/images/nfts/top-4.jpg',
 		params: [
-			{title: 'Доходность', value: '80%'}
+			{ title: 'Доходность', value: '80%' },
 			{ title: 'Доход за год', value: '40 000 USDT' },
 			{ title: 'Доход за период', value: '3 333,3 USDT' },
 		],
