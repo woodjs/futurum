@@ -16,7 +16,7 @@ export default function CarouselHeader() {
 					align: 'start',
 					loop: true,
 				}}
-				plugins={[plugin.current]}
+				plugins={[Autoplay({ playOnInit: true, delay: 3000 })]}
 				// onMouseEnter={plugin.current.stop}
 				// onMouseLeave={plugin.current.reset}
 			>
