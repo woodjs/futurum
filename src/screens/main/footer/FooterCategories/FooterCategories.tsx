@@ -1,82 +1,85 @@
 import { Typography } from '@/shared/ui';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 const FooterCategories = () => {
+	const t = useTranslations('Home.Footer');
+
 	return (
 		<div className={'flex flex-col items-center md:items-start'}>
 			<Link href={'#'}>
 				<Typography className={'text-white font-semibold mb-[15px]'}>
-					Категория
+					{t('Category')}
 				</Typography>
 			</Link>
 			<Link href={'#'}>
 				<Typography
 					className={'text-white font-semibold text-opacity-50 mb-[5px]'}
 				>
-					Купить NFT
+					{t('BuyNFT')}
 				</Typography>
 			</Link>
 			<Link href={'#'}>
 				<Typography
 					className={'text-white font-semibold text-opacity-50 mb-[5px]'}
 				>
-					Купить токен х100
+				{t('BuyToken')}
 				</Typography>
 			</Link>
 			<Link href={'#'}>
 				<Typography
 					className={'text-white font-semibold text-opacity-50 mb-[5px]'}
 				>
-					Цифровая барахолка
+					{t('DigitalJunk')}
 				</Typography>
 			</Link>
 			<Link href={'#'}>
 				<Typography
 					className={'text-white font-semibold text-opacity-50 mb-[5px]'}
 				>
-					Помощь животным
+					{t('HelpAnimals')}
 				</Typography>
 			</Link>
 			<Link href={'#'}>
 				<Typography
 					className={'text-white font-semibold text-opacity-50 mb-[5px]'}
 				>
-					Помощь людям
+					{t('HelpPeople')}
 				</Typography>
 			</Link>
 			<Link href={'#'}>
 				<Typography
 					className={'text-white font-semibold text-opacity-50 mb-[5px]'}
 				>
-					Книги и музыка
+					{t('BooksAndMusic')}
 				</Typography>
 			</Link>
 			<Link href={'#'}>
 				<Typography
 					className={'text-white font-semibold text-opacity-50 mb-[5px]'}
 				>
-					Билеты на мероприятия
+					{t('EventTickets')}
 				</Typography>
 			</Link>
 			<Link href={'#'}>
 				<Typography
 					className={'text-white font-semibold text-opacity-50 mb-[5px]'}
 				>
-					Обучающие курсы
+					{t('TrainingCourses')}
 				</Typography>
 			</Link>
 			<Link href={'#'}>
 				<Typography
 					className={'text-white font-semibold text-opacity-50 mb-[5px]'}
 				>
-					Искусство в NFT
+					{t('ArtsAtNFT')}
 				</Typography>
 			</Link>
 			<Link href={'#'}>
 				<Typography
 					className={'text-white font-semibold text-opacity-50 mb-[5px]'}
 				>
-					Реферальные программы
+					{t('ReferralPrograms')}
 				</Typography>
 			</Link>
 		</div>

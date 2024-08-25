@@ -12,57 +12,55 @@ import Nftcard from '@/shared/ui/nftcard';
 import NftcardHeader from '@/shared/ui/nftcard-header';
 import NftImage from '@/shared/ui/nft-image';
 import NftFooter from '@/shared/ui/nft-footer';
-
-const data = [
-	{
-		id: 1,
-		image: '/images/nfts/digital-1.jpg',
-		title: 'Чат-бот «Виртуальный Гений»',
-		description:
-			'умный и дружелюбный ассистент для быстрого поиска информации и решения повседневных задач.',
-		price: 700,
-	},
-	{
-		id: 2,
-		image: '/images/nfts/digital-2.jpg',
-		title: 'ЭкоПростор',
-		description:
-			'дизайн макет, сочетающий природные элементы и современные решения для создания гармоничного и...',
-		price: 1300,
-	},
-	{
-		id: 3,
-		image: '/images/nfts/digital-3.jpg',
-		title: 'WebHarmony',
-		description:
-			'современный дизайн сайта, объединяющий интуитивную навигацию и эстетичную визуализацию..',
-		price: 750,
-	},
-	{
-		id: 4,
-		image: '/images/nfts/digital-4.jpg',
-		title: 'Ультраград',
-		description:
-			'детализированная 3D модель мегаполиса будущего с инновационной архитектурой и продуманной инфраструктурой.',
-		price: 2500,
-	},
-	{
-		id: 5,
-		image: '/images/nfts/digital-5.jpg',
-		title: 'Цифровой Рывок',
-		description:
-			'динамичная маркетинговая стратегия, направленная на быстрое привлечение клиентов...',
-		price: 1.4,
-	},
-];
+import { useTranslations } from 'next-intl';
 
 export default function CarouselDigital() {
+	const t = useTranslations('Home.Categories');
+
+	const data = [
+		{
+			id: 1,
+			image: '/images/nfts/digital-1.jpg',
+			title: t('VirtualGeniusOne'),
+			description: t('VirtualGeniusTwo'),
+			price: 700,
+		},
+		{
+			id: 2,
+			image: '/images/nfts/digital-2.jpg',
+			title: t('EcoProstorOne'),
+			description: t('EcoProstorTwo'),
+			price: 1300,
+		},
+		{
+			id: 3,
+			image: '/images/nfts/digital-3.jpg',
+			title: t('WebHarmonyOne'),
+			description: t('WebHarmonyTwo'),
+			price: 750,
+		},
+		{
+			id: 4,
+			image: '/images/nfts/digital-4.jpg',
+			title: t('UltragradOne'),
+			description: t('UltragradTwo'),
+			price: 2500,
+		},
+		{
+			id: 5,
+			image: '/images/nfts/digital-5.jpg',
+			title: t('DigitalRushOne'),
+			description: t('DigitalRushTwo'),
+			price: 1.4,
+		},
+	];
+
 	return (
 		<Section
 			Title={
 				<Typography variant="h2">
-					<GradientTypography variant="h2">Цифровая </GradientTypography>{' '}
-					барахолка
+					<GradientTypography variant="h2">{t('DigitalMarketOne')} </GradientTypography>{' '}
+					{t('DigitalMarketTwo')}
 				</Typography>
 			}
 		>

@@ -16,74 +16,77 @@ import NftInnerContent from '@/shared/ui/nft-inner-content';
 import NftcardHeader from '@/shared/ui/nftcard-header';
 import NftFooter from '@/shared/ui/nft-footer';
 import NftImage from '@/shared/ui/nft-image';
-
-const data = [
-	{
-		id: 1,
-		image: '/images/nfts/profit-1.jpg',
-		params: [
-			{ title: 'Доходность', value: '55%' },
-			{ title: 'Доход за год', value: '550 USDT' },
-			{ title: 'Доход за период', value: '45,8 USDT' },
-		],
-		category: '#бизнес',
-		price: `1 000`,
-	},
-	{
-		id: 2,
-		image: '/images/nfts/profit-2.jpg',
-		params: [
-			{ title: 'Доходность', value: '60%' },
-			{ title: 'Доход за год', value: '1 800 USDT' },
-			{ title: 'Доход за период', value: '150 USDT' },
-		],
-		category: '#бизнес',
-		price: `3 000`,
-	},
-	{
-		id: 4,
-		image: '/images/nfts/profit-3.jpg',
-		params: [
-			{ title: 'Доходность', value: '70%' },
-			{ title: 'Доход за год', value: '4 200 USDT' },
-			{ title: 'Доход за период', value: '350 USDT' },
-		],
-		category: '#бизнес',
-		price: `6 000`,
-	},
-	{
-		id: 3,
-		image: '/images/nfts/profit-4.jpg',
-		params: [
-			{ title: 'Доходность', value: '75%' },
-			{ title: 'Доход за год', value: '2 625 USDT' },
-			{ title: 'Доход за период', value: '219 USDT' },
-		],
-		category: '#бизнес',
-		price: `3 500`,
-	},
-
-	{
-		id: 5,
-		image: '/images/nfts/profit-5.jpg',
-		params: [
-			{ title: 'Доходность', value: '90%' },
-			{ title: 'Доход за год', value: '36 000 USDT' },
-			{ title: 'Доход за период', value: '3 000 USDT' },
-		],
-		category: '#бизнес',
-		price: `40 000`,
-	},
-];
+import { useTranslations } from 'next-intl';
 
 export default function CarouselProfit() {
+	const t = useTranslations('Home.Categories');
 	const plugin = useRef(Autoplay({ delay: 2000, playOnInit: false }));
+
+	const data = [
+		{
+			id: 1,
+			image: '/images/nfts/profit-1.jpg',
+			params: [
+				{ title: t('Profitability'), value: '55%' },
+				{ title: t('IncomeForTheYear'), value: '550 USDT' },
+				{ title: t('IncomeForThePeriod'), value: '45,8 USDT' },
+			],
+			category: t('#business'),
+			price: `1 000`,
+		},
+		{
+			id: 2,
+			image: '/images/nfts/profit-2.jpg',
+			params: [
+				{ title: t('Profitability'), value: '60%' },
+				{ title: t('IncomeForTheYear'), value: '1 800 USDT' },
+				{ title: t('IncomeForThePeriod'), value: '150 USDT' },
+			],
+			category: t('#business'),
+			price: `3 000`,
+		},
+		{
+			id: 4,
+			image: '/images/nfts/profit-3.jpg',
+			params: [
+				{ title: t('Profitability'), value: '70%' },
+				{ title: t('IncomeForTheYear'), value: '4 200 USDT' },
+				{ title: t('IncomeForThePeriod'), value: '350 USDT' },
+			],
+			category: t('#business'),
+			price: `6 000`,
+		},
+		{
+			id: 3,
+			image: '/images/nfts/profit-4.jpg',
+			params: [
+				{ title: t('Profitability'), value: '75%' },
+				{ title: t('IncomeForTheYear'), value: '2 625 USDT' },
+				{ title: t('IncomeForThePeriod'), value: '219 USDT' },
+			],
+			category: t('#business'),
+			price: `3 500`,
+		},
+	
+		{
+			id: 5,
+			image: '/images/nfts/profit-5.jpg',
+			params: [
+				{ title: t('Profitability'), value: '90%' },
+				{ title: t('IncomeForTheYear'), value: '36 000 USDT' },
+				{ title: t('IncomeForThePeriod'), value: '3 000 USDT' },
+			],
+			category: t('#business'),
+			price: `40 000`,
+		},
+	];
+
 	return (
 		<Section
 			Title={
 				<Typography variant="h2">
-					<GradientTypography variant="h2">Зарабатывай</GradientTypography>{' '}
-					вместе с лучшими в своем деле
+					<GradientTypography variant="h2">{t('EarnWithTheBestInTheBusinessOne')}</GradientTypography>{' '}
+					{t('EarnWithTheBestInTheBusinessTwo')}
 				</Typography>
 			}
 		>

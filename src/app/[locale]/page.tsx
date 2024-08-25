@@ -1,6 +1,7 @@
 import CarouselHeader from '@/screens/main/header/Carousel';
 import FeatureSection from '@/screens/main/header/FeatureSection';
 import IconLabelBadge from '@/screens/main/header/IconLabelBadge';
+import { useTranslations } from 'next-intl';
 import Menu from '@/screens/main/header/Menu';
 import { Button, Container, Input } from '@/shared/ui';
 import { Heart, Search, ShoppingCart, UserRound } from 'lucide-react';
@@ -18,12 +19,13 @@ import CarouselProfit from '@/screens/main/carousel-profit';
 import ScrollToTop from '@/shared/ui/scroll-to-top';
 
 export default function Home() {
+	const t = useTranslations('Home.Header');
 	return (
 		<div className={'relative'}>
 			<Menu />
 			<div className="w-full bg-white sticky z-50 left-0 top-[52px]">
 				<Container>
-					<div className="flex items-center w-full gap-[28px]   bg-white py-[24px]">
+					<div className="flex items-center w-full gap-[28px] bg-white py-[24px]">
 						<div className="hidden lg:block">
 							<svg
 								width="148"
@@ -56,10 +58,10 @@ export default function Home() {
 								</defs>
 							</svg>
 						</div>
-						<Button className="hidden lg:block">Регистрация</Button>
+						<Button className="hidden lg:block">{t('Registration')}</Button>
 
 						<Input
-							placeholder="Поиск по названию..."
+							placeholder={t('SearchByName')}
 							leftSection={<Search />}
 							className="flex-1"
 						/>
@@ -67,16 +69,16 @@ export default function Home() {
 						<div className="items-center gap-[26px] hidden lg:flex">
 							<IconLabelBadge
 								icon={<UserRound width={25} height={25} />}
-								label="Войти"
+								label={t('LogIn')}
 							/>
 							<IconLabelBadge
 								icon={<Heart width={25} height={25} />}
-								label="Избранное"
+								label={t('Watchlist')}
 								badgeCount={1}
 							/>
 							<IconLabelBadge
 								icon={<ShoppingCart width={25} height={25} />}
-								label="Корзина"
+								label={t('Cart')}
 								badgeCount={2}
 							/>
 						</div>

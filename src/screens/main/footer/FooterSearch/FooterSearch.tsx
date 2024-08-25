@@ -5,8 +5,11 @@ import TelegramIcon from '@/shared/icons/TelegramIcon';
 import TwitterIcon from '@/shared/icons/TwitterIcon';
 import DiscordIcon from '@/shared/icons/DiscordIcon';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 const FooterSearch = () => {
+	const t = useTranslations('Home.Footer');
+
 	return (
 		<div className={'flex flex-col items-center'}>
 			<div className={'mb-[20px]'}>
@@ -15,7 +18,7 @@ const FooterSearch = () => {
 			<div className={'mb-[26px]'}>
 				<Input
 					className={'bg-primary border border-solid border-white'}
-					placeholder="Поиск по названию..."
+					placeholder={t('SearchByName')}
 					leftSection={<Search color={'white'} />}
 				/>
 			</div>
@@ -31,7 +34,7 @@ const FooterSearch = () => {
 				</Link>
 			</div>
 			<Typography variant={'p-small2'} className={'text-white'}>
-				© 2024 Все права защищены
+				{t('AllRightsReserved')}
 			</Typography>
 		</div>
 	);
