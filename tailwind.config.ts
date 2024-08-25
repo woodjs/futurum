@@ -58,8 +58,8 @@ const config = {
 					foreground: 'hsl(var(--muted-foreground))',
 				},
 				accent: {
-					// DEFAULT: "hsl(var(--accent))",
-					DEFAULT: 'lime',
+					DEFAULT: 'hsl(var(--accent))',
+					// DEFAULT: 'lime',
 					foreground: 'hsl(var(--accent-foreground))',
 				},
 				popover: {
