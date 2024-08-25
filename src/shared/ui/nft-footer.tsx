@@ -2,6 +2,7 @@ import { cn } from '@/shared/lib/utils';
 import { FC } from 'react';
 import { Button } from '@/shared/ui/button';
 import NftcardTimer from '@/shared/ui/nft-timer';
+import { useTranslations } from 'next-intl';
 
 interface IProps {
 	Description?: React.ReactNode;
@@ -20,6 +21,8 @@ const NftFooter: FC<IProps> = ({
 	price,
 	priceColor = 'text-black',
 }) => {
+	const t = useTranslations('Home.Categories');
+
 	return (
 		<div
 			className={cn(
@@ -42,11 +45,11 @@ const NftFooter: FC<IProps> = ({
 				)}
 			>
 				<div>
-					<p className={cn('text-[12px] font-bold', priceColor)}>Цена</p>
+					<p className={cn('text-[12px] font-bold', priceColor)}>{t('Price')}</p>
 					<p className={cn('text-[14px] font-bold', priceColor)}>{price}</p>
 				</div>
 				<div>
-					<Button className={'w-[95px] text-[14px]'}>Купить</Button>
+					<Button className={'w-[95px] text-[14px]'}>{t('Buy')}</Button>
 				</div>
 			</div>
 		</div>

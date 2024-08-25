@@ -4,15 +4,18 @@ import TelegramGradient from '@/shared/icons/TelegramGradient';
 import DiscordGradient from '@/shared/icons/DiscordGradient';
 import TwitterGradient from '@/shared/icons/TwitterGradient';
 import Section from '../section';
+import { useTranslations } from 'next-intl';
 
 const CommunitySection = () => {
+	const t = useTranslations('Home.Categories');
+
 	return (
 		<Section
 			Title={
 				<Typography variant={'h2'}>
-					Стань частью{' '}
-					<GradientTypography variant={'h2'}>комьюнити</GradientTypography>{' '}
-					Futurum
+					{t('BecomePartOfTheFuturumCommunityOne')}{' '}
+					<GradientTypography variant={'h2'}>{t('BecomePartOfTheFuturumCommunityTwo')}</GradientTypography>{' '}
+					{t('BecomePartOfTheFuturumCommunityThree')}
 				</Typography>
 			}
 		>

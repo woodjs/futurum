@@ -1,52 +1,55 @@
 import Link from 'next/link';
 import { Typography } from '@/shared/ui';
+import { useTranslations } from 'next-intl';
 
 const FooterInfo = () => {
+	const t = useTranslations('Home.Footer');
+
 	return (
 		<div className={'flex flex-col items-center md:items-start'}>
 			<Link href={'#'}>
 				<Typography className={'text-white font-semibold mb-[15px]'}>
-					Юридическая информация
+					{t('LegalInformation')}
 				</Typography>
 			</Link>
 			<Link href={'#'}>
 				<Typography
 					className={'text-white font-semibold text-opacity-50 mb-[5px]'}
 				>
-					Roadmap
+					{t('Roadmap')}
 				</Typography>
 			</Link>
 			<Link href={'#'}>
 				<Typography
 					className={'text-white font-semibold text-opacity-50 mb-[5px]'}
 				>
-					White paper
+					{t('WhitePaper')}
 				</Typography>
 			</Link>
 			<Link href={'#'}>
 				<Typography
 					className={'text-white font-semibold text-opacity-50 mb-[5px]'}
 				>
-					Пользовательское соглашение
+				{t('UserAgreement')}
 				</Typography>
 			</Link>
 			<Link href={'#'}>
 				<Typography
 					className={'text-white font-semibold text-opacity-50 mb-[5px]'}
 				>
-					Политика конфиденциальности
+					{t('PrivacyPolicy')}
 				</Typography>
 			</Link>
 			<Link href={'#'}>
 				<Typography
 					className={'text-white font-semibold text-opacity-50 mb-[5px]'}
 				>
-					Публичная оферта
+					{t('PublicOffer')}
 				</Typography>
 			</Link>
 			<Link href={'#'}>
 				<Typography className={'text-white font-semibold mt-[27px]'}>
-					Контактная информация
+				{t('ContactInformation')}
 				</Typography>
 			</Link>
 		</div>

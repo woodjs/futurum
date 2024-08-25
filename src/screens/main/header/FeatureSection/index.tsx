@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import FeatureCard from './FeatureCard';
-
+import { useTranslations } from 'next-intl';
 import IncomeIcon from './icons/income.png';
 import ComputerCoin from './icons/computer.png';
 import AnimalCoin from './icons/animal.png';
@@ -15,12 +15,14 @@ import { GradientTypography } from '@/shared/ui';
 interface FeatureSectionProps {}
 
 const FeatureSection: FC<FeatureSectionProps> = () => {
+	const t = useTranslations('Home');
+
 	return (
 		<div className="mt-[24px] lg:mt-[64px] ">
 			<div className="hidden lg:block">
-				<GradientTypography>Маркетплейс цифровых активов</GradientTypography>
+				<GradientTypography>{t('Header.DigitalAssetMarketplace')}</GradientTypography>
 				<p className="text-[22px] font-normal mt-[8px]">
-					Масштабируй бизнес, совершай покупки и зарабатывай вместе с FUTURUM
+				  {t('Header.ScaleYourBusiness')}
 				</p>
 			</div>
 
@@ -30,10 +32,10 @@ const FeatureSection: FC<FeatureSectionProps> = () => {
 						isActive
 						Title={
 							<span className="block font-bold lg:text-[18px] xl:text-[20px]">
-								Получай доход
+								{t('Categories.GainIncome')}
 							</span>
 						}
-						subtitle="от действующих бизнесов"
+						subtitle={t('Categories.FromExistingBusinesses')}
 						// image={<img src={IncomeIcon.src} alt="" />}
 						Image={
 							<div className="absolute right-0 top-0 z-1 w-[120px] hidden lg:block">
@@ -48,11 +50,11 @@ const FeatureSection: FC<FeatureSectionProps> = () => {
 					<FeatureCard
 						Title={
 							<span className="block font-bold lg:text-[18px] xl:text-[20px]">
-								Стань сооснователем
+								{t('Categories.BecomeACofounder')}
 							</span>
 						}
 						className="px-[10px]"
-						subtitle="инновационного стартапа"
+						subtitle={t('Categories.OfAnInnovativeStartup')}
 						Image={
 							<div className="absolute right-[26px] bottom-0 z-1 w-[74px] h-[74px] hidden lg:block">
 								<img
@@ -66,7 +68,7 @@ const FeatureSection: FC<FeatureSectionProps> = () => {
 					<FeatureCard
 						Title={
 							<span className="block font-bold lg:text-[18px] xl:text-[20px] max-w-[171px]">
-								Цифровая барахолка
+								{t('Categories.DigitalMarketplace')}
 							</span>
 						}
 						Image={
@@ -89,7 +91,7 @@ const FeatureSection: FC<FeatureSectionProps> = () => {
 					<FeatureCard
 						Title={
 							<span className="block font-bold lg:text-[18px] xl:text-[20px] max-w-[171px]">
-								Помощь животным
+								{t('Categories.AnimalCharity')}
 							</span>
 						}
 						Image={
@@ -116,7 +118,7 @@ const FeatureSection: FC<FeatureSectionProps> = () => {
 					<FeatureCard
 						Title={
 							<span className="block font-bold lg:text-[18px] xl:text-[20px] max-w-[105px]">
-								Помощь людям
+								{t('Categories.PeopleCharity')}
 							</span>
 						}
 						Image={
@@ -139,7 +141,7 @@ const FeatureSection: FC<FeatureSectionProps> = () => {
 					<FeatureCard
 						Title={
 							<span className="block font-bold lg:text-[18px] xl:text-[20px] max-w-[105px]">
-								Книги и музыка
+								{t('Categories.BooksAndMusic')}
 							</span>
 						}
 						Image={
@@ -163,7 +165,7 @@ const FeatureSection: FC<FeatureSectionProps> = () => {
 						className="pb-0 justify-end"
 						Title={
 							<span className="block font-bold lg:text-[18px] xl:text-[20px] max-w-[179px]">
-								Билеты на мероприятия
+								{t('Categories.EventTickets')}
 							</span>
 						}
 						Image={
@@ -186,7 +188,7 @@ const FeatureSection: FC<FeatureSectionProps> = () => {
 					<FeatureCard
 						Title={
 							<span className="block font-bold lg:text-[18px] xl:text-[20px] max-w-[156]">
-								Обучающие курсы
+								{t('Categories.EducationCourses')}
 							</span>
 						}
 						Image={
@@ -210,7 +212,7 @@ const FeatureSection: FC<FeatureSectionProps> = () => {
 						className="pb-0 justify-end"
 						Title={
 							<span className="block font-bold lg:text-[18px] xl:text-[20px] max-w-[115px]">
-								Искусство в NFT
+								{t('Categories.NFTArts')}
 							</span>
 						}
 						Image={
@@ -233,7 +235,7 @@ const FeatureSection: FC<FeatureSectionProps> = () => {
 					<FeatureCard
 						Title={
 							<span className="block font-bold lg:text-[18px] xl:text-[20px] max-w-[141px]">
-								Реферальные программы
+								{t('Categories.ReferralPrograms')}
 							</span>
 						}
 						Image={

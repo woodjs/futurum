@@ -8,24 +8,28 @@ import {
 	Typography,
 } from '@/shared/ui';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 
 import Section from '../section';
 
-const data = [
-	{ id: 1, title: 'Что такое Futurum', image: '/images/stories/1.png' },
-	{ id: 2, title: 'Идеология проекта', image: '/images/stories/2.png' },
-	{ id: 3, title: 'Почему TON?', image: '/images/stories/3.png' },
-	{ id: 4, title: 'Плюсы платформы', image: '/images/stories/4.png' },
-	{ id: 5, title: 'Для инвесторов', image: '/images/stories/5.png' },
-	{ id: 6, title: 'Для бизнеса', image: '/images/stories/6.png' },
-];
 
 export default function Stories() {
+	const t = useTranslations('Home.Categories');
+
+	const data = [
+		{ id: 1, title: t('WhatIsFuturum'), image: '/images/stories/1.png' },
+		{ id: 2, title: t('ProjectVision'), image: '/images/stories/2.png' },
+		{ id: 3, title: t('WhyTON'), image: '/images/stories/3.png' },
+		{ id: 4, title: t('AdvantagesOfThePlatform'), image: '/images/stories/4.png' },
+		{ id: 5, title: t('ForInvestors'), image: '/images/stories/5.png' },
+		{ id: 6, title: t('ForBusiness'), image: '/images/stories/6.png' },
+	];
+
 	return (
 		<Section
 			Title={
 				<Typography variant="h2">
-					Наши <GradientTypography variant="h2">Stories</GradientTypography>
+					{t('StoriesOne')} <GradientTypography variant="h2">{t('StoriesTwo')}</GradientTypography>
 				</Typography>
 			}
 		>

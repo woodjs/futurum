@@ -1,4 +1,5 @@
 import { cn } from '@/shared/lib/utils';
+import { useTranslations } from 'next-intl';
 import { Button, GradientTypography, Typography } from '@/shared/ui';
 import Image from 'next/image';
 import Section from '../section';
@@ -47,11 +48,13 @@ const data = [
 ];
 
 export default function Exchange() {
+	const t = useTranslations('Home.Categories');
+	
 	return (
 		<Section
 			Title={
 				<Typography variant="h2">
-					Биржа <GradientTypography variant="h2">FUTURUM</GradientTypography>
+					{t('FUTURUMСryptoExchangeOne')} <GradientTypography variant="h2">{t('FUTURUMСryptoExchangeTwo')}</GradientTypography>
 				</Typography>
 			}
 		>
@@ -59,13 +62,13 @@ export default function Exchange() {
 				<div className="bg-gray px-[16px] rounded-[15px] w-full flex-1">
 					<div className="w-full flex justify-between border-b border-gray2 py-[14px]">
 						<p className="flex-1 text-[#4F4F4F] text-[12px] uppercase font-semibold">
-							Название
+							{t("Name")}
 						</p>
 						<p className="lg:flex-1 text-[#4F4F4F] text-[12px] uppercase font-semibold">
-							Цена
+						{t("Price")}
 						</p>
 						<p className="flex-1 text-[#4F4F4F] text-[12px] uppercase font-semibold hidden lg:block">
-							График
+						{t("Chart")}
 						</p>
 					</div>
 					{data.map((item) => (
@@ -236,11 +239,11 @@ export default function Exchange() {
 									height={64}
 								/>
 								<span className="font-bold text-[18px] text-[#4F4F4F]">
-									Токен Futurum x100 Coin (TON)
+									{t('FuturumToken')}
 								</span>
 							</div>
 							<Button className="w-full mt-[12px]">
-								Участвовать в пресейле
+								{t('GetInPresale')}
 							</Button>
 						</div>
 					</div>

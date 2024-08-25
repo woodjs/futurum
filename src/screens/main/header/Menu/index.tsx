@@ -1,35 +1,58 @@
 'use client';
 
+import { useRouter, usePathname } from 'next/navigation'
+import { useTranslations, useLocale } from 'next-intl';
 import { Container } from '@/shared/ui';
 import BurgerButton from './BurgerButton';
 import BurgerMenu from './BurgerMenu';
 import { useState } from 'react';
-
-const data = [
-	{
-		id: 1,
-		name: 'О нас',
-	},
-	{
-		id: 2,
-		name: 'Для бизнеса',
-	},
-	{
-		id: 3,
-		name: 'Для частных лиц',
-	},
-	{
-		id: 4,
-		name: 'Futurum',
-	},
-	{
-		id: 5,
-		name: 'Комьюнити',
-	},
-];
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from '../../../../shared/ui/select';
 
 function Menu() {
 	const [isOpen, setIsOpen] = useState(false);
+	const router = useRouter();
+	const pathname = usePathname();
+	const locale = useLocale();
+	const t = useTranslations('Home.Header');
+
+	const data = [
+		{
+			id: 1,
+			name: t('AboutUs'),
+		},
+		{
+			id: 2,
+			name: t('ForBusiness'),
+		},
+		{
+			id: 3,
+			name: t('ForIndividuals'),
+		},
+		{
+			id: 4,
+			name: t('CareersAtFuturum'),
+		},
+		{
+			id: 5,
+			name: t('Community'),
+		},
+	];
+
+	const trimUrl = (url: string) => {
+
+	}
+
+	const handleLanguageChange = (lang: string): void => {
+		const newPath = pathname.replace(locale, lang)
+		router.replace(newPath)
+	 }
+
 	return (
 		<>
 			<div className="bg-primary h-[52px] sticky left-0 top-0 z-50">
@@ -44,6 +67,16 @@ function Menu() {
 								</li>
 							))}
 						</ul>
+
+						<Select onValueChange={handleLanguageChange}>
+							<SelectTrigger className="w-[70px]">
+								<SelectValue placeholder={locale} />
+							</SelectTrigger>
+							<SelectContent>
+								<SelectItem value="ru">Ru</SelectItem>
+								<SelectItem value="en">En</SelectItem>
+							</SelectContent>
+						</Select>
 
 						<div className="lg:hidden">
 							<svg
