@@ -131,6 +131,18 @@
         "Headline": "Good Deeds",
         "Subtitle": "Get in charity events and save lives"
       }
+    },
+    "FeaturesSlider": {
+      "slideOne": "/images/sliders/slide-1-en.jpg",
+      "slideOneMobile": "/images/sliders/slide-1-mobile-en.jpg",
+      "slideTwo": "/images/sliders/slide-2-en.jpg",
+      "slideTwoMobile": "/images/sliders/slide-2-mobile-en.jpg",
+      "slideThree": "/images/sliders/slide-3-en.jpg",
+      "slideThreeMobile": "/images/sliders/slide-3-mobile-en.jpg",
+      "slideFour": "/images/sliders/slide-4-en.jpg",
+      "slideFourMobile": "/images/sliders/slide-4-en.jpg",
+      "slideFive": "/images/sliders/slide-5-en.jpg",
+      "slideFiveMobile": "/images/sliders/slide-5-mobile-en.jpg"
     }
   }
 }

@@ -5,8 +5,10 @@ import { Button, Carousel, CarouselContent, CarouselItem } from '@/shared/ui';
 import SlideOne from './images/slide_1.png';
 import { useRef } from 'react';
 import Section from '../../section';
+import { useTranslations } from 'next-intl';
 
 export default function CarouselHeader() {
+	const t = useTranslations('Home.FeaturesSlider');
 	const plugin = useRef(Autoplay({ delay: 2000, playOnInit: false }));
 	return (
 		<Section className="mt-[24px] lg:mt-[64px]">
@@ -26,12 +28,12 @@ export default function CarouselHeader() {
 							<picture>
 								<source
 									className="w-full"
-									srcSet="/images/sliders/slide-1-mobile.jpg"
+									srcSet={t("slideOneMobile")}
 									media="(max-width: 600px)"
 								/>
 								<img
 									className="w-full"
-									src="/images/sliders/slide-1.jpg"
+									src={t("slideOne")}
 									alt=""
 								/>
 							</picture>
@@ -42,12 +44,12 @@ export default function CarouselHeader() {
 							<picture>
 								<source
 									className="w-full"
-									srcSet="/images/sliders/slide-2-mobile.jpg"
+									srcSet={t("slideTwoMobile")}
 									media="(max-width: 600px)"
 								/>
 								<img
 									className="w-full"
-									src="/images/sliders/slide-2.jpg"
+									src={t("slideTwo")}
 									alt=""
 								/>
 							</picture>
@@ -58,12 +60,12 @@ export default function CarouselHeader() {
 							<picture>
 								<source
 									className="w-full"
-									srcSet="/images/sliders/slide-3-mobile.jpg"
+									srcSet={t("slideThreeMobile")}
 									media="(max-width: 600px)"
 								/>
 								<img
 									className="w-full"
-									src="/images/sliders/slide-3.jpg"
+									src={t("slideThree")}
 									alt=""
 								/>
 							</picture>
@@ -74,12 +76,12 @@ export default function CarouselHeader() {
 							<picture>
 								<source
 									className="w-full"
-									srcSet="/images/sliders/slide-4-mobile.jpg"
+									srcSet={t("slideFourMobile")}
 									media="(max-width: 600px)"
 								/>
 								<img
 									className="w-full"
-									src="/images/sliders/slide-4.jpg"
+									src={t("slideFour")}
 									alt=""
 								/>
 							</picture>
@@ -90,12 +92,12 @@ export default function CarouselHeader() {
 							<picture>
 								<source
 									className="w-full"
-									srcSet="/images/sliders/slide-5-mobile.jpg"
+									srcSet={t("slideFiveMobile")}
 									media="(max-width: 600px)"
 								/>
 								<img
 									className="w-full"
-									src="/images/sliders/slide-5.jpg"
+									src={t("slideFive")}
 									alt=""
 								/>
 							</picture>
