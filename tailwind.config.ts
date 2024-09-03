@@ -26,6 +26,7 @@ const config = {
 				'gradient-accent-start': '#0098F1',
 				'gradient-accent-end': '#2DEDD7',
 				'light-gray': '#F5F5F5',
+				'transparent-gray': '#A0AEC0E5', // Есть необходимость заменить этот цвет без прозрачности
 				'primary-red': '#FB5757',
 				white: '#FFFFFF',
 				black: '#2D3748',
