@@ -12,7 +12,7 @@ const Avatar = React.forwardRef<
   <AvatarPrimitive.Root
     ref={ref}
     className={cn(
-      'relative flex justify-items-center items-center h-[100px] w-[100px] bg-gradient-to-r from-gradient-accent-start to-gradient-accent-end shrink-0 overflow-hidden rounded-full',
+      'relative flex justify-items-center items-center h-[100px] w-[100px] bg-gradient-to-r from-gradient-accent-start  to-gradient-accent-end shrink-0 overflow-hidden rounded-full',
       className,
     )}
     {...props}
