@@ -2,7 +2,7 @@
 
 import { useRouter, usePathname } from 'next/navigation'
 import { useTranslations, useLocale } from 'next-intl'
-import { Container } from '@/shared/ui'
+import { Button, Container } from '@/shared/ui'
 import BurgerButton from './BurgerButton'
 import BurgerMenu from './BurgerMenu'
 import { useState } from 'react'
@@ -14,6 +14,29 @@ import {
   SelectValue,
 } from '../../../../shared/ui/select'
 import { LoginDialog } from '@/features/login'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from '@/shared/ui/dropdown-menu'
+import { DropdownMenuSubContent } from '@radix-ui/react-dropdown-menu'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/shared/ui/tooltip'
+import { TooltipPortal } from '@radix-ui/react-tooltip'
 
 function Menu() {
   const [isOpen, setIsOpen] = useState(false)
@@ -54,13 +77,13 @@ function Menu() {
 
   return (
     <>
-      <div className='bg-primary h-[52px] sticky left-0 top-0 z-50'>
-        <Container className='flex items-center justify-between h-full'>
-          <div className='items-center justify-between  w-full flex '>
-            <ul className='hidden lg:flex flex-col md:flex-row gap-[35px]'>
+      <div className='sticky left-0 top-0 z-50 h-[52px] bg-primary'>
+        <Container className='flex h-full items-center justify-between'>
+          <div className='flex w-full items-center justify-between'>
+            <ul className='hidden flex-col gap-[35px] md:flex-row lg:flex'>
               {data.map(item => (
                 <li key={item.id}>
-                  <a href='#' className='text-primary-foreground font-[600]'>
+                  <a href='#' className='font-[600] text-primary-foreground'>
                     {item.name}
                   </a>
                 </li>
@@ -76,6 +99,65 @@ function Menu() {
                 <SelectItem value='en'>En</SelectItem>
               </SelectContent>
             </Select>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button size='sm' variant='outline'>
+                  Open
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className='w-56'>
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                  <DropdownMenuItem>
+                    Profile
+                    <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    Billing
+                    <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    Settings
+                    <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    Keyboard shortcuts
+                    <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                  <DropdownMenuItem>Team</DropdownMenuItem>
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
+                      Invite users
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuPortal>
+                      <DropdownMenuSubContent>
+                        <DropdownMenuItem>Email</DropdownMenuItem>
+                        <DropdownMenuItem>Message</DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>More...</DropdownMenuItem>
+                      </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
+                  <DropdownMenuItem>
+                    New Team
+                    <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>GitHub</DropdownMenuItem>
+                <DropdownMenuItem>Support</DropdownMenuItem>
+                <DropdownMenuItem disabled>API</DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  Log out
+                  <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
 
             <div className='lg:hidden'>
               <svg
@@ -100,7 +182,17 @@ function Menu() {
                 </defs>
               </svg>
             </div>
-
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>Tooltip</TooltipTrigger>
+                <TooltipPortal>
+                  <TooltipContent className='max-w-72'>
+                    Receive notifications when someone comments on your
+                    documents or mentions you.
+                  </TooltipContent>
+                </TooltipPortal>
+              </Tooltip>
+            </TooltipProvider>
             <div className='lg:hidden'>
               <BurgerButton
                 onClick={() => setIsOpen(!isOpen)}
