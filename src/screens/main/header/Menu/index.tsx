@@ -54,13 +54,13 @@ function Menu() {
 
   return (
     <>
-      <div className='bg-primary h-[52px] sticky left-0 top-0 z-50'>
-        <Container className='flex items-center justify-between h-full'>
-          <div className='items-center justify-between  w-full flex '>
-            <ul className='hidden lg:flex flex-col md:flex-row gap-[35px]'>
+      <div className='sticky left-0 top-0 z-50 h-[52px] bg-primary'>
+        <Container className='flex h-full items-center justify-between'>
+          <div className='flex w-full items-center justify-between'>
+            <ul className='hidden flex-col gap-[35px] md:flex-row lg:flex'>
               {data.map(item => (
                 <li key={item.id}>
-                  <a href='#' className='text-primary-foreground font-[600]'>
+                  <a href='#' className='font-[600] text-primary-foreground'>
                     {item.name}
                   </a>
                 </li>
