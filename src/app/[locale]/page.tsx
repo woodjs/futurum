@@ -17,20 +17,15 @@ import CarouselDigital from '@/screens/main/carousel-digital'
 import CarouselTop from '@/screens/main/carousel-top'
 import CarouselProfit from '@/screens/main/carousel-profit'
 import ScrollToTop from '@/shared/ui/scroll-to-top'
-import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar'
 
 export default function Home() {
   const t = useTranslations('Home.Header')
   return (
     <div className={'relative'}>
       <Menu />
-      <Avatar>
-        <AvatarImage src='https://github.com/shadcn.png' alt='@shadcn' />
-        <AvatarFallback>CN</AvatarFallback>
-      </Avatar>
-      <div className='w-full bg-white sticky z-50 left-0 top-[52px]'>
+      <div className='sticky left-0 top-[52px] z-50 w-full bg-white'>
         <Container>
-          <div className='flex items-center w-full gap-[28px] bg-white py-[24px]'>
+          <div className='flex w-full items-center gap-[28px] bg-white py-[24px]'>
             <div className='hidden lg:block'>
               <svg
                 width='148'
@@ -71,7 +66,7 @@ export default function Home() {
               className='flex-1'
             />
 
-            <div className='items-center gap-[26px] hidden lg:flex'>
+            <div className='hidden items-center gap-[26px] lg:flex'>
               <IconLabelBadge
                 icon={<UserRound width={25} height={25} />}
                 label={t('LogIn')}
