@@ -40,7 +40,7 @@ const linkList = [
   },
 ]
 
-const statuses = {
+const tariffs = {
   basic: {
     className:
       'bg-gradient-to-r from-gradient-accent-start to-gradient-accent-end inline-block text-transparent bg-clip-text',
@@ -50,7 +50,7 @@ const statuses = {
 
 const balance = 276034
 
-const status = statuses.basic
+const tariff = tariffs.basic
 
 const user = {
   name: 'Владислав',
@@ -112,10 +112,10 @@ const Sidebar = () => {
           hover:bg-slate-100'
       >
         <div className='flex flex-col'>
-          <div className='text-left text-sm text-slate-400'>{t('Status')}</div>
-          {status && (
-            <div className={cn('text-2xl font-bold', status.className)}>
-              {status.name}
+          <div className='text-left text-sm text-slate-400'>{t('Tariff')}</div>
+          {tariff && (
+            <div className={cn('text-2xl font-bold', tariff.className)}>
+              {tariff.name}
             </div>
           )}
         </div>
