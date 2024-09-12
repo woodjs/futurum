@@ -6,36 +6,37 @@ import { ChevronRight } from 'lucide-react'
 import Image from 'next/image'
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar'
 import getShortNumber from '@/shared/lib/numberFormatter'
+import { useTranslations } from 'next-intl'
 
 const linkList = [
   {
     href: '/',
-    name: 'Мои активы',
+    name: 'MyAssets',
+  },
+  {
+    href: '/organizations',
+    name: 'MyOrganizations',
   },
   {
     href: '#',
-    name: 'Мои организации',
+    name: 'Profile',
   },
   {
     href: '#',
-    name: 'Профиль',
-  },
-  {
-    href: '#',
-    name: 'Сообщения',
+    name: 'Messages',
     notification: 4,
   },
   {
     href: '#',
-    name: 'Мои покупки',
+    name: 'MyPurchases',
   },
   {
     href: '#',
-    name: 'Избранное',
+    name: 'Favorites',
   },
   {
     href: '#',
-    name: 'Корзина',
+    name: 'Cart',
   },
 ]
 
@@ -59,11 +60,12 @@ const user = {
 
 const Sidebar = () => {
   const pathname = usePathname()
+  const t = useTranslations('Menu')
 
   return (
     <div
-      className='ml-[20px] flex w-[300px] flex-col gap-[36px] rounded-2xl border border-slate-200
-        p-[16px]'
+      className='fixed left-[10px] top-[150px] z-50 ml-[20px] flex w-[300px] flex-col gap-[36px]
+        rounded-3xl border border-slate-200 p-[16px] pt-[24px]'
     >
       <div className='flex flex-col items-center justify-between gap-[8px] text-black'>
         <Avatar>
@@ -78,27 +80,29 @@ const Sidebar = () => {
           </span>
         </div>
       </div>
-      <button
-        className='flex w-full items-center gap-[8px] rounded-xl px-[12px] py-[8px] duration-200
-          hover:bg-slate-100'
-      >
-        <div className='flex flex-col'>
-          <div className='text-left text-sm text-slate-400'>Баланс</div>
-          {balance && (
+      {balance && (
+        <button
+          className='flex w-full items-center gap-[8px] rounded-xl px-[12px] py-[8px] duration-200
+            hover:bg-slate-100'
+        >
+          <div className='flex flex-col'>
+            <div className='text-left text-sm text-slate-400'>
+              {t('Balance')}
+            </div>
             <div className={cn('text-xl font-bold text-black')}>
               {getShortNumber(balance, 'en', 'USDT')}
             </div>
-          )}
-        </div>
-        <ChevronRight className='ml-auto text-slate-400' />
-      </button>
+          </div>
+          <ChevronRight className='ml-auto text-slate-400' />
+        </button>
+      )}
       <div className='flex flex-col gap-[4px]'>
         {linkList.map(item => (
           <SidebarLink
             active={pathname === item.href}
             key={item.name}
             href={item.href}
-            name={item.name}
+            name={t(item.name)}
             notification={item.notification}
           />
         ))}
@@ -108,7 +112,7 @@ const Sidebar = () => {
           hover:bg-slate-100'
       >
         <div className='flex flex-col'>
-          <div className='text-left text-sm text-slate-400'>Статус</div>
+          <div className='text-left text-sm text-slate-400'>{t('Status')}</div>
           {status && (
             <div className={cn('text-2xl font-bold', status.className)}>
               {status.name}
