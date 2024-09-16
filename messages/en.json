@@ -1,4 +1,16 @@
 {
+  "Menu": {
+    "MyAssets": "My assets",
+    "MyOrganizations": "My organizations",
+    "Profile": "Profile",
+    "Messages": "Messages",
+    "MyPurchases": "My purchases",
+    "Favorites": "Favorites",
+    "Cart": "Cart",
+    "Status": "Status",
+    "Balance": "Balance",
+    "Tariff": "Tariff"
+  },
   "Home": {
     "Header": {
       "AboutUs": "About us",

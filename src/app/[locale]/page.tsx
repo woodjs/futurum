@@ -18,6 +18,7 @@ import CarouselDigital from '@/screens/main/carousel-digital'
 import CarouselTop from '@/screens/main/carousel-top'
 import CarouselProfit from '@/screens/main/carousel-profit'
 import ScrollToTop from '@/shared/ui/scroll-to-top'
+import { Sidebar } from '@/widgets/sidebar'
 
 export default function Home() {
   const t = useTranslations('Home.Header')
@@ -86,7 +87,7 @@ export default function Home() {
           </div>
         </Container>
       </div>
-
+      <Sidebar />
       <Container>
         <FeatureSection />
         <Link href='/about'>About</Link>
