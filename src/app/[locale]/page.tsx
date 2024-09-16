@@ -3,6 +3,7 @@ import FeatureSection from '@/screens/main/header/FeatureSection'
 import IconLabelBadge from '@/screens/main/header/IconLabelBadge'
 import { useTranslations } from 'next-intl'
 import Menu from '@/screens/main/header/Menu'
+import { Link } from '@/i18n/routing'
 import { Button, Container, Input } from '@/shared/ui'
 import { Heart, Search, ShoppingCart, UserRound } from 'lucide-react'
 import Footer from '@/screens/main/footer'
@@ -89,7 +90,7 @@ export default function Home() {
       <Sidebar />
       <Container>
         <FeatureSection />
-
+        <Link href='/about'>About</Link>
         <CarouselHeader />
         <CarouselTop />
         <Exchange />
