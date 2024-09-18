@@ -1,6 +1,6 @@
+import { Link } from '@/i18n/routing'
 import { cn } from '@/shared/lib/utils'
 import { Badge } from '@/shared/ui/badge'
-import Link from 'next/link'
 
 interface ISidebarLinkProps {
   href: string

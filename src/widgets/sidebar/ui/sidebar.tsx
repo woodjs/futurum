@@ -65,7 +65,7 @@ const Sidebar = () => {
   return (
     <div
       className='fixed left-[10px] top-[150px] z-50 ml-[20px] flex w-[300px] flex-col gap-[36px]
-        rounded-3xl border border-slate-200 p-[16px] pt-[24px]'
+        rounded-3xl border border-slate-200 bg-white p-[16px] pt-[24px]'
     >
       <div className='flex flex-col items-center justify-between gap-[8px] text-black'>
         <Avatar>
