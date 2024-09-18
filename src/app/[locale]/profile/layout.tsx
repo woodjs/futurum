@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { NextIntlClientProvider, useMessages } from 'next-intl'
-import './globals.css'
+import './../globals.css'
+import { Sidebar } from '@/widgets/sidebar'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -29,6 +30,7 @@ export default function RootLayout({
           locale={params?.locale || 'en'}
           messages={messages}
         >
+          {/* <Sidebar /> */}
           {children}
         </NextIntlClientProvider>
       </body>
