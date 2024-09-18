@@ -60,14 +60,20 @@ function Menu() {
             <ul className='hidden flex-col gap-[35px] md:flex-row lg:flex'>
               {data.map(item => (
                 <li key={item.id}>
-                  <a href='#' className='font-[600] text-primary-foreground'>
+                  <a
+                    href='#'
+                    className='text-primary-foreground duration-200 hover:text-white'
+                  >
                     {item.name}
                   </a>
                 </li>
               ))}
             </ul>
-            <Select onValueChange={handleLanguageChange}>
-              <SelectTrigger className='w-[70px]'>
+            <Select value={locale} onValueChange={handleLanguageChange}>
+              <SelectTrigger
+                className='w-[70px] border-transparent bg-transparent text-white outline-none ring-0
+                  ring-transparent'
+              >
                 <SelectValue placeholder={locale} />
               </SelectTrigger>
               <SelectContent>

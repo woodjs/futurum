@@ -94,7 +94,7 @@ const Sidebar = () => {
 
   return (
     <div
-      className='sticky top-36 z-50 mr-4 flex h-fit w-[300px] flex-shrink-0 flex-col gap-[36px]
+      className='sticky top-40 mr-4 flex h-fit w-[300px] flex-shrink-0 flex-col gap-[36px]
         rounded-3xl border border-slate-200 bg-white p-[16px] pt-[24px]'
     >
       <div className='flex flex-col items-center justify-between gap-[8px] text-black'>

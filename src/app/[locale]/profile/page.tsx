@@ -27,7 +27,7 @@ export default function Home() {
     <div className={'relative'}>
       <Container>
         <Editor />
-        <FeatureSection />
+        {/* <FeatureSection />
         <CarouselHeader />
         <CarouselTop />
         <Exchange />
@@ -37,7 +37,7 @@ export default function Home() {
         <CarouselDigital />
         <CommunitySection />
         <CarouselToday />
-        <GameSection />
+        <GameSection /> */}
       </Container>
       <ScrollToTop />
     </div>
