@@ -10,6 +10,7 @@ import { useTranslations } from 'next-intl'
 import { Skeleton } from '@/shared/ui/skeleton'
 import { Routes } from '@/shared/model/routes'
 import BigButton from '@/shared/ui/big-button'
+import { Tariff } from '@/shared/api/types'
 
 const linkList = [
   {
@@ -44,11 +45,14 @@ const linkList = [
 ]
 
 const tariffs = {
-  basic: {
-    className:
-      'bg-gradient-to-r from-gradient-accent-start to-gradient-accent-end inline-block text-transparent bg-clip-text',
-    name: 'Basic',
-  },
+  [Tariff.BASIC]:
+    'bg-gradient-to-r from-gradient-accent-start to-gradient-accent-end inline-block text-transparent bg-clip-text',
+  [Tariff.PREMIUM]:
+    'bg-gradient-to-r from-gradient-accent-start to-gradient-accent-end inline-block text-transparent bg-clip-text',
+  [Tariff.STANDARD]:
+    'bg-gradient-to-r from-gradient-accent-start to-gradient-accent-end inline-block text-transparent bg-clip-text',
+  [Tariff.BLACK]:
+    'bg-gradient-to-r from-gradient-accent-start to-gradient-accent-end inline-block text-transparent bg-clip-text',
 }
 
 const userFake = {
@@ -56,8 +60,25 @@ const userFake = {
   avatar: 'https://picsum.photos/300',
   rating: 4.5,
   balance: 276034,
-  tariff: tariffs.basic,
+  tariff: {
+    id: Tariff.BASIC,
+    name: 'Basic',
+  },
+  messages: 4,
   id: '1',
+}
+
+interface IUserMe {
+  name: string
+  avatar: string
+  rating: number
+  balance: number
+  tariff: {
+    id: Tariff
+    name: string
+  }
+  messages: number
+  id: string
 }
 
 const Sidebar = () => {
@@ -109,7 +130,9 @@ const Sidebar = () => {
             key={item.name}
             href={item.href}
             name={t(item.name)}
-            notification={item.notification}
+            notification={
+              Routes.MESSAGES === item.href ? user?.messages : undefined
+            }
           />
         ))}
       </div>
@@ -120,7 +143,7 @@ const Sidebar = () => {
         }}
         isLoading={isUserLoading}
       >
-        <div className={cn('text-2xl font-bold', user.tariff.className)}>
+        <div className={cn('text-2xl font-bold', tariffs[user.tariff.id])}>
           {user.tariff.name}
         </div>
       </BigButton>
