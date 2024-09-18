@@ -3,6 +3,10 @@ import { Inter } from 'next/font/google'
 import { NextIntlClientProvider, useMessages } from 'next-intl'
 import './../globals.css'
 import { Sidebar } from '@/widgets/sidebar'
+import { Container } from '@/shared/ui'
+import Menu from '@/screens/main/header/Menu'
+import Footer from '@/screens/main/footer'
+import { Header } from '@/widgets/header'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -30,8 +34,13 @@ export default function RootLayout({
           locale={params?.locale || 'en'}
           messages={messages}
         >
-          {/* <Sidebar /> */}
-          {children}
+          <Menu />
+          <Header />
+          <Container className='flex'>
+            <Sidebar />
+            <div className='w-full'>{children}</div>
+          </Container>
+          <Footer />
         </NextIntlClientProvider>
       </body>
     </html>

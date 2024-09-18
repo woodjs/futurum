@@ -66,7 +66,6 @@ function Menu() {
                 </li>
               ))}
             </ul>
-            <LoginDialog />
             <Select onValueChange={handleLanguageChange}>
               <SelectTrigger className='w-[70px]'>
                 <SelectValue placeholder={locale} />

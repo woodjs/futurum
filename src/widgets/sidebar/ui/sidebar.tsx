@@ -7,35 +7,38 @@ import Image from 'next/image'
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar'
 import getShortNumber from '@/shared/lib/numberFormatter'
 import { useTranslations } from 'next-intl'
+import { Skeleton } from '@/shared/ui/skeleton'
+import { Routes } from '@/shared/model/routes'
+import BigButton from '@/shared/ui/big-button'
 
 const linkList = [
   {
-    href: '/',
+    href: Routes.MY_ASSETS,
     name: 'MyAssets',
   },
   {
-    href: '/organizations',
+    href: Routes.MY_ORGANIZATIONS,
     name: 'MyOrganizations',
   },
   {
-    href: '#',
+    href: Routes.PROFILE,
     name: 'Profile',
   },
   {
-    href: '#',
+    href: Routes.MESSAGES,
     name: 'Messages',
     notification: 4,
   },
   {
-    href: '#',
+    href: Routes.PURCHASES,
     name: 'MyPurchases',
   },
   {
-    href: '#',
+    href: Routes.FAVORITES,
     name: 'Favorites',
   },
   {
-    href: '#',
+    href: Routes.CART,
     name: 'Cart',
   },
 ]
@@ -48,54 +51,57 @@ const tariffs = {
   },
 }
 
-const balance = 276034
-
-const tariff = tariffs.basic
-
-const user = {
+const userFake = {
   name: 'Владислав',
   avatar: 'https://picsum.photos/300',
   rating: 4.5,
+  balance: 276034,
+  tariff: tariffs.basic,
+  id: '1',
 }
 
 const Sidebar = () => {
   const pathname = usePathname()
   const t = useTranslations('Menu')
 
+  // TODO update with real api
+  const {
+    data: user,
+    isLoading: isUserLoading,
+    isSuccess: isUserSuccess,
+  } = { data: userFake, isLoading: false, isSuccess: true }
+
   return (
     <div
-      className='fixed left-[10px] top-[150px] z-50 ml-[20px] flex w-[300px] flex-col gap-[36px]
+      className='sticky top-36 z-50 mr-4 flex h-fit w-[300px] flex-shrink-0 flex-col gap-[36px]
         rounded-3xl border border-slate-200 bg-white p-[16px] pt-[24px]'
     >
       <div className='flex flex-col items-center justify-between gap-[8px] text-black'>
-        <Avatar>
-          <AvatarImage src={user.avatar} alt={user.name} />
-          <AvatarFallback>{user.name[0]}</AvatarFallback>
-        </Avatar>
-        <div className='text-lg'>
-          {user.name}
-          <span className='inline-flex items-center pl-[8px] text-base'>
-            {user.rating}
-            <span className='text-xs'>★</span>
-          </span>
-        </div>
+        {isUserLoading && (
+          <>
+            <Skeleton className='my-[5px] size-[90px] rounded-full' />
+            <Skeleton className='my-1 h-6 w-2/3 rounded-full' />
+          </>
+        )}
+        {isUserSuccess && (
+          <>
+            <Avatar>
+              <AvatarImage src={user.avatar} alt={user.name} />
+              <AvatarFallback>{user.name[0]}</AvatarFallback>
+            </Avatar>
+            <div className='text-lg'>
+              {user.name}
+              <span className='inline-flex items-center pl-[8px] text-base'>
+                {user.rating}
+                <span className='text-xs'>★</span>
+              </span>
+            </div>
+          </>
+        )}
       </div>
-      {balance && (
-        <button
-          className='flex w-full items-center gap-[8px] rounded-xl px-[12px] py-[8px] duration-200
-            hover:bg-slate-100'
-        >
-          <div className='flex flex-col'>
-            <div className='text-left text-sm text-slate-400'>
-              {t('Balance')}
-            </div>
-            <div className={cn('text-xl font-bold text-black')}>
-              {getShortNumber(balance, 'en', 'USDT')}
-            </div>
-          </div>
-          <ChevronRight className='ml-auto text-slate-400' />
-        </button>
-      )}
+      <BigButton isLoading={isUserLoading} label={t('Balance')}>
+        {getShortNumber(user.balance, 'en', 'USDT')}
+      </BigButton>
       <div className='flex flex-col gap-[4px]'>
         {linkList.map(item => (
           <SidebarLink
@@ -107,20 +113,17 @@ const Sidebar = () => {
           />
         ))}
       </div>
-      <button
-        className='flex w-full items-center gap-[8px] rounded-xl px-[12px] py-[8px] duration-200
-          hover:bg-slate-100'
+      <BigButton
+        label={t('Tariff')}
+        classNames={{
+          value: 'text-2xl font-bold',
+        }}
+        isLoading={isUserLoading}
       >
-        <div className='flex flex-col'>
-          <div className='text-left text-sm text-slate-400'>{t('Tariff')}</div>
-          {tariff && (
-            <div className={cn('text-2xl font-bold', tariff.className)}>
-              {tariff.name}
-            </div>
-          )}
+        <div className={cn('text-2xl font-bold', user.tariff.className)}>
+          {user.tariff.name}
         </div>
-        <ChevronRight className='ml-auto text-slate-400' />
-      </button>
+      </BigButton>
     </div>
   )
 }
