@@ -1,4 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/tabs'
+import Loader from '../../../shared/ui/loader'
 
 export default function TestPage() {
   return (
@@ -12,7 +13,7 @@ export default function TestPage() {
           <TabsTrigger value='testFive'>TestFive</TabsTrigger>
         </TabsList>
         <TabsContent value='testOne'>
-          <div>TestOne</div>
+          <Loader />
         </TabsContent>
         <TabsContent value='testTwo'>
           <div>TestTwo</div>

@@ -8,7 +8,7 @@ import { cn } from '@/shared/lib/utils'
 
 interface ITabsTrigger
   extends React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger> {
-  badge: string
+  badge?: string
 }
 
 const Tabs = TabsPrimitive.Root
