@@ -21,8 +21,10 @@
       "SelectCategory": "Select a category",
       "FromDate": "From date",
       "ToDate": "To date",
+      "SelectDate": "Select a date",
       "FromPrice": "From price",
       "ToPrice": "To price",
+      "EnterPrice": "Enter a price",
       "ResetFilters": "Reset filters",
       "Apply": "Apply"
     }
