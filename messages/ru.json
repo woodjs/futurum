@@ -11,6 +11,24 @@
     "Balance": "Баланс",
     "Tariff": "Тариф"
   },
+  "Purchase": {
+    "Filters": {
+      "FromValue": "От {value}",
+      "ToValue": "До {value}",
+      "AddFilter": "Добавить фильтр",
+      "Title": "Фильтры",
+      "Category": "Категория",
+      "SelectCategory": "Выберите категорию",
+      "FromDate": "Дата начала",
+      "ToDate": "Дата окончания",
+      "SelectDate": "Выберите дату",
+      "FromPrice": "Цена от",
+      "ToPrice": "Цена до",
+      "EnterPrice": "Введите цену",
+      "ResetFilters": "Сбросить фильтры",
+      "Apply": "Применить"
+    }
+  },
   "Editor": {
     "empty": "Выделите текст",
     "p": "Параграф",

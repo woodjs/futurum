@@ -6,13 +6,13 @@ export interface INft {
     price: number;
     type: string;
     category: string;
+    params: { title: string; value: string }[];
     author: {
         id: string;
         name: string;
         image: string;
     };
+    expired: Date;
     likes: number;
-    comments: number;
-    views: number;
     isLiked: boolean;
 }

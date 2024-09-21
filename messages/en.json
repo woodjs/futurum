@@ -11,6 +11,22 @@
     "Balance": "Balance",
     "Tariff": "Tariff"
   },
+  "Purchase": {
+    "Filters": {
+      "FromValue": "From {value}",
+      "ToValue": "To {value}",
+      "AddFilter": "Add filter",
+      "Title": "Filters",
+      "Category": "Category",
+      "SelectCategory": "Select a category",
+      "FromDate": "From date",
+      "ToDate": "To date",
+      "FromPrice": "From price",
+      "ToPrice": "To price",
+      "ResetFilters": "Reset filters",
+      "Apply": "Apply"
+    }
+  },
   "Editor": {
     "empty": "Select text",
     "p": "Paragraph",

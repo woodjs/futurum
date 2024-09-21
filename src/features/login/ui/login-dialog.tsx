@@ -1,43 +1,36 @@
+'use client'
 import { Dialog, DialogContent } from '@/shared/ui/dialog'
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/shared/ui/form'
-import { z } from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { Button, Input } from '@/shared/ui'
-import { FormInput } from '@/shared/ui/form-input'
-import {
-  FormSelect,
-  FormSelectContent,
-  FormSelectItem,
-  FormSelectTrigger,
-  FormSelectValue,
-} from '@/shared/ui/form-select'
-
-const formSchema = z.object({
-  username: z
-    .string({ required_error: 'Username is required' })
-    .min(1, 'Username is required'),
-  email: z
-    .string({ required_error: 'Email is required' })
-    .min(1, 'Email is required'),
-})
+import { DynamicForm } from '@/shared/ui/dynamic-form'
+import { NormalButton } from '@/shared/ui/normal-button'
 
 export const LoginDialog = () => {
-  const form = useForm({
-    resolver: zodResolver(formSchema),
-  })
   return (
     <Dialog defaultOpen>
       <DialogContent>
-        <Form {...form}>
+        <DynamicForm
+          fields={{
+            username: {
+              type: 'input',
+              label: 'Username',
+              placeholder: 'Enter your username',
+            },
+            email: {
+              type: 'input',
+              label: 'Email',
+              placeholder: 'Enter your email',
+            },
+          }}
+          renderFooter={form => (
+            <div className='flex justify-end'>
+              <NormalButton
+                onClick={form.handleSubmit(data => console.log(data))}
+              >
+                Login
+              </NormalButton>
+            </div>
+          )}
+        />
+        {/* <Form {...form}>
           <FormField
             control={form.control}
             name='username'
@@ -91,7 +84,7 @@ export const LoginDialog = () => {
           <Button onClick={form.handleSubmit(console.log)} type='submit'>
             Login
           </Button>
-        </Form>
+        </Form> */}
       </DialogContent>
     </Dialog>
   )

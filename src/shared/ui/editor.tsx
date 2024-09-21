@@ -199,7 +199,7 @@ const MenuBar = () => {
             <SelectItem value='h6'>{t('h6')}</SelectItem>
           </SelectContent>
         </Select>
-        <div className='flex flex-wrap items-center gap-2'>
+        <div className='no-scrollbar flex w-full items-center gap-2 overflow-x-auto'>
           <EditorMenuButton
             onClick={() => editor.chain().focus().toggleBold().run()}
             disabled={!editor.can().chain().focus().toggleBold().run()}
@@ -341,7 +341,10 @@ const extensions = [
 
 interface IEditorProps {
   content: Content
+  onContentChange?: (content: string) => void
   onUpdate?: (props: EditorEvents['update']) => void
+  onFocus?: (props: EditorEvents['focus']) => void
+  onBlur?: (props: EditorEvents['blur']) => void
   className?: string
   label?: string
   description?: string
@@ -350,11 +353,13 @@ interface IEditorProps {
 
 const Editor: React.FC<IEditorProps> = ({
   content,
-  onUpdate,
   className,
   label,
   description,
   id,
+  onContentChange,
+  onUpdate,
+  ...props
 }) => {
   const innerId = useId()
   return (
@@ -382,7 +387,15 @@ const Editor: React.FC<IEditorProps> = ({
           }),
         ]}
         content={content}
-        onUpdate={onUpdate}
+        onUpdate={props => {
+          if (typeof onContentChange === 'function') {
+            onContentChange(props.editor.getText())
+          }
+          if (typeof onUpdate === 'function') {
+            onUpdate(props)
+          }
+        }}
+        {...props}
       />
       {description && (
         <p className='mt-2 text-sm text-slate-400'>{description}</p>

@@ -1,6 +1,12 @@
 import { INft } from "@/shared/api/types"
 
-interface IPurchaseOptions {
+export enum PurchaseStatusFilter {
+    ALL = 'ALL',
+    ACTIVE = 'ACTIVE',
+    COMPLETED = 'COMPLETED',
+}
+
+export interface IPurchaseParams {
     category?: string
     fromDate?: string
     toDate?: string
@@ -8,6 +14,6 @@ interface IPurchaseOptions {
     toPrice?: number
 }
 
-interface IPurchaseItem extends INft {
-
+export interface IPurchaseItem extends INft {
+    purchaseDate: Date;
 }
