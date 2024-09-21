@@ -29,6 +29,14 @@
       "Apply": "Apply"
     }
   },
+  "Tariffs": {
+    "Tariffs": "Tariffs",
+    "YourTariff": "Your tariff — {tariff} until {expireDate}",
+    "Extend": "Extend",
+    "ExtendMonth": "For a month",
+    "ExtendYear": "For a year",
+    "Cheaper": "20% cheaper"
+  },
   "Editor": {
     "empty": "Select text",
     "p": "Paragraph",
