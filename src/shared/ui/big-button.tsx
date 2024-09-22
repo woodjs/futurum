@@ -50,7 +50,8 @@ const BigButton: FC<IBigButtonProps> = ({
       </div>
       <ChevronRight
         className={cn(
-          'ml-auto text-slate-400 duration-200 group-hover/button:translate-x-1',
+          `ml-auto text-slate-400 duration-200 group-hover/button:translate-x-1
+          group-hover/button:scale-x-110 group-hover/button:scale-y-90`,
           classNames?.icon,
         )}
       />
