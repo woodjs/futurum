@@ -6,6 +6,7 @@ export interface INft {
     price: number;
     type: string;
     category: string;
+    tag: string;
     params: { title: string; value: string }[];
     author: {
         id: string;

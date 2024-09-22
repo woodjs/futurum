@@ -10,12 +10,12 @@ export const LoginDialog = () => {
         <DynamicForm
           fields={{
             username: {
-              type: 'input',
+              type: 'text',
               label: 'Username',
               placeholder: 'Enter your username',
             },
             email: {
-              type: 'input',
+              type: 'email',
               label: 'Email',
               placeholder: 'Enter your email',
             },

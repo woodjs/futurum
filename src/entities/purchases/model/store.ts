@@ -1,7 +1,9 @@
 import { create } from 'zustand';
-import { IPurchaseParams } from '../api';
+import { IPurchaseParams, PurchaseStatusFilter } from '../api';
 
 interface IPurchaseState {
+    statusFilter?: PurchaseStatusFilter;
+    setStatusFilter: (statusFilter: PurchaseStatusFilter) => void;
     filters?: IPurchaseParams;
     setFilters: (filters: IPurchaseParams) => void;
     setFilter: <T extends keyof IPurchaseParams>(key: T, value: IPurchaseParams[T]) => void;
@@ -9,6 +11,8 @@ interface IPurchaseState {
 }
 
 export const usePurchaseStore = create<IPurchaseState>((set) => ({
+    statusFilter: PurchaseStatusFilter.ALL,
+    setStatusFilter: (statusFilter) => set({ statusFilter }),
     filters: {},
     setFilters: (filters) => set({ filters }),
     setFilter: <T extends keyof IPurchaseParams>(key: T, value: IPurchaseParams[T]) => set((state) => ({

@@ -37,7 +37,9 @@ export default function RootLayout({
           <Menu />
           <Header />
           <Container className='flex'>
-            <Sidebar />
+            <div className='hidden xl:block'>
+              <Sidebar />
+            </div>
             <div className='w-full'>{children}</div>
           </Container>
           <Footer />

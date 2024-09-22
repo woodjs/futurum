@@ -22,6 +22,8 @@ import { NormalButton, normalButtonVariants } from '@/shared/ui/normal-button'
 import { FunnelIcon, XCircleIcon } from '@heroicons/react/16/solid'
 import { Plus } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import { preprocessStringToNumber } from '@/shared/lib/preprocess-srting-to-number'
+import BadgeButton from '@/shared/ui/badge-button'
 
 const fields: Record<keyof IPurchaseParams, FieldConfig> = {
   category: {
@@ -45,14 +47,14 @@ const fields: Record<keyof IPurchaseParams, FieldConfig> = {
     className: 'col-span-6',
   },
   fromPrice: {
-    type: 'input',
+    type: 'number',
     name: 'fromPrice',
     label: 'FromPrice',
     placeholder: 'EnterPrice',
     className: 'col-span-6',
   },
   toPrice: {
-    type: 'input',
+    type: 'number',
     name: 'toPrice',
     label: 'To price',
     placeholder: 'EnterPrice',
@@ -63,6 +65,13 @@ const fields: Record<keyof IPurchaseParams, FieldConfig> = {
 export const PurchaseFilterForm = () => {
   const t = useTranslations('Purchase.Filters')
   const { filters, setFilters, removeFilter } = usePurchaseStore()
+  const [formState, setFormState] = useState<{
+    fromDate?: any
+    toDate?: any
+    category?: any
+    fromPrice?: any
+    toPrice?: any
+  }>()
   const [open, setOpen] = useState(false)
   const [autoFocusField, setAutoFocusField] = useState<keyof IPurchaseParams>()
 
@@ -80,7 +89,7 @@ export const PurchaseFilterForm = () => {
   return (
     <>
       <Dialog open={open} onOpenChange={setOpen}>
-        <div className='flex h-14 items-center gap-2'>
+        <div className='my-[20px] flex h-14 items-center gap-2'>
           <DialogTrigger asChild>
             <NormalButton
               variant='secondary'
@@ -102,33 +111,13 @@ export const PurchaseFilterForm = () => {
             filterKeys
               .filter(key => !!filters[key])
               .map(key => (
-                <div key={key} className='flex items-center'>
-                  <button
-                    className={cn(
-                      normalButtonVariants({
-                        size: 'sm',
-                        variant: 'outline',
-                      }),
-                      'h-8 rounded-r-none border-r-0 pr-[5px]',
-                    )}
-                    onClick={() => openWithAutoFocus(key)}
-                  >
-                    <PurchaseFiltersFormatter id={key} value={filters[key]} />
-                  </button>
-                  <button
-                    className={cn(
-                      normalButtonVariants({
-                        size: 'sm',
-                        variant: 'outline',
-                      }),
-                      `h-8 rounded-l-none border-l-0 pl-[5px] pr-[10px] text-slate-500
-                      hover:text-slate-700`,
-                    )}
-                    onClick={() => deleteFilter(key)}
-                  >
-                    <XCircleIcon className='size-[16px]' />
-                  </button>
-                </div>
+                <BadgeButton
+                  key={key}
+                  onClick={() => openWithAutoFocus(key)}
+                  onClose={() => deleteFilter(key)}
+                >
+                  <PurchaseFiltersFormatter id={key} value={filters[key]} />
+                </BadgeButton>
               ))}
         </div>
         <DialogContent>
@@ -146,24 +135,38 @@ export const PurchaseFilterForm = () => {
                 label: t('FromDate'),
                 placeholder: t('SelectDate'),
                 className: 'col-span-6',
+                toDate: watch => watch('toDate'),
               },
               toDate: {
                 type: 'date',
                 label: t('ToDate'),
                 placeholder: t('SelectDate'),
                 className: 'col-span-6',
+                fromDate: watch => watch('fromDate'),
               },
               fromPrice: {
-                type: 'input',
+                type: 'number',
                 label: t('FromPrice'),
                 placeholder: t('EnterPrice'),
                 className: 'col-span-6',
+                validation: z
+                  .preprocess(
+                    preprocessStringToNumber,
+                    z.number().positive().min(0).max(Infinity).optional(),
+                  )
+                  .optional(),
               },
               toPrice: {
-                type: 'input',
+                type: 'number',
                 label: t('ToPrice'),
                 placeholder: t('EnterPrice'),
                 className: 'col-span-6',
+                validation: z
+                  .preprocess(
+                    preprocessStringToNumber,
+                    z.number().positive().min(0).max(Infinity).optional(),
+                  )
+                  .optional(),
               },
             }}
             useFormProps={{
@@ -172,6 +175,7 @@ export const PurchaseFilterForm = () => {
             classNames={{
               form: 'gap-y-6',
             }}
+            onFormUpdate={data => setFormState(data)}
             autoFocusField={autoFocusField}
             renderFooter={({ handleSubmit }) => (
               <div className='mt-[30px] flex w-full justify-end'>

@@ -1,8 +1,8 @@
 import { z } from 'zod'
 import { Matcher } from 'react-day-picker'
-import { DeepPartial, UseFormProps, UseFormReturn } from 'react-hook-form'
+import { DeepPartial, UseFormProps, UseFormReturn, UseFormWatch } from 'react-hook-form'
 
-export type FieldType = 'input' | 'select' | 'checkbox' | 'date' | 'richText' | 'custom'
+export type FieldType = 'text' | 'number' | 'email' | 'password' | 'select' | 'checkbox' | 'date' | 'richText' | 'custom'
 
 export interface FiledBase {
     name?: string
@@ -15,7 +15,7 @@ export interface FiledBase {
 }
 
 export interface FieldInput extends FiledBase {
-    type: 'input'
+    type: 'text' | 'number' | 'email' | 'password'
     placeholder?: string
     validation?: z.ZodTypeAny
     label?: string
@@ -38,8 +38,8 @@ export interface FieldCheckbox extends FiledBase {
 
 export interface FieldDate extends FiledBase {
     type: 'date'
-    fromDate?: Date
-    toDate?: Date
+    fromDate?: Date | ((watch: UseFormWatch<any>) => Date | undefined)
+    toDate?: Date | ((watch: UseFormWatch<any>) => Date | undefined)
     disabled?: Matcher | Matcher[] | undefined
 }
 
@@ -53,7 +53,10 @@ export interface FieldRichText extends FiledBase {
 }
 
 export type FieldMap = {
-    input: FieldInput,
+    number: FieldInput,
+    email: FieldInput,
+    password: FieldInput,
+    text: FieldInput,
     select: FieldSelect,
     checkbox: FieldCheckbox,
     date: FieldDate,

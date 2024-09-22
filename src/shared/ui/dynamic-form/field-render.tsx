@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import { useController } from 'react-hook-form'
+import { Controller, useController } from 'react-hook-form'
 import {
   FormField,
   FormItem,
@@ -53,6 +53,7 @@ const FieldRenderer: React.FC<IFieldRendererProps> = ({
           {field.label && <FormLabel>{field.label}</FormLabel>}
           <FormControl>
             <FormInput
+              type={field.type}
               autoFocus={autoFocus}
               placeholder={field.placeholder}
               {...formField}
@@ -69,7 +70,10 @@ const FieldRenderer: React.FC<IFieldRendererProps> = ({
 
   // Логика для остальных типов полей
   switch (field.type) {
-    case 'input':
+    case 'text':
+    case 'email':
+    case 'number':
+    case 'password':
       return renderInputField()
     case 'select':
       return (
@@ -144,8 +148,16 @@ const FieldRenderer: React.FC<IFieldRendererProps> = ({
                 <PopoverContent className='w-auto p-0' align='start'>
                   <Calendar
                     mode='single'
-                    fromDate={field.fromDate}
-                    toDate={field.toDate}
+                    fromDate={
+                      typeof field.fromDate === 'function'
+                        ? field.fromDate(form.watch)
+                        : field.fromDate
+                    }
+                    toDate={
+                      typeof field.toDate === 'function'
+                        ? field.toDate(form.watch)
+                        : field.toDate
+                    }
                     selected={formField.value}
                     onSelect={formField.onChange}
                     disabled={field.disabled}
