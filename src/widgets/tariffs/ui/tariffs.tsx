@@ -1,6 +1,6 @@
-import { Tabs, TabsTrigger } from '@/shared/ui/tabs'
+import { Tabs, TabsContent, TabsTrigger } from '@/shared/ui/tabs'
 import { TabsTariffsList, TabsTariffsTrigger } from '@/shared/ui/tariffs-tabs'
-import { Button, GradientTypography, Typography } from '@/shared/ui'
+import { Button, GradientTypography, TariffCard, Typography } from '@/shared/ui'
 import { useTranslations } from 'next-intl'
 
 const Tariffs = () => {
@@ -18,8 +18,8 @@ const Tariffs = () => {
           {t('Extend')}
         </Button>
       </div>
-      <Tabs defaultValue='month' className='flex items-center justify-center'>
-        <TabsTariffsList className='w-full'>
+      <Tabs defaultValue='month'>
+        <TabsTariffsList className='ml-auto mr-auto flex w-full items-center justify-center'>
           <TabsTariffsTrigger value='month' className={'bg-transparent'}>
             {t('ExtendMonth')}
           </TabsTariffsTrigger>
@@ -31,12 +31,12 @@ const Tariffs = () => {
             {t('ExtendYear')}
           </TabsTariffsTrigger>
         </TabsTariffsList>
-        {/*<TabsTariffsContent value='month'>*/}
-        {/*  <Loader />*/}
-        {/*</TabsTariffsContent>*/}
-        {/*<TabsTariffsContent value='year'>*/}
-        {/*  <div>TestTwo</div>*/}
-        {/*</TabsTariffsContent>*/}
+        <TabsContent value='month' className={'flex'}>
+          <TariffCard />
+        </TabsContent>
+        <TabsContent value='year'>
+          <div>TestTwo</div>
+        </TabsContent>
       </Tabs>
     </div>
   )
