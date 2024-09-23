@@ -16,4 +16,5 @@ export enum Routes {
     MESSAGES = '/profile/messages',
     CART = '/profile/cart',
     FAVORITES = '/profile/favorites',
+    TARIFFS = '/profile/tariffs'
 }

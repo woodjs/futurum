@@ -29,6 +29,14 @@
       "Apply": "Применить"
     }
   },
+  "Tariffs": {
+    "Tariffs": "Тарифы",
+    "YourTariff": "Ваш тариф — {tariff} до {expireDate}",
+    "Extend": "Продлить",
+    "ExtendMonth": "На месяц",
+    "ExtendYear": "На год",
+    "Cheaper": "Выгоднее на 20%"
+  },
   "Editor": {
     "empty": "Выделите текст",
     "p": "Параграф",
