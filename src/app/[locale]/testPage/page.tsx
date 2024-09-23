@@ -1,6 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/tabs'
 import Loader from '../../../shared/ui/loader'
 import { RangeSlider } from '../../../shared/ui/range-slider'
+import Table from '../../../shared/ui/table'
 
 export default function TestPage() {
   const onValueChange = (values: number[]): void => {
@@ -30,7 +31,7 @@ export default function TestPage() {
           />
         </TabsContent>
         <TabsContent value='testThree'>
-          <div>TestThree</div>
+          <Table />
         </TabsContent>
         <TabsContent value='testFour'>
           <div>TestFour</div>
