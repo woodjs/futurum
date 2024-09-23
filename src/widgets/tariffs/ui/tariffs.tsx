@@ -1,12 +1,21 @@
-import { Tabs, TabsContent, TabsTrigger } from '@/shared/ui/tabs'
+'use client'
+import { Tabs, TabsContent } from '@/shared/ui/tabs'
 import { TabsTariffsList, TabsTariffsTrigger } from '@/shared/ui/tariffs-tabs'
-import { Button, GradientTypography, TariffCard, Typography } from '@/shared/ui'
+import { Button, GradientTypography, Typography } from '@/shared/ui'
 import { useTranslations } from 'next-intl'
+import { TariffCard } from '@/entities/tariff-card'
+import { ButtonName } from '@/entities/tariff-card/lib/buttonName'
+import { Tariff } from '@/shared/api/types'
 
 const Tariffs = () => {
   const t = useTranslations('Tariffs')
   const tariff = 'Premium'
   const expireDate = '21.12.2025'
+
+  const onActivate = () => {}
+  const onExtend = () => {}
+  const onBuy = () => {}
+
   return (
     <div className={'ml-[8px] mt-[27px]'}>
       <GradientTypography>{t('Tariffs')}</GradientTypography>
@@ -31,11 +40,59 @@ const Tariffs = () => {
             {t('ExtendYear')}
           </TabsTariffsTrigger>
         </TabsTariffsList>
-        <TabsContent value='month' className={'flex'}>
-          <TariffCard />
+        <TabsContent value='month' className={'flex flex-col'}>
+          <div className={'my-16 flex justify-evenly'}>
+            <TariffCard
+              buttonName={ButtonName.ACTIVATE}
+              onButtonClick={onActivate}
+            />
+            <TariffCard
+              variant={Tariff.STANDARD}
+              buttonName={ButtonName.BUY}
+              onButtonClick={onBuy}
+            />
+          </div>
+          <div className={'flex justify-evenly'}>
+            <TariffCard
+              variant={Tariff.PREMIUM}
+              buttonName={ButtonName.EXTEND}
+              onButtonClick={onExtend}
+            />
+            <TariffCard
+              variant={Tariff.BLACK}
+              buttonName={ButtonName.BUY}
+              onButtonClick={onBuy}
+            />
+          </div>
         </TabsContent>
-        <TabsContent value='year'>
-          <div>TestTwo</div>
+        <TabsContent value='year' className={'mt-0 flex flex-col'}>
+          <div className={'my-16 flex justify-evenly'}>
+            <TariffCard
+              buttonName={ButtonName.ACTIVATE}
+              onButtonClick={onActivate}
+              mode={'year'}
+            />
+            <TariffCard
+              variant={Tariff.STANDARD}
+              buttonName={ButtonName.BUY}
+              onButtonClick={onBuy}
+              mode={'year'}
+            />
+          </div>
+          <div className={'flex justify-evenly'}>
+            <TariffCard
+              variant={Tariff.PREMIUM}
+              buttonName={ButtonName.EXTEND}
+              onButtonClick={onExtend}
+              mode={'year'}
+            />
+            <TariffCard
+              variant={Tariff.BLACK}
+              buttonName={ButtonName.BUY}
+              onButtonClick={onBuy}
+              mode={'year'}
+            />
+          </div>
         </TabsContent>
       </Tabs>
     </div>
