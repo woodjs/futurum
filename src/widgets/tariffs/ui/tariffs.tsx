@@ -12,9 +12,22 @@ const Tariffs = () => {
   const tariff = 'Premium'
   const expireDate = '21.12.2025'
 
-  const onActivate = () => {}
-  const onExtend = () => {}
-  const onBuy = () => {}
+  const onTariffClick = (variant: string) => {
+    switch (variant) {
+      case Tariff.BASIC:
+        console.log('basic')
+        break
+      case Tariff.STANDARD:
+        console.log('standard')
+        break
+      case Tariff.PREMIUM:
+        console.log('premium')
+        break
+      case Tariff.BLACK:
+        console.log('black')
+        break
+    }
+  }
 
   return (
     <div className={'ml-[8px] mt-[27px]'}>
@@ -43,54 +56,54 @@ const Tariffs = () => {
         <TabsContent value='month' className={'flex flex-col'}>
           <div className={'my-16 flex justify-evenly'}>
             <TariffCard
-              buttonName={ButtonName.ACTIVATE}
-              onButtonClick={onActivate}
+              buttonName={ButtonName.Activate}
+              onButtonClick={onTariffClick}
             />
             <TariffCard
               variant={Tariff.STANDARD}
-              buttonName={ButtonName.BUY}
-              onButtonClick={onBuy}
+              buttonName={ButtonName.Buy}
+              onButtonClick={onTariffClick}
             />
           </div>
           <div className={'flex justify-evenly'}>
             <TariffCard
               variant={Tariff.PREMIUM}
-              buttonName={ButtonName.EXTEND}
-              onButtonClick={onExtend}
+              buttonName={ButtonName.Extend}
+              onButtonClick={onTariffClick}
             />
             <TariffCard
               variant={Tariff.BLACK}
-              buttonName={ButtonName.BUY}
-              onButtonClick={onBuy}
+              buttonName={ButtonName.Buy}
+              onButtonClick={onTariffClick}
             />
           </div>
         </TabsContent>
         <TabsContent value='year' className={'mt-0 flex flex-col'}>
           <div className={'my-16 flex justify-evenly'}>
             <TariffCard
-              buttonName={ButtonName.ACTIVATE}
-              onButtonClick={onActivate}
-              mode={'year'}
+              buttonName={ButtonName.Activate}
+              onButtonClick={onTariffClick}
+              mode={'Year'}
             />
             <TariffCard
               variant={Tariff.STANDARD}
-              buttonName={ButtonName.BUY}
-              onButtonClick={onBuy}
-              mode={'year'}
+              buttonName={ButtonName.Buy}
+              onButtonClick={onTariffClick}
+              mode={'Year'}
             />
           </div>
           <div className={'flex justify-evenly'}>
             <TariffCard
               variant={Tariff.PREMIUM}
-              buttonName={ButtonName.EXTEND}
-              onButtonClick={onExtend}
-              mode={'year'}
+              buttonName={ButtonName.Extend}
+              onButtonClick={onTariffClick}
+              mode={'Year'}
             />
             <TariffCard
               variant={Tariff.BLACK}
-              buttonName={ButtonName.BUY}
-              onButtonClick={onBuy}
-              mode={'year'}
+              buttonName={ButtonName.Buy}
+              onButtonClick={onTariffClick}
+              mode={'Year'}
             />
           </div>
         </TabsContent>
