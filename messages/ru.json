@@ -35,7 +35,32 @@
     "Extend": "Продлить",
     "ExtendMonth": "На месяц",
     "ExtendYear": "На год",
-    "Cheaper": "Выгоднее на 20%"
+    "Cheaper": "Выгоднее на 20%",
+    "Condition": "При условии оплаты за год",
+    "Activate": "Активировать",
+    "Buy": "Купить",
+    "TariffTypes": {
+      "Description": {
+        "BASIC": "до 5 активных NFT <br /> комиссия до 5%",
+        "PREMIUM": "до 50 активных NFT <br /> комиссия до 2,5% <br /> размещение в топе 3 NFT",
+        "STANDARD": "до 20 активных NFT <br /> комиссия до 2,5%",
+        "BLACK": "без ограничений <br /> комиссия до 2,5% <br /> личный менеджер <br /> размещение в топе 10 NFT"
+      },
+      "Price": {
+        "Year": {
+          "BASIC": "Бесплатно",
+          "PREMIUM": "105 TON/мес.",
+          "STANDARD": "65 TON/мес.",
+          "BLACK": "150 TON/мес."
+        },
+        "Month": {
+          "BASIC": "Бесплатно",
+          "PREMIUM": "85 TON/мес.",
+          "STANDARD": "44 TON/мес.",
+          "BLACK": "100 TON/мес."
+        }
+      }
+    }
   },
   "Editor": {
     "empty": "Выделите текст",

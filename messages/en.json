@@ -35,7 +35,32 @@
     "Extend": "Extend",
     "ExtendMonth": "For a month",
     "ExtendYear": "For a year",
-    "Cheaper": "20% cheaper"
+    "Cheaper": "20% cheaper",
+    "Condition": "Subject to payment for a year",
+    "Activate": "Activate",
+    "Buy": "Buy",
+    "TariffTypes": {
+      "Description": {
+        "BASIC": "up to 5 active NFT <br /> commission up to 5%",
+        "PREMIUM": "up to 50 active NFT <br /> commission up to 2.5% <br /> placement in the top 3 NFT",
+        "STANDARD": "up to 20 active NFT <br /> commission up to 2.5%",
+        "BLACK": "no limits <br /> commission up to 2.5% <br /> personal manager <br /> placement in the top 10 NFT"
+      },
+      "Price": {
+        "Year": {
+          "BASIC": "Free",
+          "PREMIUM": "105 TON/month",
+          "STANDARD": "65 TON/month",
+          "BLACK": "150 TON/month"
+        },
+        "Month": {
+          "BASIC": "Free",
+          "PREMIUM": "85 TON/month.",
+          "STANDARD": "44 TON/month.",
+          "BLACK": "100 TON/month."
+        }
+      }
+    }
   },
   "Editor": {
     "empty": "Select text",

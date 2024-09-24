@@ -1,5 +1,5 @@
 export enum ButtonName {
-  ACTIVATE = 'Активировать',
-  EXTEND = 'Продлить',
-  BUY = 'Купить',
+  Activate = 'Activate',
+  Extend = 'Extend',
+  Buy = 'Buy',
 }

@@ -7,20 +7,22 @@ import { GradientTypography } from '@/shared/ui/gradient-typography'
 import { Typography } from '@/shared/ui/typography'
 import { tariffs } from '@/entities/tariff-card/lib/tariffs'
 import { ButtonName } from '@/entities/tariff-card/lib/buttonName'
+import { useTranslations } from 'next-intl'
 
 interface IProps {
   variant?: Tariff
   buttonName: ButtonName
-  onButtonClick: () => void
-  mode?: string
+  onButtonClick: (variant: string) => void
+  mode?: 'Month' | 'Year'
 }
 
 const TariffCard: FC<IProps> = ({
   variant = Tariff.BASIC,
   buttonName,
   onButtonClick,
-  mode = 'month',
+  mode = 'Month',
 }) => {
+  const t = useTranslations('Tariffs')
   return (
     <div
       className={`relative flex h-[361px] w-[306px] items-center justify-center rounded-[15px]
@@ -37,19 +39,21 @@ const TariffCard: FC<IProps> = ({
       </Button>
       <div className={'absolute flex flex-col items-center justify-center'}>
         <div
-          className={'flex h-[96px] max-w-[258px] items-center justify-center'}
+          className={'flex h-[96px] max-w-[242px] items-center justify-center'}
         >
           <Typography
             variant={'h5'}
             className={'text-center leading-6'}
-            dangerouslySetInnerHTML={{ __html: tariffs[variant].description }}
+            dangerouslySetInnerHTML={{
+              __html: t(`TariffTypes.Description.${variant}`),
+            }}
           />
         </div>
         <GradientTypography
           variant={'h3'}
           className={cn(tariffs[variant].gradient, 'mt-6')}
         >
-          {tariffs[variant].title[mode]}
+          {t(`TariffTypes.Price.${mode}.${variant}`)}
         </GradientTypography>
         <div
           className={cn(
@@ -60,9 +64,9 @@ const TariffCard: FC<IProps> = ({
           <Button
             variant={'outline'}
             className={'h-full w-full'}
-            onClick={onButtonClick}
+            onClick={() => onButtonClick(variant)}
           >
-            {buttonName}
+            {t(buttonName)}
           </Button>
         </div>
         {variant !== Tariff.BASIC && (
@@ -70,7 +74,7 @@ const TariffCard: FC<IProps> = ({
             variant={'p-small'}
             className={'text-center text-[#A0AEC0E5]'}
           >
-            При условии оплаты за год
+            {t('Condition')}
           </Typography>
         )}
       </div>
