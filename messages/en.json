@@ -217,5 +217,19 @@
       "slideFive": "/images/sliders/slide-5-en.jpg",
       "slideFiveMobile": "/images/sliders/slide-5-mobile-en.jpg"
     }
+  },
+  "Tables": {
+    "IncomeTable": {
+      "Header": {
+        "NFTName": "NFT Name",
+        "AssetBalance": "Asset Balance",
+        "PayoutFrequency": "Payout Frequency",
+        "MonthlyIncome": "Monthly Income",
+        "ClosestPayout": "Closest Payout",
+        "PayoutStatus": "Payout Status",
+        "AnnualIncome": "Annual Income",
+        "ReturnDate": "Date Of Investment Return"
+      }
+    }
   }
 }
