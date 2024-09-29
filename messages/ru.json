@@ -184,5 +184,19 @@
       "slideFive": "/images/sliders/slide-5.jpg",
       "slideFiveMobile": "/images/sliders/slide-5-mobile.jpg"
     }
+  },
+  "Tables": {
+    "IncomeTable": {
+      "Header": {
+        "NFTName": "Название NFT",
+        "AssetBalance": "Баланс актива",
+        "PayoutFrequency": "Частота выплат",
+        "MonthlyIncome": "Доход за месяц",
+        "ClosestPayout": "Ближайшая выплата",
+        "PayoutStatus": "Статус выплаты",
+        "AnnualIncome": "Доход за год",
+        "ReturnDate": "Дата возврата инвестиции"
+      }
+    }
   }
 }
