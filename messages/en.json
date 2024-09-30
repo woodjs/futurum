@@ -231,5 +231,13 @@
         "ReturnDate": "Date Of Investment Return"
       }
     }
+  },
+  "Auth": {
+    "SignIn": {
+      "title": "Sign In"
+    },
+    "SignUp": {
+      "title": "Sign Up"
+    }
   }
 }
