@@ -25,7 +25,6 @@ export default function Home() {
   const t = useTranslations('Home.Header')
   return (
     <div className={'relative'}>
-      <LoginDialog />
       <Menu />
       <div className='sticky left-0 top-[52px] z-50 w-full bg-white'>
         <Container>
