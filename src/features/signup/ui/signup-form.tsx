@@ -11,6 +11,11 @@ export const SignUpForm = () => {
 
   const queryClient = useQueryClient()
 
+  interface ITest {
+    id: string
+    title: string
+  }
+
   const getTodos = async () => {}
   const postTodo = async () => {}
 
@@ -25,7 +30,7 @@ export const SignUpForm = () => {
 
   return (
     <div className='flex h-[100vh] w-full items-center bg-[#E2E8F0]'>
-      <ul>{query.data?.map(todo => <li key={todo.id}>{todo.title}</li>)}</ul>
+      {/* <ul>{query.data?.map(todo => <li key={todo.id}>{todo.title}</li>)}</ul> */}
       <div
         className='m-auto flex w-full max-w-[560px] flex-col items-center rounded-[20px] bg-white
           px-[76.5px] py-[48px]'
@@ -57,7 +62,7 @@ export const SignUpForm = () => {
               <NormalButton
                 onClick={form.handleSubmit(() => {
                   mutation.mutate({
-                    id: Date.now(),
+                    id: 'test',
                     title: 'Do Laundry',
                   })
                 })}
