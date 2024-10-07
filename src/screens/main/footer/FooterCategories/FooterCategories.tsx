@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
 const FooterCategories = () => {
-	const t = useTranslations('Home.Footer');
+	const t = useTranslations('default.Home.Footer');
 
 	return (
 		<div className={'flex flex-col items-center md:items-start'}>

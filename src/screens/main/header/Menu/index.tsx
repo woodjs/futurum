@@ -20,7 +20,7 @@ function Menu() {
   const router = useRouter()
   const pathname = usePathname()
   const locale = useLocale()
-  const t = useTranslations('Home.Header')
+  const t = useTranslations('default.Home.Header')
 
   const data = [
     {

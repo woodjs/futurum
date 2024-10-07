@@ -3,7 +3,7 @@ import Section from '../section';
 import { useTranslations } from 'next-intl';
 
 export default function JoinUs() {
-  const t = useTranslations('Home.Categories');
+  const t = useTranslations('default.Home.Categories');
 
 	return (
 		<Section>

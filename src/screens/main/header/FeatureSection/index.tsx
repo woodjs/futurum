@@ -15,7 +15,7 @@ import { GradientTypography } from '@/shared/ui';
 interface FeatureSectionProps {}
 
 const FeatureSection: FC<FeatureSectionProps> = () => {
-	const t = useTranslations('Home');
+	const t = useTranslations('default.Home');
 
 	return (
 		<div className="mt-[24px] lg:mt-[64px] ">

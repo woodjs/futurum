@@ -22,7 +22,7 @@ import { useTranslations } from 'next-intl';
 
 export default function CarouselTop() {
 	const plugin = useRef(Autoplay({ delay: 2000, playOnInit: false }));
-	const t = useTranslations('Home.Categories');
+	const t = useTranslations('default.Home.Categories');
 
 	const data = [
 		{
