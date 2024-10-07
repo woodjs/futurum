@@ -19,7 +19,7 @@ import NftImage from '@/shared/ui/nft-image';
 import { useTranslations } from 'next-intl';
 
 export default function CarouselProfit() {
-	const t = useTranslations('Home.Categories');
+	const t = useTranslations('default.Home.Categories');
 	const plugin = useRef(Autoplay({ delay: 2000, playOnInit: false }));
 
 	const data = [

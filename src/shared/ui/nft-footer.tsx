@@ -23,7 +23,7 @@ const NftFooter: FC<IProps> = ({
   price,
   priceColor = 'text-black',
 }) => {
-  const t = useTranslations('Home.Categories')
+  const t = useTranslations('default.Home.Categories')
 
   return (
     <div

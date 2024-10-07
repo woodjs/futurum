@@ -2,7 +2,7 @@ import { Button, GradientTypography, Typography } from '@/shared/ui';
 import { useTranslations } from 'next-intl';
 
 const GameSectionDescription = () => {
-	const t = useTranslations('Home.Categories');
+	const t = useTranslations('default.Home.Categories');
 
 	return (
 		<div className={'lg:w-[42%] w-full'}>

@@ -3,7 +3,7 @@ import { Typography } from '@/shared/ui';
 import { useTranslations } from 'next-intl';
 
 const FooterInfo = () => {
-	const t = useTranslations('Home.Footer');
+	const t = useTranslations('default.Home.Footer');
 
 	return (
 		<div className={'flex flex-col items-center md:items-start'}>

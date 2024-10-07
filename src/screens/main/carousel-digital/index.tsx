@@ -15,7 +15,7 @@ import NftFooter from '@/shared/ui/nft-footer';
 import { useTranslations } from 'next-intl';
 
 export default function CarouselDigital() {
-	const t = useTranslations('Home.Categories');
+	const t = useTranslations('default.Home.Categories');
 
 	const data = [
 		{

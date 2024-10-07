@@ -21,8 +21,8 @@ import ScrollToTop from '@/shared/ui/scroll-to-top'
 import { Sidebar } from '@/widgets/sidebar'
 import { LoginDialog } from '@/features/login'
 
-export default function Home() {
-  const t = useTranslations('Home.Header')
+export default function Home({ params: { locale } }) {
+  const t = useTranslations('default.Home.Header')
   return (
     <div className={'relative'}>
       <Menu />
