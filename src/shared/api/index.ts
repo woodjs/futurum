@@ -1,6 +1,7 @@
 import axios from 'axios'
 import storeTokens from '@/utils/storeTokens'
 import { redirect } from '@/i18n/routing'
+import { API_URL } from './config'
 
 const instance = axios.create({
   withCredentials: true,
@@ -70,7 +71,7 @@ instance.interceptors.response.use(
       const refreshToken = window.localStorage.getItem('refreshToken')
       return new Promise((resolve, reject) => {
         instance
-          .post('/auth/refresh-token', { refreshToken }) // route must be changed to the actual one, this one is dummy url
+          .post(`${API_URL}/api/v1/auth/refresh`, { refreshToken }) // route must be changed to the actual one, this one is dummy url
           .then(({ data }) => {
             storeTokens(data.accessToken, data.refreshToken)
             instance.defaults.headers.common.Authorization = `Bearer ${data.accessToken}`

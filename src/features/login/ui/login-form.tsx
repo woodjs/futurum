@@ -4,9 +4,17 @@ import { DynamicForm } from '@/shared/ui/dynamic-form'
 import { NormalButton } from '@/shared/ui/normal-button'
 import { GradientTypography } from '../../../shared/ui'
 import { useTranslations } from 'next-intl'
+import useFetchBase from '../../../shared/api/use-fetch-base'
+import { useQuery } from '@tanstack/react-query'
 
 export const LoginForm = () => {
   const t = useTranslations('Auth.SignIn')
+  const fetchBase = useFetchBase()
+  const { isPending, error, data } = useQuery({
+    queryKey: ['repoData'],
+    queryFn: () =>
+      fetchBase('https://api.github.com/repos/TanStack/query').then(res => res),
+  })
 
   return (
     <div className='flex h-[100vh] w-full items-center bg-[#E2E8F0]'>
@@ -26,9 +34,9 @@ export const LoginForm = () => {
               placeholder: 'Enter your username',
             },
             email: {
-              type: 'email',
-              label: 'Email',
-              placeholder: 'Enter your email',
+              type: 'password',
+              label: 'Password',
+              placeholder: 'Enter your password',
             },
           }}
           renderFooter={form => (
