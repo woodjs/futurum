@@ -9,7 +9,8 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: 'https://nestjs-boilerplate-test.herokuapp.com/api/:path*', // Proxy to Backend
+        destination:
+          'https://futurum-backend-production.up.railway.app/api/:path*', // Proxy to Backend
       },
     ]
   },

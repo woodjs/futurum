@@ -1,19 +1,40 @@
 import axios from 'axios'
-import storeTokens from '@/utils/storeTokens'
-import { redirect } from '@/i18n/routing'
-import { API_URL } from './config'
+import Cookies from 'js-cookie'
+import { Tokens } from '@/shared/api/types/tokens'
+import { API_URL, AUTH_LOGOUT_URL, AUTH_REFRESH_URL } from './config'
+import HTTP_CODES_ENUM from '@/shared/api/types/http-codes'
+import { redirect } from '../../i18n/routing'
 
-const instance = axios.create({
+const AUTH_TOKEN_KEY = 'auth-token-data'
+
+export type TokensInfo = Tokens | null
+
+const tokens = JSON.parse(Cookies.get(AUTH_TOKEN_KEY) ?? 'null') as TokensInfo
+
+export const publicAPI = axios.create({
   withCredentials: true,
-  baseURL: process.env.SERVER_URL,
+  baseURL: API_URL,
 })
 
-instance.interceptors.request.use(config => {
-  config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
-
-  return config
+const baseAPI = axios.create({
+  withCredentials: true,
+  baseURL: API_URL,
 })
 
+if (tokens?.token) {
+  baseAPI.interceptors.request.use(
+    config => {
+      config.headers.Authorization = `Bearer ${tokens.token}`
+
+      return config
+    },
+    error => {
+      return Promise.reject(error)
+    },
+  )
+}
+
+// creating refreshing status to execute request when refreshing
 let isRefreshing = false
 let failedQueue: any[] = []
 
@@ -29,16 +50,13 @@ const processQueue = (error: any, token = null) => {
   failedQueue = []
 }
 
-instance.interceptors.response.use(
+baseAPI.interceptors.response.use(
   response => response,
-  error => {
+  async error => {
     const originalRequest = error.config
 
     if (
-      (error.response.status === 401 ||
-        error.response.status === 419 ||
-        error.response.status === 406 ||
-        error.response.status === 400) &&
+      error.response.status === HTTP_CODES_ENUM.UNAUTHORIZED &&
       !originalRequest._retry
     ) {
       if (isRefreshing) {
@@ -46,21 +64,22 @@ instance.interceptors.response.use(
           failedQueue.push({ resolve, reject })
 
           if (
-            originalRequest.url === '/auth/refresh-token' &&
-            (error.response.status === 401 ||
-              error.response.status === 419 ||
-              error.response.status === 406 ||
-              error.response.status === 400)
+            originalRequest.url === AUTH_REFRESH_URL &&
+            error.response.status === HTTP_CODES_ENUM.UNAUTHORIZED
           ) {
-            redirect('signIn')
+            publicAPI.post(AUTH_LOGOUT_URL).catch(() => {
+              console.log(window.location.pathname)
+              redirect('/auth/signin')
+            })
+            redirect('/auth/signin')
           }
         })
           .then(token => {
             originalRequest.headers.Authorization = `Bearer ${token}`
-            return instance(originalRequest)
+            return baseAPI(originalRequest)
           })
           .catch(err => {
-            redirect('signIn')
+            redirect('/auth/signin')
             return Promise.reject(err)
           })
       }
@@ -68,16 +87,15 @@ instance.interceptors.response.use(
       originalRequest._retry = true
       isRefreshing = true
 
-      const refreshToken = window.localStorage.getItem('refreshToken')
       return new Promise((resolve, reject) => {
-        instance
-          .post(`${API_URL}/api/v1/auth/refresh`, { refreshToken }) // route must be changed to the actual one, this one is dummy url
+        const newTokens = baseAPI
+          .post(AUTH_REFRESH_URL, { refreshToken: tokens?.refreshToken })
           .then(({ data }) => {
-            storeTokens(data.accessToken, data.refreshToken)
-            instance.defaults.headers.common.Authorization = `Bearer ${data.accessToken}`
+            Cookies.set(AUTH_TOKEN_KEY, data)
+            baseAPI.defaults.headers.common.Authorization = `Bearer ${data.accessToken}`
             originalRequest.headers.Authorization = `Bearer ${data.accessToken}`
             processQueue(null, data.accessToken)
-            resolve(instance(originalRequest))
+            resolve(baseAPI(originalRequest))
           })
           .catch(err => {
             processQueue(err, null)
@@ -86,11 +104,43 @@ instance.interceptors.response.use(
           .finally(() => {
             isRefreshing = false
           })
+        originalRequest.headers['Authorization'] =
+          `Bearer ${newTokens.refreshToken}`
+        return baseAPI(originalRequest)
       })
+      // } catch (err) {
+      //   await baseAPI
+      //     .get(AUTH_LOGOUT_URL)
+      //     .then(() => {
+      //       redirect('/auth/signin')
+      //     })
+      //     .catch(() => {
+      //       redirect('/auth/signin')
+      //     })
+      //   return Promise.reject(err)
+      // }
     }
-
     return Promise.reject(error)
+
+    // if (tokens?.tokenExpires && tokens.tokenExpires <= Date.now()) {
+    //   const newTokens = baseAPI
+    //     .post(AUTH_REFRESH_URL, { refreshToken: tokens.refreshToken })
+    //     .then(res => res.data)
+
+    //   if (newTokens.token) {
+    //     tokens?.setTokensInfo?.({
+    //       token: newTokens.token,
+    //       refreshToken: newTokens.refreshToken,
+    //       tokenExpires: newTokens.tokenExpires,
+    //     })
+
+    //     headers.Authorization = `Bearer ${newTokens.token}`
+    //   } else {
+    //     tokens?.setTokensInfo?.(null)
+    //     throw new Error('Refresh token expired')
+    //   }
+    // }
   },
 )
 
-export default instance
+export default baseAPI

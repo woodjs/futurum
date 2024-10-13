@@ -17,12 +17,14 @@ import {
   TokensInfo,
 } from './auth-context'
 import Cookies from 'js-cookie'
-import useFetchBase from '@/shared/api/use-fetch-base'
 import { AUTH_LOGOUT_URL, AUTH_ME_URL } from '@/shared/api/config'
 import HTTP_CODES_ENUM from '../api/types/http-codes'
 import { useRouter } from '../../i18n/routing'
+import baseAPI from '../api'
+import { useSnackbar } from 'notistack'
 
 function AuthProvider(props: PropsWithChildren<{}>) {
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar()
   const AUTH_TOKEN_KEY = 'auth-token-data'
   const [tabId] = useState(() => Math.random().toString(36).slice(2))
   const [broadcastChannel] = useState(
@@ -36,7 +38,6 @@ function AuthProvider(props: PropsWithChildren<{}>) {
     refreshToken: null,
     tokenExpires: null,
   })
-  const fetchBase = useFetchBase()
 
   const setTokensInfoRef = useCallback((tokens: TokensInfo) => {
     tokensInfoRef.current = tokens ?? {
@@ -65,16 +66,17 @@ function AuthProvider(props: PropsWithChildren<{}>) {
   )
 
   const logOut = useCallback(async () => {
-    await fetchBase(AUTH_LOGOUT_URL, {
-      method: 'POST',
-    })
-      .then(() => {})
-      .catch(() => {})
-
-    // router.push('/auth/signin')
+    await baseAPI
+      .post(AUTH_LOGOUT_URL)
+      .then(() => {
+        router.push('/auth/signin')
+      })
+      .catch(() => {
+        enqueueSnackbar('Error logout')
+      })
 
     setTokensInfo(null)
-  }, [setTokensInfo, fetchBase])
+  }, [setTokensInfo, enqueueSnackbar, router])
 
   const loadData = useCallback(async () => {
     const tokens = JSON.parse(
@@ -85,25 +87,19 @@ function AuthProvider(props: PropsWithChildren<{}>) {
 
     try {
       if (tokens?.token) {
-        const response = await fetchBase(
-          AUTH_ME_URL,
-          {
-            method: 'GET',
-          },
-          {
-            token: tokens.token,
-            refreshToken: tokens.refreshToken,
-            tokenExpires: tokens.tokenExpires,
-            setTokensInfo,
-          },
-        )
+        const response = await baseAPI.get(AUTH_ME_URL, {
+          token: tokens.token,
+          refreshToken: tokens.refreshToken,
+          tokenExpires: tokens.tokenExpires,
+          setTokensInfo,
+        })
 
         if (response.status === HTTP_CODES_ENUM.UNAUTHORIZED) {
           logOut()
           return
         }
 
-        const data = await response.json()
+        const data = await response.data
         setUser(data)
       } else {
         logOut()
@@ -113,7 +109,7 @@ function AuthProvider(props: PropsWithChildren<{}>) {
     } finally {
       setIsLoaded(true)
     }
-  }, [fetchBase, logOut, setTokensInfoRef, setTokensInfo])
+  }, [logOut, setTokensInfoRef, setTokensInfo])
 
   useEffect(() => {
     loadData()

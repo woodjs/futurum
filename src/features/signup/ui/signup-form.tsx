@@ -4,9 +4,15 @@ import { DynamicForm } from '@/shared/ui/dynamic-form'
 import { NormalButton } from '@/shared/ui/normal-button'
 import { GradientTypography } from '../../../shared/ui'
 import { useTranslations } from 'next-intl'
-import useFetchBase from '../../../shared/api/use-fetch-base'
 import { AUTH_SIGN_UP } from '../../../shared/api/config'
+import HTTP_CODES_ENUM from '@/shared/api/types/http-codes'
+import Cookies from 'js-cookie'
 import { useState } from 'react'
+import baseAPI from '../../../shared/api'
+import { useRouter } from '../../../i18n/routing'
+import { useSnackbar } from 'notistack'
+
+const AUTH_TOKEN_KEY = 'auth-token-data'
 
 interface IFormData {
   email?: string | null
@@ -18,6 +24,7 @@ interface IFormData {
 
 export const SignUpForm = () => {
   const t = useTranslations('Auth.SignUp')
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar()
   const [formData, setFormData] = useState<IFormData>({
     email: null,
     password: null,
@@ -25,19 +32,26 @@ export const SignUpForm = () => {
     lastName: null,
   })
 
-  const fetchBase = useFetchBase()
+  const router = useRouter()
 
   const handleSignUp = async () => {
     const { email, password, firstName, lastName } = formData
 
     if (email && password && firstName && lastName) {
-      await fetchBase(AUTH_SIGN_UP, {
-        body: {
+      await baseAPI
+        .post(AUTH_SIGN_UP, {
           ...formData,
-        },
-      }).then(res => {
-        console.log(res)
-      })
+        })
+        .then(res => {
+          if (res.status === HTTP_CODES_ENUM.OK) {
+            Cookies.set(AUTH_TOKEN_KEY, JSON.stringify(res.data))
+
+            router.push('/')
+          }
+        })
+        .catch(error => {
+          enqueueSnackbar('I love hooks')
+        })
     }
   }
 
