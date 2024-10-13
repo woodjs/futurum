@@ -8,7 +8,7 @@ import { AUTH_SIGN_UP } from '../../../shared/api/config'
 import HTTP_CODES_ENUM from '@/shared/api/types/http-codes'
 import Cookies from 'js-cookie'
 import { useState } from 'react'
-import baseAPI from '../../../shared/api'
+import { protectedAPI } from '../../../shared/api'
 import { useRouter } from '../../../i18n/routing'
 import { useSnackbar } from 'notistack'
 
@@ -23,7 +23,7 @@ interface IFormData {
 }
 
 export const SignUpForm = () => {
-  const t = useTranslations('Auth.SignUp')
+  const t = useTranslations('default.Auth.SignUp')
   const { enqueueSnackbar, closeSnackbar } = useSnackbar()
   const [formData, setFormData] = useState<IFormData>({
     email: null,
@@ -38,11 +38,12 @@ export const SignUpForm = () => {
     const { email, password, firstName, lastName } = formData
 
     if (email && password && firstName && lastName) {
-      await baseAPI
+      await protectedAPI
         .post(AUTH_SIGN_UP, {
           ...formData,
         })
         .then(res => {
+          console.log(res, res.status)
           if (res.status === HTTP_CODES_ENUM.OK) {
             Cookies.set(AUTH_TOKEN_KEY, JSON.stringify(res.data))
 
@@ -58,8 +59,6 @@ export const SignUpForm = () => {
   const handleFormUpdate = (data: IFormData) => {
     const { email, password, firstName, lastName } = data
     setFormData({ ...formData, email, password, firstName, lastName })
-
-    console.log(formData)
   }
 
   return (

@@ -6,6 +6,7 @@ import { GradientTypography } from '../../../shared/ui'
 import { useTranslations } from 'next-intl'
 import useFetchBase from '../../../shared/api/use-fetch-base'
 import { useQuery } from '@tanstack/react-query'
+import { Link } from '../../../i18n/routing'
 
 export const LoginForm = () => {
   const t = useTranslations('Auth.SignIn')
@@ -40,7 +41,13 @@ export const LoginForm = () => {
             },
           }}
           renderFooter={form => (
-            <div className='flex justify-end'>
+            <div className='flex justify-end gap-2'>
+              <Link
+                href='/auth/signup'
+                className='m-0 flex self-center p-0 transition-colors hover:text-blue-400'
+              >
+                Don't have an account?
+              </Link>
               <NormalButton
                 onClick={form.handleSubmit(data => console.log(data))}
               >
