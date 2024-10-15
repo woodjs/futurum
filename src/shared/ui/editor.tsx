@@ -92,7 +92,7 @@ const toggleTextNode = (editor: TiptapEditor, type?: TextNodeType) => {
 
 const MenuBar = () => {
   const { editor } = useCurrentEditor()
-  const t = useTranslations('Editor')
+  const t = useTranslations('default.Editor')
   const [alignment, setAlignment] = React.useState('left')
 
   const setLink = useCallback(() => {

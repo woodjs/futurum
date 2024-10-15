@@ -14,7 +14,7 @@ export const PurchaseFiltersFormatter: FC<IPurchaseFiltersFormatterProps> = ({
   value,
 }) => {
   const locale = useLocale()
-  const t = useTranslations('Purchase.Filters')
+  const t = useTranslations('default.Purchase.Filters')
   switch (id) {
     case 'fromDate':
       // @ts-ignore

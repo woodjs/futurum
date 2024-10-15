@@ -4,18 +4,56 @@ import { DynamicForm } from '@/shared/ui/dynamic-form'
 import { NormalButton } from '@/shared/ui/normal-button'
 import { GradientTypography } from '../../../shared/ui'
 import { useTranslations } from 'next-intl'
-import useFetchBase from '../../../shared/api/use-fetch-base'
-import { useQuery } from '@tanstack/react-query'
-import { Link } from '../../../i18n/routing'
+import { Link, useRouter } from '../../../i18n/routing'
+import Cookies from 'js-cookie'
+import { useState } from 'react'
+import { useSnackbar } from 'notistack'
+import { protectedAPI } from '../../../shared/api'
+import { AUTH_SIGN_IN } from '../../../shared/api/config'
+import HTTP_CODES_ENUM from '../../../shared/api/types/http-codes'
+
+interface IFormData {
+  email?: string | null
+  password?: string | null
+}
+
+const AUTH_TOKEN_KEY = 'auth-token-data'
 
 export const LoginForm = () => {
-  const t = useTranslations('Auth.SignIn')
-  const fetchBase = useFetchBase()
-  const { isPending, error, data } = useQuery({
-    queryKey: ['repoData'],
-    queryFn: () =>
-      fetchBase('https://api.github.com/repos/TanStack/query').then(res => res),
+  const t = useTranslations('default.Auth.SignIn')
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar()
+  const [formData, setFormData] = useState<IFormData>({
+    email: null,
+    password: null,
   })
+
+  const router = useRouter()
+
+  const handleSignIn = async () => {
+    const { email, password } = formData
+
+    if (email && password) {
+      await protectedAPI
+        .post(AUTH_SIGN_IN, {
+          ...formData,
+        })
+        .then(res => {
+          if (res.status === HTTP_CODES_ENUM.OK) {
+            Cookies.set(AUTH_TOKEN_KEY, JSON.stringify(res.data))
+
+            router.push('/')
+          }
+        })
+        .catch(error => {
+          enqueueSnackbar('Sign in error')
+        })
+    }
+  }
+
+  const handleFormUpdate = (data: IFormData) => {
+    const { email, password } = data
+    setFormData({ ...formData, email, password })
+  }
 
   return (
     <div className='flex h-[100vh] w-full items-center bg-[#E2E8F0]'>
@@ -29,17 +67,18 @@ export const LoginForm = () => {
         <DynamicForm
           classNames={{ form: 'w-full' }}
           fields={{
-            username: {
-              type: 'text',
-              label: 'Username',
-              placeholder: 'Enter your username',
-            },
             email: {
+              type: 'text',
+              label: 'Email',
+              placeholder: 'Enter your email',
+            },
+            password: {
               type: 'password',
               label: 'Password',
               placeholder: 'Enter your password',
             },
           }}
+          onFormUpdate={data => handleFormUpdate(data)}
           renderFooter={form => (
             <div className='flex justify-end gap-2'>
               <Link
@@ -48,9 +87,7 @@ export const LoginForm = () => {
               >
                 Don't have an account?
               </Link>
-              <NormalButton
-                onClick={form.handleSubmit(data => console.log(data))}
-              >
+              <NormalButton onClick={form.handleSubmit(() => handleSignIn())}>
                 Login
               </NormalButton>
             </div>

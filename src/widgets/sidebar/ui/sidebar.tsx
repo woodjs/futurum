@@ -11,7 +11,7 @@ import { Skeleton } from '@/shared/ui/skeleton'
 import { Routes } from '@/shared/model/routes'
 import BigButton from '@/shared/ui/big-button'
 import { Tariff } from '@/shared/api/types'
-import {Link} from "@/i18n/routing";
+import { Link } from '@/i18n/routing'
 
 const linkList = [
   {
@@ -84,7 +84,7 @@ interface IUserMe {
 
 const Sidebar = () => {
   const pathname = usePathname()
-  const t = useTranslations('Menu')
+  const t = useTranslations('default.Menu')
 
   // TODO update with real api
   const {
@@ -137,13 +137,13 @@ const Sidebar = () => {
           />
         ))}
       </div>
-      <Link href={Routes.TARIFFS} >
+      <Link href={Routes.TARIFFS}>
         <BigButton
-            label={t('Tariff')}
-            classNames={{
-              value: 'text-2xl font-bold',
-            }}
-            isLoading={isUserLoading}
+          label={t('Tariff')}
+          classNames={{
+            value: 'text-2xl font-bold',
+          }}
+          isLoading={isUserLoading}
         >
           <div className={cn('text-2xl font-bold', tariffs[user.tariff.id])}>
             {user.tariff.name}

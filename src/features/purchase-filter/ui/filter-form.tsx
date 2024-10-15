@@ -63,7 +63,7 @@ const fields: Record<keyof IPurchaseParams, FieldConfig> = {
 }
 
 export const PurchaseFilterForm = () => {
-  const t = useTranslations('Purchase.Filters')
+  const t = useTranslations('default.Purchase.Filters')
   const { filters, setFilters, removeFilter } = usePurchaseStore()
   const [formState, setFormState] = useState<{
     fromDate?: any
