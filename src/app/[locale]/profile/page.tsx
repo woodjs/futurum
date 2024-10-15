@@ -21,12 +21,13 @@ import ScrollToTop from '@/shared/ui/scroll-to-top'
 import { Sidebar } from '@/widgets/sidebar'
 import Editor from '@/shared/ui/editor'
 import { LogoFull } from '@/shared/ui/logo'
+import { CreateBusinessForm } from '@/features/create-organization'
 
 export default function Home() {
   return (
     <div className={'relative'}>
       <Container>
-        <Editor />
+        123
         {/* <FeatureSection />
         <CarouselHeader />
         <CarouselTop />
