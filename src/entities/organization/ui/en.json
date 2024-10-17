@@ -1,0 +1,119 @@
+{
+  "form": {
+    "companyInfo": {
+      "position": {
+        "required": "Enter the position",
+        "min": "Enter the position"
+      },
+      "companyName": {
+        "required": "Enter the company name",
+        "min": "The company name must be at least 3 characters long"
+      },
+      "ownershipForm": {
+        "required": "Enter the form of ownership",
+        "min": "Enter the form of ownership"
+      }
+    },
+    "address": {
+      "address": {
+        "required": "Enter the address",
+        "min": "Enter the address"
+      },
+      "city": {
+        "required": "Enter the city",
+        "min": "Enter the city"
+      },
+      "country": {
+        "required": "Enter the country",
+        "min": "Enter the country"
+      }
+    },
+    "contactInfo": {
+      "website": {
+        "invalid": "Invalid website address"
+      },
+      "phone": {
+        "invalid": "Invalid phone number"
+      },
+      "facebook": {
+        "invalid": "Invalid website address"
+      },
+      "instagram": {
+        "invalid": "Invalid website address"
+      },
+      "twitter": {
+        "invalid": "Invalid website address"
+      },
+      "tiktok": {
+        "invalid": "Invalid website address"
+      },
+      "telegram": {
+        "invalid": "Invalid website address"
+      },
+      "youtube": {
+        "invalid": "Invalid website address"
+      },
+      "whatsapp": {
+        "invalid": "Invalid website address"
+      },
+      "vk": {
+        "invalid": "Invalid website address"
+      },
+      "weChat": {
+        "invalid": "Invalid website address"
+      },
+      "reddit": {
+        "invalid": "Invalid website address"
+      }
+    },
+    "documents": {
+      "logo": {
+        "min": "Logo is required"
+      }
+    },
+    "description": {
+      "max": "Description must not exceed 3000 characters"
+    },
+    "startPage": {
+      "amountForStart": {
+        "required": "The amount must be a number",
+        "min": "The amount must be greater than 0"
+      }
+    },
+    "financialInfo": {
+      "foundationYear": {
+        "required": "The foundation year must be a number",
+        "min": "The foundation year must be greater than 1000",
+        "max": "The foundation year cannot exceed the current year"
+      },
+      "annualTurnover": {
+        "required": "The annual turnover must be a number",
+        "min": "The annual turnover must be greater than 0"
+      },
+      "grossRevenue": {
+        "required": "Gross revenue must be a number",
+        "min": "Gross revenue must be greater than 0"
+      }
+    },
+    "employee": {
+      "firstName": {
+        "min": "Enter the first name"
+      },
+      "lastName": {
+        "min": "Enter the last name or the first letter"
+      },
+      "futurumAccount": {
+        "invalid": "Enter a valid link"
+      },
+      "phone": {
+        "invalid": "Enter a valid phone number"
+      },
+      "telegram": {
+        "min": "Enter Telegram"
+      }
+    },
+    "employees": {
+      "max": "The maximum number of employees is 10"
+    }
+  }
+}

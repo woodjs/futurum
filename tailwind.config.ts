@@ -94,7 +94,8 @@ const config = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')],
+  plugins: [require('@tailwindcss/container-queries'),
+  require('tailwindcss-animate'), require('@tailwindcss/typography')],
 } satisfies Config
 
 export default config
