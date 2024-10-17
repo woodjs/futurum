@@ -1,7 +1,7 @@
 'use client'
-import { DynamicForm } from '../../../shared/ui/dynamic-form'
-import Editor from '../../../shared/ui/editor'
-import Section from '../../main/section'
+import { DynamicForm } from '../../shared/ui/dynamic-form'
+import Editor from '../../shared/ui/editor'
+import Section from '../../screens/main/section'
 
 const UserInfoForm = () => {
   return (

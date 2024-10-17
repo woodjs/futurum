@@ -27,7 +27,7 @@ import ScrollToTop from '@/shared/ui/scroll-to-top'
 import { Sidebar } from '@/widgets/sidebar'
 import Editor from '@/shared/ui/editor'
 import { LogoFull } from '@/shared/ui/logo'
-import UserInfoForm from '../../../screens/profile/user-info-form'
+import UserInfoForm from '../../../features/user-info-form'
 
 export default function Home() {
   const t = useTranslations('profile')
