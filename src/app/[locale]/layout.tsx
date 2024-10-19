@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+// import { getTranslations } from 'next-intl/server'
 import { NextIntlClientProvider, useMessages } from 'next-intl'
 import './globals.css'
 import { AppProvider } from '../providers'

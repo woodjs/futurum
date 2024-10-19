@@ -1,16 +1,21 @@
-import { PurchaseStatusFilter } from '@/entities/purchases/api';
-import { z } from 'zod';
+// import { PurchaseStatusFilter } from '@/entities/purchases/api';
+import { z } from 'zod'
 
-const ZodStatusFilter = z.nativeEnum(PurchaseStatusFilter);
+// const ZodStatusFilter = z.nativeEnum(PurchaseStatusFilter);
+
+const phoneRegex = new RegExp(
+  /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/,
+)
 
 const PurchaseParamsSchema = z.object({
-    category: z.string().optional(),
-    fromDate: z.string().optional(),
-    toDate: z.string().optional(),
-    fromPrice: z.number().optional(),
-    toPrice: z.number().optional(),
-    status: ZodStatusFilter.optional(),
-});
+  login: z.string(),
+  email: z.coerce.string().email().min(5),
+  name: z.string(),
+  lastName: z.string(),
+  country: z.string(),
+  phone: z.string().regex(phoneRegex, 'Invalid Number!'),
+  whatsapp: z.string(),
+  telegram: z.string(),
+})
 
-
-export { PurchaseParamsSchema };
+export { PurchaseParamsSchema }
