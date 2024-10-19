@@ -22,7 +22,7 @@ const TariffCard: FC<IProps> = ({
   onButtonClick,
   mode = 'Month',
 }) => {
-  const t = useTranslations('Tariffs')
+  const t = useTranslations('default.Tariffs')
   return (
     <div
       className={`relative flex h-[361px] w-[306px] items-center justify-center rounded-[15px]

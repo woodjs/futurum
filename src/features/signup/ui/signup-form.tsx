@@ -43,7 +43,6 @@ export const SignUpForm = () => {
           ...formData,
         })
         .then(res => {
-          console.log(res, res.status)
           if (res.status === HTTP_CODES_ENUM.OK) {
             Cookies.set(AUTH_TOKEN_KEY, JSON.stringify(res.data))
 
@@ -51,7 +50,7 @@ export const SignUpForm = () => {
           }
         })
         .catch(error => {
-          enqueueSnackbar('I love hooks')
+          enqueueSnackbar('Sign up error')
         })
     }
   }

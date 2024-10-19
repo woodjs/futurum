@@ -21,7 +21,7 @@ export type InvestorPayout = {
 }
 
 export const IncomeTable = () => {
-  const t = useTranslations('Tables.IncomeTable')
+  const t = useTranslations('default.Tables.IncomeTable')
 
   const defaultData: InvestorPayout[] = [
     {

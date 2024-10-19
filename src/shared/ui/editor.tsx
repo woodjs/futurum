@@ -95,7 +95,7 @@ interface IEditorMenuBarProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 const MenuBar: FC<IEditorMenuBarProps> = ({ onUpdate }) => {
   const { editor } = useCurrentEditor()
-  const t = useTranslations('Editor')
+  const t = useTranslations('default.Editor')
   const [alignment, setAlignment] = React.useState('left')
 
   const setLink = useCallback(() => {
