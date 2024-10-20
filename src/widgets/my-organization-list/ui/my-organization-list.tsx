@@ -7,18 +7,24 @@ import Loader from '@/shared/ui/loader'
 import { NormalButton } from '@/shared/ui/normal-button'
 import { Skeleton } from '@/shared/ui/skeleton'
 import { PlusIcon } from '@heroicons/react/16/solid'
+import { useTranslations } from 'next-intl'
 
 const skeletons = new Array(12).fill(0)
 
 const MyOrganizationList = () => {
   const { data, isLoading, isSuccess } = useGetOrganizationList({ my: true })
+  const t = useTranslations()
   return (
     <div className=''>
       <div className='my-4 flex flex-wrap justify-between gap-2 text-black'>
-        <h1 className='text-2xl font-bold'>Мои организации</h1>
+        <h1 className='text-2xl font-bold'>
+          {t('organization.view.myOrganizations')}
+        </h1>
         <NormalButton variant='ghost' className='hidden md:block' asChild>
           <Link href='/profile/organizations/create'>
-            <span className=''>Создать организацию</span>
+            <span className=''>
+              {t('organization.buttons.createOrganization')}
+            </span>
           </Link>
         </NormalButton>
       </div>

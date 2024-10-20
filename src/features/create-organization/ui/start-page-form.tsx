@@ -5,6 +5,7 @@ import { Controller, useFormContext } from 'react-hook-form'
 import FileUpload from '@/shared/ui/file-upload'
 import { FormControl, FormItem, FormLabel, FormMessage } from '@/shared/ui/form'
 import { FormInput } from '@/shared/ui/form-input'
+import { useTranslations } from 'next-intl'
 
 type StartPageValues = z.infer<typeof startPageSchema>
 const StartPageForm = () => {
@@ -12,45 +13,51 @@ const StartPageForm = () => {
     control,
     formState: { errors },
   } = useFormContext<StartPageValues>()
+  const t = useTranslations()
 
   return (
     <div className='grid gap-4'>
-      {/* Поле для загрузки презентации */}
+      {/* Поле для ввода суммы для старта */}
       <Controller
         name='amountForStart'
         control={control}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Сумма для старта</FormLabel>
+            <FormLabel>
+              {t('organization.form.startPage.amountForStart.label')}
+            </FormLabel>
             <FormControl>
               <FormInput
                 type='number'
-                placeholder='Введите сумму...'
+                placeholder={t(
+                  'organization.form.startPage.amountForStart.placeholder',
+                )}
                 {...field}
                 onChange={e => {
                   field.onChange(e.target.valueAsNumber)
                 }}
               />
             </FormControl>
-            <FormMessage />
+            <FormMessage useTranslate />
           </FormItem>
         )}
       />
 
+      {/* Поле для загрузки файлов */}
       <Controller
         name='files'
         control={control}
         render={({ field }) => (
           <FileUpload
             name='files'
-            label='Файлы (до 10, PNG, JPG)'
+            label={t('organization.form.startPage.files.label')}
             accept={'image/png, image/jpeg, image/jpg, image/webp'}
             multiple={true}
             maxFiles={10}
             required={false}
             value={field.value}
             onChange={field.onChange}
-            error={errors.files?.message as string}
+            error={t(errors.files?.message as string)}
           />
         )}
       />

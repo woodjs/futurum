@@ -1,7 +1,9 @@
+'use client'
 import React from 'react'
 import { IOrganization } from '../model'
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
 import { StarIcon } from '@heroicons/react/16/solid'
+import { useTranslations } from 'next-intl'
 
 interface OrganizationCardProps {
   organization: IOrganization
@@ -10,10 +12,11 @@ interface OrganizationCardProps {
 const OrganizationCard: React.FC<OrganizationCardProps> = ({
   organization,
 }) => {
+  const t = useTranslations()
   return (
-    <div className='@container/organization rounded-md border border-slate-200 p-3 sm:p-4'>
-      <div className='@sm/organization:flex-row flex flex-col gap-4'>
-        <Avatar className='@sm/organization:max-w-[160px] aspect-square w-full overflow-hidden rounded-md'>
+    <div className='rounded-md border border-slate-200 p-3 @container/organization sm:p-4'>
+      <div className='flex flex-col gap-4 @sm/organization:flex-row'>
+        <Avatar className='aspect-square w-full overflow-hidden rounded-md @sm/organization:max-w-[160px]'>
           <AvatarFallback className='flex aspect-square w-full items-center justify-center bg-slate-100'>
             {organization.companyName[0]}
           </AvatarFallback>
@@ -35,7 +38,7 @@ const OrganizationCard: React.FC<OrganizationCardProps> = ({
                 className='inline-block rounded-full bg-slate-100 px-3 py-1 text-sm font-semibold
                   text-slate-700'
               >
-                {organization.type}
+                {t(`organization.types.${organization.type}`)}
               </span>
             )}
             {!!organization.rating && (

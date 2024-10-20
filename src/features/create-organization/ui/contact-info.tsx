@@ -10,11 +10,14 @@ import {
   FormMessage,
 } from '@/shared/ui/form'
 import { FormInput } from '@/shared/ui/form-input'
+import { useTranslations } from 'next-intl'
 
 type ContactInfoValues = z.infer<typeof contactInfoSchema>
 
 const ContactInfo = () => {
   const { control } = useFormContext<ContactInfoValues>()
+  const t = useTranslations()
+
   return (
     <div className='grid gap-4'>
       <FormField
@@ -22,15 +25,19 @@ const ContactInfo = () => {
         name='phone'
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Номер телефона</FormLabel>
+            <FormLabel>
+              {t('organization.form.contactInfo.phone.label')}
+            </FormLabel>
             <FormControl>
               <FormInput
-                placeholder='Введите номер...'
+                placeholder={t(
+                  'organization.form.contactInfo.phone.placeholder',
+                )}
                 {...field}
                 value={field.value || ''}
               />
             </FormControl>
-            <FormMessage />
+            <FormMessage useTranslate />
           </FormItem>
         )}
       />
@@ -39,15 +46,19 @@ const ContactInfo = () => {
         name='facebook'
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Facebook</FormLabel>
+            <FormLabel>
+              {t('organization.form.contactInfo.facebook.label')}
+            </FormLabel>
             <FormControl>
               <FormInput
-                placeholder='Введите ссылку...'
+                placeholder={t(
+                  'organization.form.contactInfo.facebook.placeholder',
+                )}
                 {...field}
                 value={field.value || ''}
               />
             </FormControl>
-            <FormMessage />
+            <FormMessage useTranslate />
           </FormItem>
         )}
       />
@@ -56,15 +67,19 @@ const ContactInfo = () => {
         name='instagram'
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Instagram</FormLabel>
+            <FormLabel>
+              {t('organization.form.contactInfo.instagram.label')}
+            </FormLabel>
             <FormControl>
               <FormInput
-                placeholder='Введите ссылку...'
+                placeholder={t(
+                  'organization.form.contactInfo.instagram.placeholder',
+                )}
                 {...field}
                 value={field.value || ''}
               />
             </FormControl>
-            <FormMessage />
+            <FormMessage useTranslate />
           </FormItem>
         )}
       />
@@ -73,15 +88,19 @@ const ContactInfo = () => {
         name='reddit'
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Reddit</FormLabel>
+            <FormLabel>
+              {t('organization.form.contactInfo.reddit.label')}
+            </FormLabel>
             <FormControl>
               <FormInput
-                placeholder='Введите ссылку...'
+                placeholder={t(
+                  'organization.form.contactInfo.reddit.placeholder',
+                )}
                 {...field}
                 value={field.value || ''}
               />
             </FormControl>
-            <FormMessage />
+            <FormMessage useTranslate />
           </FormItem>
         )}
       />
@@ -90,15 +109,19 @@ const ContactInfo = () => {
         name='telegram'
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Telegram</FormLabel>
+            <FormLabel>
+              {t('organization.form.contactInfo.telegram.label')}
+            </FormLabel>
             <FormControl>
               <FormInput
-                placeholder='Введите ссылку...'
+                placeholder={t(
+                  'organization.form.contactInfo.telegram.placeholder',
+                )}
                 {...field}
                 value={field.value || ''}
               />
             </FormControl>
-            <FormMessage />
+            <FormMessage useTranslate />
           </FormItem>
         )}
       />
@@ -107,15 +130,19 @@ const ContactInfo = () => {
         name='twitter'
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Twitter</FormLabel>
+            <FormLabel>
+              {t('organization.form.contactInfo.twitter.label')}
+            </FormLabel>
             <FormControl>
               <FormInput
-                placeholder='Введите ссылку...'
+                placeholder={t(
+                  'organization.form.contactInfo.twitter.placeholder',
+                )}
                 {...field}
                 value={field.value || ''}
               />
             </FormControl>
-            <FormMessage />
+            <FormMessage useTranslate />
           </FormItem>
         )}
       />
@@ -124,15 +151,15 @@ const ContactInfo = () => {
         name='vk'
         render={({ field }) => (
           <FormItem>
-            <FormLabel>VK</FormLabel>
+            <FormLabel>{t('organization.form.contactInfo.vk.label')}</FormLabel>
             <FormControl>
               <FormInput
-                placeholder='Введите ссылку...'
+                placeholder={t('organization.form.contactInfo.vk.placeholder')}
                 {...field}
                 value={field.value || ''}
               />
             </FormControl>
-            <FormMessage />
+            <FormMessage useTranslate />
           </FormItem>
         )}
       />
@@ -141,15 +168,19 @@ const ContactInfo = () => {
         name='weChat'
         render={({ field }) => (
           <FormItem>
-            <FormLabel>WeChat</FormLabel>
+            <FormLabel>
+              {t('organization.form.contactInfo.weChat.label')}
+            </FormLabel>
             <FormControl>
               <FormInput
-                placeholder='Введите ссылку...'
+                placeholder={t(
+                  'organization.form.contactInfo.weChat.placeholder',
+                )}
                 {...field}
                 value={field.value || ''}
               />
             </FormControl>
-            <FormMessage />
+            <FormMessage useTranslate />
           </FormItem>
         )}
       />
@@ -158,15 +189,19 @@ const ContactInfo = () => {
         name='whatsapp'
         render={({ field }) => (
           <FormItem>
-            <FormLabel>WhatsApp</FormLabel>
+            <FormLabel>
+              {t('organization.form.contactInfo.whatsapp.label')}
+            </FormLabel>
             <FormControl>
               <FormInput
-                placeholder='Введите ссылку...'
+                placeholder={t(
+                  'organization.form.contactInfo.whatsapp.placeholder',
+                )}
                 {...field}
                 value={field.value || ''}
               />
             </FormControl>
-            <FormMessage />
+            <FormMessage useTranslate />
           </FormItem>
         )}
       />

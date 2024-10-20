@@ -30,6 +30,8 @@ import { Dialog, DialogContent, DialogTrigger } from '@/shared/ui/dialog'
 import { useGetOrganizationById } from '@/entities/organization/api/hooks/use-get-organization-by-id'
 import Loader from '@/shared/ui/loader'
 import { Form } from '@/shared/ui/form'
+import { PencilSquareIcon } from '@heroicons/react/16/solid'
+import { useTranslations } from 'next-intl'
 
 // const organizationToForm = (
 //   organization: IOrganization,
@@ -221,6 +223,7 @@ const EditFromBase: FC<IEditFromBaseProps> = ({
   defaultValues,
   isLoading,
 }) => {
+  const t = useTranslations()
   const [open, setOpen] = useState(false)
   const form = useForm({
     mode: 'onTouched',
@@ -238,8 +241,23 @@ const EditFromBase: FC<IEditFromBaseProps> = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <NormalButton size='sm' variant='ghost' onClick={() => setOpen(true)}>
-          Редактировать
+        <NormalButton
+          className='hidden md:block'
+          size='sm'
+          variant='ghost'
+          onClick={() => setOpen(true)}
+        >
+          {t('organization.buttons.edit')}
+        </NormalButton>
+      </DialogTrigger>
+      <DialogTrigger asChild>
+        <NormalButton
+          className='block md:hidden'
+          size='icon-sm'
+          variant='ghost'
+          onClick={() => setOpen(true)}
+        >
+          <PencilSquareIcon />
         </NormalButton>
       </DialogTrigger>
       <DialogContent className='max-h-[90vh] max-w-[600px] overflow-auto'>
@@ -262,13 +280,13 @@ const EditFromBase: FC<IEditFromBaseProps> = ({
           <div className='mt-8 flex justify-between'>
             <div className='ml-auto flex gap-4'>
               <NormalButton variant='ghost' onClick={() => setOpen(false)}>
-                Отменить
+                {t('organization.buttons.cancel')}
               </NormalButton>
               <NormalButton
                 onClick={form.handleSubmit(submitHandler)}
                 disabled={!form.formState.isValid}
               >
-                Сохранить
+                {t('organization.buttons.save')}
               </NormalButton>
             </div>
           </div>
@@ -308,11 +326,13 @@ export const EditMainInfoForm: FC<IEditIdProps> = ({ id }) => {
     return {}
   }, [isSuccess, organization])
 
+  const t = useTranslations()
+
   if (isSuccess)
     return (
       <EditFromBase
-        title='Основная информация'
-        description='Укажите основную информацию организации'
+        title={t('organization.form.mainInfo.title')}
+        description={t('organization.form.mainInfo.description')}
         schema={companyInfoSchema.merge(addressSchema)}
         form={MainInfoForm}
         isLoading={isLoading}
@@ -352,11 +372,13 @@ export const EditContactInfoForm: FC<IEditIdProps> = ({ id }) => {
 
   const { mutate } = useUpdateOrganization()
 
+  const t = useTranslations()
+
   if (isSuccess)
     return (
       <EditFromBase
-        title='Контакты'
-        description='Укажите контакты организации'
+        title={t('organization.view.socialNetworks')}
+        description={t('organization.form.stepper.businessStepper.contact')}
         schema={contactInfoSchema}
         form={ContactInfoForm}
         isLoading={isLoading}
@@ -380,11 +402,13 @@ export const EditDocumentsForm: FC<IEditIdProps> = ({ id }) => {
     return {}
   }, [isSuccess, organization])
 
+  const t = useTranslations()
+
   if (isSuccess)
     return (
       <EditFromBase
-        title='Документы'
-        description='Укажите документы организации'
+        title={t('organization.view.documents')}
+        description={t('organization.form.stepper.businessStepper.documents')}
         schema={documentsFormSchema}
         form={DocumentsForm}
         isLoading={isLoading}
@@ -408,11 +432,13 @@ export const EditEmployeesForm: FC<IEditIdProps> = ({ id }) => {
     return {}
   }, [isSuccess, organization])
 
+  const t = useTranslations()
+
   if (isSuccess)
     return (
       <EditFromBase
-        title='Сотрудники'
-        description='Укажите сотрудников организации'
+        title={t('organization.view.employees')}
+        description={t('organization.form.stepper.business.employees')}
         schema={employeesSchema}
         form={EmployeeForm}
         isLoading={isLoading}
@@ -438,12 +464,13 @@ export const EditFinancialForm: FC<IEditIdProps> = ({ id }) => {
     }
     return {}
   }, [isSuccess, organization])
+  const t = useTranslations()
 
   if (isSuccess)
     return (
       <EditFromBase
-        title='Финансы'
-        description='Укажите финансы организации'
+        title={t('organization.view.financialIndicators')}
+        description={t('organization.form.stepper.businessStepper.financial')}
         schema={employeesSchema}
         form={EmployeeForm}
         isLoading={isLoading}
@@ -470,11 +497,13 @@ export const EditStartPageForm: FC<IEditIdProps> = ({ id }) => {
     return {}
   }, [isSuccess, organization])
 
+  const t = useTranslations()
+
   if (isSuccess)
     return (
       <EditFromBase
-        title='Стартовая страница'
-        description='Укажите информацию о стартовой странице организации'
+        title={t('organization.view.startPage')}
+        description={t('organization.form.stepper.startupStepper.startPage')}
         schema={startPageSchema}
         form={StartPageForm}
         isLoading={isLoading}
@@ -498,11 +527,13 @@ export const EditDescriptionForm: FC<IEditIdProps> = ({ id }) => {
 
   const { mutate } = useUpdateOrganization()
 
+  const t = useTranslations()
+
   if (isSuccess)
     return (
       <EditFromBase
-        title='Описание'
-        description='Укажите описание организации'
+        title={t('organization.view.description')}
+        description={t('organization.form.stepper.businessStepper.description')}
         schema={descriptionFormSchema}
         form={DescriptionForm}
         isLoading={isLoading}

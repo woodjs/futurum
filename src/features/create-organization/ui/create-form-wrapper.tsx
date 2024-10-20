@@ -26,6 +26,7 @@ import { Stepper } from '@stepperize/react'
 import StartPageForm from './start-page-form'
 import EmployeeForm from './employee-form'
 import Loader from '@/shared/ui/loader'
+import { useTranslations } from 'next-intl'
 
 interface ICreateBusinessFormProps {
   onSuccess: () => void
@@ -44,6 +45,8 @@ export const CreateFormWrapper: FC<ICreateBusinessFormProps> = ({
   steps,
   type,
 }) => {
+  const t = useTranslations()
+
   const form = useForm({
     mode: 'onTouched',
     resolver: zodResolver(stepper.current.schema),
@@ -54,14 +57,18 @@ export const CreateFormWrapper: FC<ICreateBusinessFormProps> = ({
   const { mutateAsync: mutate } = useCreateOrganization()
 
   const onSubmit = (values: z.infer<typeof stepper.current.schema>) => {
-    setData({ ...data, [stepper.current.id]: values, type })
+    const newData = { ...data, [stepper.current.id]: values, type }
+    setData(newData)
     if (stepper.isLast) {
       setIsLoading(true)
-      mutate(data as IOrganizationFormData)
-        .then(() => {
+      console.log(newData)
+      mutate(newData as IOrganizationFormData)
+        .then(e => {
+          console.log(e)
           if (onSuccess) onSuccess()
         })
         .catch(e => {
+          console.log(e)
           if (onReject) onReject()
         })
         .finally(() => {
@@ -81,15 +88,21 @@ export const CreateFormWrapper: FC<ICreateBusinessFormProps> = ({
           stepper.reset()
         }}
       >
-        <ChevronLeftIcon className='size-5' /> К выбору типа организации
+        <ChevronLeftIcon className='size-5' />{' '}
+        {t('organization.buttons.toTypeSelection')}
       </button>
       <div className='mb-4 flex items-center justify-between'>
         <div>
-          <div className='text-2xl text-black'>Создание компании</div>
-          <div className='text-slate-600'>{stepper.current.description}</div>
+          <div className='text-2xl text-black'>
+            {t('organization.form.stepper.mainStepper.createOrganization')}
+          </div>
+          <div className='text-slate-600'>{t(stepper.current.description)}</div>
         </div>
         <div className='text-slate-500'>
-          Шаг {stepper.current.index + 1} из {steps.length}
+          {t('organization.form.stepper.mainStepper.stepInfo', {
+            currentStep: stepper.current.index + 1,
+            totalSteps: steps.length,
+          })}
         </div>
       </div>
       {isLoading && (
@@ -115,20 +128,22 @@ export const CreateFormWrapper: FC<ICreateBusinessFormProps> = ({
               stepper.prev()
             }}
           >
-            Назад
+            {t('organization.buttons.back')}
           </NormalButton>
         )}
         <div className='ml-auto flex gap-4'>
           {stepper.current.skip && (
             <NormalButton variant='ghost' onClick={() => stepper.next()}>
-              Пропустить
+              {t('organization.buttons.skip')}
             </NormalButton>
           )}
           <NormalButton
             onClick={form.handleSubmit(onSubmit)}
             disabled={!form.formState.isValid || isLoading}
           >
-            {stepper.isLast ? 'Submit' : 'Next'}
+            {stepper.isLast
+              ? t('organization.buttons.submit')
+              : t('organization.buttons.next')}
           </NormalButton>
         </div>
       </div>

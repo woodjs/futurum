@@ -42,7 +42,6 @@ const FieldRenderer: React.FC<IFieldRendererProps> = ({
   autoFocus,
 }) => {
   const { control } = form
-
   // Логика для маски полей типа "input"
   const renderInputField = () => (
     <FormField

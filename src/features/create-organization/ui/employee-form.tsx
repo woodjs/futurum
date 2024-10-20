@@ -13,6 +13,7 @@ import { FormControl, FormItem, FormLabel, FormMessage } from '@/shared/ui/form'
 import { FormInput } from '@/shared/ui/form-input'
 import { NormalButton } from '@/shared/ui/normal-button'
 import FileUpload from '@/shared/ui/file-upload'
+import { useTranslations } from 'next-intl'
 
 type EmployeeFormValues = z.infer<typeof employeesSchema>
 
@@ -28,6 +29,8 @@ const EmployeeForm = () => {
     name: 'employees',
   })
 
+  const t = useTranslations()
+
   return (
     <div className='grid gap-4'>
       {fields.map((field, index) => (
@@ -37,13 +40,20 @@ const EmployeeForm = () => {
             name={`employees.${index}.firstName`}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Имя</FormLabel>
+                <FormLabel>
+                  {t('organization.form.startPage.employee.firstName.label')}
+                </FormLabel>
                 <FormControl>
-                  <FormInput placeholder='Введите имя...' {...field} />
+                  <FormInput
+                    placeholder={t(
+                      'organization.form.startPage.employee.firstName.placeholder',
+                    )}
+                    {...field}
+                  />
                 </FormControl>
                 {errors.employees?.[index]?.firstName && (
-                  <FormMessage>
-                    {errors.employees?.[index]?.firstName.message}
+                  <FormMessage useTranslate>
+                    {t(errors.employees?.[index]?.firstName.message)}
                   </FormMessage>
                 )}
               </FormItem>
@@ -55,16 +65,20 @@ const EmployeeForm = () => {
             name={`employees.${index}.lastName`}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Фамилия</FormLabel>
+                <FormLabel>
+                  {t('organization.form.startPage.employee.lastName.label')}
+                </FormLabel>
                 <FormControl>
                   <FormInput
-                    placeholder='Введите фамилию или первую букву...'
+                    placeholder={t(
+                      'organization.form.startPage.employee.lastName.placeholder',
+                    )}
                     {...field}
                   />
                 </FormControl>
                 {errors.employees?.[index]?.lastName && (
-                  <FormMessage>
-                    {errors.employees?.[index]?.lastName.message}
+                  <FormMessage useTranslate>
+                    {t(errors.employees?.[index]?.lastName.message)}
                   </FormMessage>
                 )}
               </FormItem>
@@ -76,13 +90,22 @@ const EmployeeForm = () => {
             name={`employees.${index}.futurumAccount`}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Аккаунт в Futurum</FormLabel>
+                <FormLabel>
+                  {t(
+                    'organization.form.startPage.employee.futurumAccount.label',
+                  )}
+                </FormLabel>
                 <FormControl>
-                  <FormInput placeholder='Ссылка...' {...field} />
+                  <FormInput
+                    placeholder={t(
+                      'organization.form.startPage.employee.futurumAccount.placeholder',
+                    )}
+                    {...field}
+                  />
                 </FormControl>
                 {errors.employees?.[index]?.futurumAccount && (
-                  <FormMessage>
-                    {errors.employees?.[index]?.futurumAccount.message}
+                  <FormMessage useTranslate>
+                    {t(errors.employees?.[index]?.futurumAccount.message)}
                   </FormMessage>
                 )}
               </FormItem>
@@ -94,13 +117,20 @@ const EmployeeForm = () => {
             name={`employees.${index}.phone`}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Телефон</FormLabel>
+                <FormLabel>
+                  {t('organization.form.startPage.employee.phone.label')}
+                </FormLabel>
                 <FormControl>
-                  <FormInput placeholder='Введите телефон...' {...field} />
+                  <FormInput
+                    placeholder={t(
+                      'organization.form.startPage.employee.phone.placeholder',
+                    )}
+                    {...field}
+                  />
                 </FormControl>
                 {errors.employees?.[index]?.phone && (
-                  <FormMessage>
-                    {errors.employees?.[index]?.phone.message}
+                  <FormMessage useTranslate>
+                    {t(errors.employees?.[index]?.phone.message)}
                   </FormMessage>
                 )}
               </FormItem>
@@ -112,13 +142,20 @@ const EmployeeForm = () => {
             name={`employees.${index}.telegram`}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Telegram</FormLabel>
+                <FormLabel>
+                  {t('organization.form.startPage.employee.telegram.label')}
+                </FormLabel>
                 <FormControl>
-                  <FormInput placeholder='Введите Telegram...' {...field} />
+                  <FormInput
+                    placeholder={t(
+                      'organization.form.startPage.employee.telegram.placeholder',
+                    )}
+                    {...field}
+                  />
                 </FormControl>
                 {errors.employees?.[index]?.telegram && (
-                  <FormMessage>
-                    {errors.employees?.[index]?.telegram.message}
+                  <FormMessage useTranslate>
+                    {t(errors.employees?.[index]?.telegram.message)}
                   </FormMessage>
                 )}
               </FormItem>
@@ -130,21 +167,22 @@ const EmployeeForm = () => {
             name={`employees.${index}.avatar`}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Фотография сотрудника</FormLabel>
+                <FormLabel>
+                  {t('organization.form.startPage.employee.avatar.label')}
+                </FormLabel>
                 <FormControl>
                   <FileUpload
                     multiple={false}
                     maxFiles={1}
                     name='avatar'
                     accept='image/png, image/jpeg, image/jpg'
-                    // label='Фотография сотрудника'
                     onChange={field.onChange}
                     value={field.value}
                   />
                 </FormControl>
                 {errors.employees?.[index]?.avatar && (
-                  <FormMessage>
-                    {errors.employees?.[index]?.avatar.message}
+                  <FormMessage useTranslate>
+                    {t(errors.employees?.[index]?.avatar.message)}
                   </FormMessage>
                 )}
               </FormItem>
@@ -156,7 +194,7 @@ const EmployeeForm = () => {
             className='text-destructive hover:bg-destructive-foreground hover:text-destructive'
             onClick={() => remove(index)}
           >
-            Удалить сотрудника
+            {t('organization.form.startPage.employees.removeEmployee')}
           </NormalButton>
         </div>
       ))}
@@ -174,7 +212,7 @@ const EmployeeForm = () => {
           })
         }
       >
-        Добавить сотрудника
+        {t('organization.form.startPage.employees.addEmployee')}
       </NormalButton>
     </div>
   )

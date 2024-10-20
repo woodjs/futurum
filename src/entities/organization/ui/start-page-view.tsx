@@ -3,6 +3,7 @@ import { IFundingInfo } from '../model'
 import Image from 'next/image'
 import { getFormattedNumber } from '@/shared/lib/numberFormatter'
 import { Carousel, CarouselContent, CarouselItem } from '@/shared/ui'
+import { useTranslations } from 'next-intl'
 
 interface IStartPageView {
   fundingInfo: IFundingInfo
@@ -10,10 +11,13 @@ interface IStartPageView {
   edit?: FC<{ id: string }>
 }
 const StartPageView: FC<IStartPageView> = ({ fundingInfo, id, edit }) => {
+  const t = useTranslations()
   return (
     <div className='mt-6 text-black'>
       <div className='mb-4 flex items-center justify-between'>
-        <div className='text-xl font-bold'>Стартовая страница</div>
+        <div className='text-xl font-bold'>
+          {t('organization.view.startPage')}
+        </div>
         {edit && edit({ id })}
       </div>
       <div className='flex flex-col items-center gap-2'>
@@ -22,7 +26,7 @@ const StartPageView: FC<IStartPageView> = ({ fundingInfo, id, edit }) => {
             {getFormattedNumber(fundingInfo.raisedFunding, 'en', 'USD')}/
             {getFormattedNumber(fundingInfo.requiredFunding, 'en', 'USD')}
           </div>
-          <div className=''>Необходимо для старта</div>
+          <div className=''>{t('organization.view.amountForStart')}</div>
         </div>
         {fundingInfo.slideDeck && (
           <Carousel

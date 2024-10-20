@@ -10,6 +10,7 @@ import {
   FormMessage,
 } from '@/shared/ui/form'
 import { FormInput } from '@/shared/ui/form-input'
+import { useTranslations } from 'next-intl'
 
 type AddressValues = z.infer<typeof addressSchema>
 
@@ -18,6 +19,8 @@ const Address = () => {
     control,
     formState: { errors },
   } = useFormContext<AddressValues>()
+  const t = useTranslations()
+
   return (
     <div className='grid gap-4'>
       <FormField
@@ -25,11 +28,16 @@ const Address = () => {
         name='country'
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Страна</FormLabel>
+            <FormLabel>
+              {t('organization.form.address.country.label')}
+            </FormLabel>
             <FormControl>
-              <FormInput placeholder='Введите страну...' {...field} />
+              <FormInput
+                placeholder={t('organization.form.address.country.placeholder')}
+                {...field}
+              />
             </FormControl>
-            <FormMessage />
+            <FormMessage useTranslate />
           </FormItem>
         )}
       />
@@ -38,11 +46,14 @@ const Address = () => {
         name='city'
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Город</FormLabel>
+            <FormLabel>{t('organization.form.address.city.label')}</FormLabel>
             <FormControl>
-              <FormInput placeholder='Введите город...' {...field} />
+              <FormInput
+                placeholder={t('organization.form.address.city.placeholder')}
+                {...field}
+              />
             </FormControl>
-            <FormMessage />
+            <FormMessage useTranslate />
           </FormItem>
         )}
       />
@@ -51,11 +62,16 @@ const Address = () => {
         name='address'
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Адрес</FormLabel>
+            <FormLabel>
+              {t('organization.form.address.address.label')}
+            </FormLabel>
             <FormControl>
-              <FormInput placeholder='Введите адрес...' {...field} />
+              <FormInput
+                placeholder={t('organization.form.address.address.placeholder')}
+                {...field}
+              />
             </FormControl>
-            <FormMessage />
+            <FormMessage useTranslate />
           </FormItem>
         )}
       />

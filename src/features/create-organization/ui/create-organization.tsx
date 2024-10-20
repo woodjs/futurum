@@ -11,22 +11,23 @@ import { mainStepper } from '@/entities/organization'
 import { CreateBusinessForm } from './create-business-form'
 import { CreateFormWrapper } from './create-form-wrapper'
 import { useRouter } from '@/i18n/routing'
+import { useTranslations } from 'next-intl'
 
 const fakeCards = [
   {
-    title: 'Бизнес',
+    title: 'organization.types.business',
     image: '/images/svg/Hand_drawn_businessman.svg',
     link: '/profile/organizations/create/business',
     id: OrganizationType.BUSINESS,
   },
   {
-    title: 'Стартап',
+    title: 'organization.types.startup',
     image: '/images/svg/light_bulbs_curly_lines.svg',
     link: '/profile/organizations/create/startup',
     id: OrganizationType.STARTUP,
   },
   {
-    title: 'Благотворительность',
+    title: 'organization.types.charity',
     image: '/images/svg/Thin_Line_Calligraphy_Heart_2.svg',
     link: '/profile/organizations/create/charity',
     id: OrganizationType.CHARITY,
@@ -42,14 +43,16 @@ const CreateOrganizationForm = () => {
   const charityStepperInstance = charityStepper.useStepper()
   const startupStepperInstance = startupStepper.useStepper()
 
+  const t = useTranslations()
   const [selectedType, setSelectedType] = useState<OrganizationType>()
+
   return (
     <>
       {stepper.switch({
         type: () => (
           <div>
             <div className='my-8 text-center text-xl text-black'>
-              Выберите тип организации, которую вы хотите создать
+              {t('organization.form.stepper.mainStepper.typeSelection')}
             </div>
             <div className='mb-6 grid grid-cols-1 gap-8 lg:grid-cols-3'>
               {fakeCards.map(card => (
@@ -60,6 +63,7 @@ const CreateOrganizationForm = () => {
                   }}
                   key={card.title}
                   {...card}
+                  title={t(card.title)}
                 />
               ))}
             </div>
@@ -72,6 +76,10 @@ const CreateOrganizationForm = () => {
             onBack={() => stepper.prev()}
             onSuccess={() => {
               router.push('/profile/organizations')
+            }}
+            onReject={() => {
+              // setSelectedType(undefined)
+              // stepper.reset()
             }}
             stepper={
               selectedType === OrganizationType.BUSINESS
@@ -89,7 +97,9 @@ const CreateOrganizationForm = () => {
             }
           />
         ),
-        success: () => <div>success</div>,
+        success: () => (
+          <div>{t('organization.form.stepper.mainStepper.success')}</div>
+        ),
       })}
     </>
   )

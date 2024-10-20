@@ -10,11 +10,14 @@ import {
   FormMessage,
 } from '@/shared/ui/form'
 import Editor from '@/shared/ui/editor'
+import { useTranslations } from 'next-intl'
 
 type DescriptionValues = z.infer<typeof descriptionFormSchema>
 
 const Description = () => {
   const { control } = useFormContext<DescriptionValues>()
+  const t = useTranslations()
+
   return (
     <div className='grid gap-4'>
       <FormField
@@ -22,16 +25,16 @@ const Description = () => {
         name='description'
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Страна</FormLabel>
+            <FormLabel>{t('organization.form.description.label')}</FormLabel>
             <FormControl>
               <Editor
                 className='min-h-[300px]'
-                placeholder='Опишите свою организацию...'
+                placeholder={t('organization.form.description.placeholder')}
                 content={field.value || ''}
                 onContentChange={field.onChange}
               />
             </FormControl>
-            <FormMessage />
+            <FormMessage useTranslate />
           </FormItem>
         )}
       />

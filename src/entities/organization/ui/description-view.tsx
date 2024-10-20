@@ -1,3 +1,5 @@
+'use client'
+import { useTranslations } from 'next-intl'
 import { FC } from 'react'
 
 interface IDescriptionViewProps {
@@ -11,10 +13,13 @@ const DescriptionView: FC<IDescriptionViewProps> = ({
   id,
   edit,
 }) => {
+  const t = useTranslations()
   return (
     <div className='mt-6'>
       <div className='flex items-center justify-between'>
-        <div className='text-xl font-bold'>Описание</div>
+        <div className='text-xl font-bold'>
+          {t('organization.view.description')}
+        </div>
         {edit && edit({ id })}
       </div>
       <div

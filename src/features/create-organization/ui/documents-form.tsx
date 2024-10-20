@@ -3,6 +3,7 @@ import { Controller, useFormContext } from 'react-hook-form'
 import { documentsFormSchema } from '@/entities/organization'
 import { z } from 'zod'
 import FileUpload from '@/shared/ui/file-upload'
+import { useTranslations } from 'next-intl'
 
 // Типизация для значений формы
 type DocumentsFormValues = z.infer<typeof documentsFormSchema>
@@ -16,24 +17,25 @@ const DocumentsForm = () => {
     control,
     formState: { errors },
   } = useFormContext<DocumentsFormValues>()
+  const t = useTranslations()
 
   return (
     <div className='grid gap-4'>
-      {/* Поле для загрузки презентации */}
+      {/* Поле для загрузки логотипа */}
       <Controller
         name='logo'
         control={control}
         render={({ field }) => (
           <FileUpload
             name='logo'
-            label='Логотип организации'
+            label={t('organization.form.documents.logo.label')}
             accept={imageAccept}
             multiple={false}
             maxFiles={1}
             required={false}
             value={field.value}
             onChange={field.onChange}
-            error={errors.presentation?.message as string}
+            error={t(errors.logo?.message as string)}
           />
         )}
       />
@@ -43,86 +45,82 @@ const DocumentsForm = () => {
         render={({ field }) => (
           <FileUpload
             name='presentation'
-            label='Презентация компании (PDF)'
+            label={t('organization.form.documents.presentation.label')}
             accept={pdfAccept}
             multiple={false}
             maxFiles={1}
             required={false}
             value={field.value}
             onChange={field.onChange}
-            error={errors.presentation?.message as string}
+            error={t(errors.presentation?.message as string)}
           />
         )}
       />
-
       <Controller
         name='companyCard'
         control={control}
         render={({ field }) => (
           <FileUpload
             name='companyCard'
-            label='Карточка компании (PDF)'
+            label={t('organization.form.documents.companyCard.label')}
             accept={pdfAccept}
             multiple={false}
             maxFiles={1}
             required={false}
             value={field.value}
             onChange={field.onChange}
-            error={errors.companyCard?.message as string}
+            error={t(errors.companyCard?.message as string)}
           />
         )}
       />
-
       <Controller
         name='taxReturn'
         control={control}
         render={({ field }) => (
           <FileUpload
             name='taxReturn'
-            label='Налоговая декларация (PDF)'
+            label={t('organization.form.documents.taxReturn.label')}
             accept={pdfAccept}
             multiple={false}
             maxFiles={1}
             required={false}
             value={field.value}
             onChange={field.onChange}
-            error={errors.taxReturn?.message as string}
+            error={t(errors.taxReturn?.message as string)}
           />
         )}
       />
-
       <Controller
         name='financialIndicators'
         control={control}
         render={({ field }) => (
           <FileUpload
             name='financialIndicators'
-            label='Финансовые показатели (PDF)'
+            label={t('organization.form.documents.financialIndicators.label')}
             accept={pdfAccept}
             multiple={false}
             maxFiles={1}
             required={false}
             value={field.value}
             onChange={field.onChange}
-            error={errors.financialIndicators?.message as string}
+            error={t(errors.financialIndicators?.message as string)}
           />
         )}
       />
-
       <Controller
         name='additionalDocuments'
         control={control}
         render={({ field }) => (
           <FileUpload
             name='additionalDocuments'
-            label='Дополнительные документы (до 10, PNG, JPG, PDF, DOCX, XLSX)'
+            label={t('organization.form.documents.additionalDocuments.label')}
             accept={additionalAccept}
             multiple={true}
             maxFiles={10}
             required={false}
             value={field.value}
             onChange={field.onChange}
-            error={errors.additionalDocuments?.message as string}
+            error={t(errors.additionalDocuments?.message as string)}
           />
         )}
       />

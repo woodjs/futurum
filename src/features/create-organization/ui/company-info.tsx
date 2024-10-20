@@ -10,6 +10,7 @@ import {
   FormMessage,
 } from '@/shared/ui/form'
 import { FormInput } from '@/shared/ui/form-input'
+import { useTranslations } from 'next-intl'
 
 type CompanyInfoValues = z.infer<typeof companyInfoSchema>
 
@@ -18,6 +19,8 @@ const CompanyInfo = () => {
     control,
     formState: { errors },
   } = useFormContext<CompanyInfoValues>()
+  const t = useTranslations()
+
   return (
     <div className='grid gap-4'>
       <FormField
@@ -25,11 +28,18 @@ const CompanyInfo = () => {
         name='companyName'
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Название компании</FormLabel>
+            <FormLabel>
+              {t('organization.form.companyInfo.companyName.label')}
+            </FormLabel>
             <FormControl>
-              <FormInput placeholder='Введите название...' {...field} />
+              <FormInput
+                placeholder={t(
+                  'organization.form.companyInfo.companyName.placeholder',
+                )}
+                {...field}
+              />
             </FormControl>
-            <FormMessage />
+            <FormMessage useTranslate />
           </FormItem>
         )}
       />
@@ -38,11 +48,18 @@ const CompanyInfo = () => {
         name='position'
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Ваша должность в компании</FormLabel>
+            <FormLabel>
+              {t('organization.form.companyInfo.position.label')}
+            </FormLabel>
             <FormControl>
-              <FormInput placeholder='Введите вашу должность...' {...field} />
+              <FormInput
+                placeholder={t(
+                  'organization.form.companyInfo.position.placeholder',
+                )}
+                {...field}
+              />
             </FormControl>
-            <FormMessage />
+            <FormMessage useTranslate />
           </FormItem>
         )}
       />
@@ -51,14 +68,18 @@ const CompanyInfo = () => {
         name='ownershipForm'
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Форма собственности</FormLabel>
+            <FormLabel>
+              {t('organization.form.companyInfo.ownershipForm.label')}
+            </FormLabel>
             <FormControl>
               <FormInput
-                placeholder='Введите форму собственности...'
+                placeholder={t(
+                  'organization.form.companyInfo.ownershipForm.placeholder',
+                )}
                 {...field}
               />
             </FormControl>
-            <FormMessage />
+            <FormMessage useTranslate />
           </FormItem>
         )}
       />

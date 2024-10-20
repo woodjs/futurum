@@ -3,6 +3,7 @@ import { IEmployeeInfo } from '../model'
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar'
 import Link from 'next/link'
 import { getIdFromLink } from '../lib'
+import { useTranslations } from 'next-intl'
 
 interface IEmployeesViewProps {
   employees: IEmployeeInfo[]
@@ -15,10 +16,14 @@ export const EmployeesView: FC<IEmployeesViewProps> = ({
   id,
   edit,
 }) => {
+  const t = useTranslations()
+
   return (
     <div className='mt-6'>
       <div className='mb-4 flex items-center justify-between'>
-        <div className='text-xl font-bold'>Сотрудники</div>
+        <div className='text-xl font-bold'>
+          {t('organization.view.employees')}
+        </div>
         {edit && edit({ id })}
       </div>
       <div className='mt-4 rounded-lg bg-slate-100 p-4'>

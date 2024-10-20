@@ -17,6 +17,7 @@ interface IOrganizationBaseData {
     employees?: IEmployeeInfo[];
     type: OrganizationType;
     rating?: number;
+    verified?: boolean;
 }
 
 interface ISocialMediaLinks {

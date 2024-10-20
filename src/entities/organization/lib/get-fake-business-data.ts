@@ -4,6 +4,7 @@ export const getFakeBusinessData = (seed = 0): IBusinessOrganization => {
 
     faker.seed(seed);
     return {
+        verified: faker.helpers.arrayElement([true, false]),
         rating: faker.number.int({ min: 0, max: 5 }),
         type: OrganizationType.BUSINESS,
         id: faker.string.uuid(),
@@ -43,6 +44,8 @@ export const getFakeBusinessData = (seed = 0): IBusinessOrganization => {
 export const getFakeCharityData = (seed = 0): ICharityOrganization => {
     faker.seed(seed);
     return {
+
+        verified: faker.helpers.arrayElement([true, false]),
         rating: faker.number.int({ min: 0, max: 5 }),
         type: OrganizationType.CHARITY,
         id: faker.string.uuid(),
@@ -79,6 +82,8 @@ export const getFakeStartupData = (seed = 0): IStartupOrganization => {
     const requiredFunding = faker.number.int({ min: 1000, max: 10000000 });
     const raisedFunding = faker.number.int({ min: 1000, max: requiredFunding * 1.2 });
     return {
+
+        verified: faker.helpers.arrayElement([true, false]),
         rating: faker.number.int({ min: 0, max: 5 }),
         type: OrganizationType.STARTUP,
         id: faker.string.uuid(),

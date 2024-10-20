@@ -54,6 +54,7 @@ const OrganizationView: FC<IOrganizationViewProps> = ({
     socialMedia,
     employees,
     documents,
+    verified,
   } = organization
 
   return (
@@ -68,6 +69,7 @@ const OrganizationView: FC<IOrganizationViewProps> = ({
         country={country}
         ownershipForm={ownershipForm}
         positionInCompany={positionInCompany}
+        verified={verified}
       />
       {description && (
         <DescriptionView

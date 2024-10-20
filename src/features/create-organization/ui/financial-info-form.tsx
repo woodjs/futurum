@@ -10,6 +10,7 @@ import {
   FormMessage,
 } from '@/shared/ui/form'
 import { FormInput } from '@/shared/ui/form-input'
+import { useTranslations } from 'next-intl'
 
 type FinancialInfoValues = z.infer<typeof financialInfoSchema>
 
@@ -18,6 +19,8 @@ const FinancialInfoForm = () => {
     control,
     formState: { errors },
   } = useFormContext<FinancialInfoValues>()
+  const t = useTranslations()
+
   return (
     <div className='grid gap-4'>
       <FormField
@@ -25,15 +28,21 @@ const FinancialInfoForm = () => {
         name='foundationYear'
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Год основания</FormLabel>
+            <FormLabel>
+              {t(
+                'organization.form.startPage.financialInfo.foundationYear.label',
+              )}
+            </FormLabel>
             <FormControl>
               <FormInput
                 type='number'
-                placeholder='Введите год...'
+                placeholder={t(
+                  'organization.form.startPage.financialInfo.foundationYear.placeholder',
+                )}
                 {...field}
               />
             </FormControl>
-            <FormMessage />
+            <FormMessage useTranslate />
           </FormItem>
         )}
       />
@@ -42,11 +51,20 @@ const FinancialInfoForm = () => {
         name='annualTurnover'
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Годовой оборот</FormLabel>
+            <FormLabel>
+              {t(
+                'organization.form.startPage.financialInfo.annualTurnover.label',
+              )}
+            </FormLabel>
             <FormControl>
-              <FormInput placeholder='Введите оборот...' {...field} />
+              <FormInput
+                placeholder={t(
+                  'organization.form.startPage.financialInfo.annualTurnover.placeholder',
+                )}
+                {...field}
+              />
             </FormControl>
-            <FormMessage />
+            <FormMessage useTranslate />
           </FormItem>
         )}
       />
@@ -55,11 +73,20 @@ const FinancialInfoForm = () => {
         name='grossRevenue'
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Месячная выручка</FormLabel>
+            <FormLabel>
+              {t(
+                'organization.form.startPage.financialInfo.grossRevenue.label',
+              )}
+            </FormLabel>
             <FormControl>
-              <FormInput placeholder='Введите выручку...' {...field} />
+              <FormInput
+                placeholder={t(
+                  'organization.form.startPage.financialInfo.grossRevenue.placeholder',
+                )}
+                {...field}
+              />
             </FormControl>
-            <FormMessage />
+            <FormMessage useTranslate />
           </FormItem>
         )}
       />

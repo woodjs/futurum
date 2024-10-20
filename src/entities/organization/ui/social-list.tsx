@@ -1,9 +1,11 @@
+'use client'
+
 import { FC } from 'react'
 import { ISocialMediaLinks } from '../model'
 import { Badge } from '@/shared/ui/badge'
-import { getIdFromLink } from '../lib'
 import { getDataFromLink } from '../lib/get-data-from-link'
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 
 interface ISocialLinkProps {
   link: string
@@ -35,10 +37,13 @@ interface ISocialListProps {
   edit?: FC<{ id: string }>
 }
 const SocialList: FC<ISocialListProps> = ({ links, id, edit }) => {
+  const t = useTranslations()
   return (
     <div className='mt-6'>
       <div className='mb-4 flex items-center justify-between'>
-        <div className='text-xl font-bold'>Социальные сети</div>
+        <div className='text-xl font-bold'>
+          {t('organization.view.socialNetworks')}
+        </div>
         {edit && edit({ id })}
       </div>
       <div className='flex flex-wrap items-center gap-2'>

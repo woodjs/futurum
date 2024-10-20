@@ -11,9 +11,11 @@ import Description from './description'
 import { NormalButton } from '@/shared/ui/normal-button'
 import ContactInfo from './contact-info'
 import DocumentsForm from './documents-form'
+import { useTranslations } from 'next-intl'
 
 export const CreateOrganizationForm = () => {
   const stepper = useStepper()
+  const t = useTranslations()
 
   const form = useForm({
     mode: 'onTouched',
@@ -34,14 +36,18 @@ export const CreateOrganizationForm = () => {
     <Form {...form}>
       <div className='mb-4 flex items-center justify-between'>
         <div>
-          <div className='text-2xl text-black'>Создание компании</div>
-          <div className='text-slate-600'>{stepper.current.description}</div>
+          <div className='text-2xl text-black'>
+            {t('organization.form.stepper.mainStepper.createOrganization')}
+          </div>
+          <div className='text-slate-600'>{t(stepper.current.description)}</div>
         </div>
         <div className='text-slate-500'>
-          Шаг {stepper.current.index + 1} из {steps.length}
+          {t('organization.form.stepper.mainStepper.stepInfo', {
+            currentStep: stepper.current.index + 1,
+            totalSteps: steps.length,
+          })}
         </div>
       </div>
-      {/* <form onSubmit={form.handleSubmit(onSubmit)}> */}
       {stepper.switch({
         company: () => <CompanyInfo />,
         address: () => <Address />,
@@ -51,7 +57,7 @@ export const CreateOrganizationForm = () => {
       })}
       <div className='mt-8 flex justify-between'>
         <NormalButton variant='ghost' onClick={() => stepper.prev()}>
-          Назад
+          {t('buttons.back')}
         </NormalButton>
         {stepper.current.skip && (
           <NormalButton
@@ -59,17 +65,16 @@ export const CreateOrganizationForm = () => {
             variant='ghost'
             onClick={() => stepper.next()}
           >
-            Пропустить
+            {t('buttons.skip')}
           </NormalButton>
         )}
         <NormalButton
           onClick={form.handleSubmit(onSubmit)}
           disabled={!form.formState.isValid}
         >
-          {stepper.isLast ? 'Submit' : 'Next'}
+          {stepper.isLast ? t('buttons.submit') : t('buttons.next')}
         </NormalButton>
       </div>
-      {/* </form> */}
     </Form>
   )
 }
