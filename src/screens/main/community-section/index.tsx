@@ -7,7 +7,7 @@ import Section from '../section';
 import { useTranslations } from 'next-intl';
 
 const CommunitySection = () => {
-	const t = useTranslations('Home.Categories');
+	const t = useTranslations('default.Home.Categories');
 
 	return (
 		<Section

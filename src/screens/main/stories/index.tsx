@@ -14,7 +14,7 @@ import Section from '../section';
 
 
 export default function Stories() {
-	const t = useTranslations('Home.Categories');
+	const t = useTranslations('default.Home.Categories');
 
 	const data = [
 		{ id: 1, title: t('WhatIsFuturum'), image: '/images/stories/1.png' },

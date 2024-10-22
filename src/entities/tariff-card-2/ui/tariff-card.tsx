@@ -9,26 +9,6 @@ import { tariffs } from '@/entities/tariff-card/lib/tariffs'
 import { ButtonName } from '@/entities/tariff-card/lib/buttonName'
 import { useTranslations } from 'next-intl'
 
-interface ISubscriptionPlan {
-  price: number
-  nftTotalQuantity: number 
-  nftArtwork: number 
-  collectionsQuantity: number 
-  collectibleSBT: string 
-  commission: number 
-  organizationAddition: number 
-  customCollectionDesign: boolean 
-  accountRating: boolean 
-  nftPurchaseAbility: boolean 
-  internalWalletCreation: boolean 
-  prioritySupport: boolean 
-  closedCommunity: boolean
-  personalManager: boolean 
-  status: string 
-  tokenCreation: boolean
-  referralConnection: boolean
-}
-
 interface IProps {
   variant?: Tariff
   subscriptionPlan: ISubscriptionPlan

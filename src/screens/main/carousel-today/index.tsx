@@ -18,7 +18,7 @@ import { useRef } from 'react';
 import { useTranslations } from 'next-intl';
 
 export default function CarouselToday() {
-	const t = useTranslations('Home.Categories');
+	const t = useTranslations('default.Home.Categories');
 
 	const data = [
 		{

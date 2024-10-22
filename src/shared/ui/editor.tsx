@@ -90,9 +90,12 @@ const toggleTextNode = (editor: TiptapEditor, type?: TextNodeType) => {
   }
 }
 
-const MenuBar = () => {
+interface IEditorMenuBarProps extends React.HTMLAttributes<HTMLDivElement> {
+  onUpdate?: (props: EditorEvents['update']) => void
+}
+const MenuBar: FC<IEditorMenuBarProps> = ({ onUpdate }) => {
   const { editor } = useCurrentEditor()
-  const t = useTranslations('Editor')
+  const t = useTranslations('default.Editor')
   const [alignment, setAlignment] = React.useState('left')
 
   const setLink = useCallback(() => {
@@ -148,6 +151,7 @@ const MenuBar = () => {
       }
     })
     editor.on('update', editor => {
+      if (onUpdate) onUpdate?.(editor)
       const type = editor?.editor?.state?.selection?.$head?.parent?.type?.name
       const level =
         editor?.editor?.state?.selection?.$head?.parent?.attrs?.level
@@ -349,6 +353,7 @@ interface IEditorProps {
   label?: string
   description?: string
   id?: string
+  placeholder?: string
 }
 
 const Editor: React.FC<IEditorProps> = ({
@@ -359,6 +364,7 @@ const Editor: React.FC<IEditorProps> = ({
   id,
   onContentChange,
   onUpdate,
+  placeholder,
   ...props
 }) => {
   const innerId = useId()
@@ -379,22 +385,20 @@ const Editor: React.FC<IEditorProps> = ({
             id: id || innerId,
           },
         }}
-        slotBefore={<MenuBar />}
-        extensions={[
-          ...extensions,
-          Placeholder.configure({
-            placeholder: 'Write something ...',
-          }),
-        ]}
+        slotBefore={
+          <MenuBar
+            onUpdate={(props: EditorEvents['update']) => {
+              if (typeof onContentChange === 'function') {
+                onContentChange(props.editor.getHTML())
+              }
+              if (typeof onUpdate === 'function') {
+                onUpdate(props)
+              }
+            }}
+          />
+        }
+        extensions={[...extensions, Placeholder.configure({ placeholder })]}
         content={content}
-        onUpdate={props => {
-          if (typeof onContentChange === 'function') {
-            onContentChange(props.editor.getText())
-          }
-          if (typeof onUpdate === 'function') {
-            onUpdate(props)
-          }
-        }}
         {...props}
       />
       {description && (

@@ -8,7 +8,7 @@ import { ButtonName } from '@/entities/tariff-card/lib/buttonName'
 import { Tariff } from '@/shared/api/types'
 
 const Tariffs = () => {
-  const t = useTranslations('Tariffs')
+  const t = useTranslations('default.Tariffs')
   const tariff = 'Premium'
   const expireDate = '21.12.2025'
 

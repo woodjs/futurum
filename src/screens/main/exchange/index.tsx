@@ -48,7 +48,7 @@ const data = [
 ];
 
 export default function Exchange() {
-	const t = useTranslations('Home.Categories');
+	const t = useTranslations('default.Home.Categories');
 	
 	return (
 		<Section

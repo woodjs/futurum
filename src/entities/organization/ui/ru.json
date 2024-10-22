@@ -1,0 +1,285 @@
+{
+  "form": {
+    "mainInfo": {
+      "label": "Основная информация",
+      "description": "Укажите основную информацию организации"
+    },
+    "companyInfo": {
+      "position": {
+        "required": "Введите должность",
+        "min": "Введите должность",
+        "label": "Ваша должность в компании",
+        "placeholder": "Введите вашу должность..."
+      },
+      "companyName": {
+        "required": "Введите название компании",
+        "min": "Название компании должно содержать не менее 3 символов",
+        "label": "Название компании",
+        "placeholder": "Введите название компании..."
+      },
+      "ownershipForm": {
+        "required": "Введите форму собственности",
+        "min": "Введите форму собственности",
+        "label": "Форма собственности",
+        "placeholder": "Введите форму собственности..."
+      }
+    },
+    "address": {
+      "address": {
+        "required": "Введите адрес",
+        "min": "Введите адрес",
+        "label": "Адрес",
+        "placeholder": "Введите адрес..."
+      },
+      "city": {
+        "required": "Введите город",
+        "min": "Введите город",
+        "label": "Город",
+        "placeholder": "Введите город..."
+      },
+      "country": {
+        "required": "Введите страну",
+        "min": "Введите страну",
+        "label": "Страна",
+        "placeholder": "Введите страну..."
+      }
+    },
+    "contactInfo": {
+      "website": {
+        "invalid": "Неверный адрес сайта",
+        "label": "Веб-сайт",
+        "placeholder": "Введите ссылку..."
+      },
+      "phone": {
+        "invalid": "Неверный номер телефона",
+        "label": "Номер телефона",
+        "placeholder": "Введите номер телефона..."
+      },
+      "facebook": {
+        "invalid": "Неверный адрес сайта",
+        "label": "Facebook",
+        "placeholder": "Введите ссылку..."
+      },
+      "instagram": {
+        "invalid": "Неверный адрес сайта",
+        "label": "Instagram",
+        "placeholder": "Введите ссылку..."
+      },
+      "twitter": {
+        "invalid": "Неверный адрес сайта",
+        "label": "Twitter",
+        "placeholder": "Введите ссылку..."
+      },
+      "tiktok": {
+        "invalid": "Неверный адрес сайта",
+        "label": "TikTok",
+        "placeholder": "Введите ссылку..."
+      },
+      "telegram": {
+        "invalid": "Неверный адрес сайта",
+        "label": "Telegram",
+        "placeholder": "Введите ссылку..."
+      },
+      "youtube": {
+        "invalid": "Неверный адрес сайта",
+        "label": "YouTube",
+        "placeholder": "Введите ссылку..."
+      },
+      "whatsapp": {
+        "invalid": "Неверный адрес сайта",
+        "label": "WhatsApp",
+        "placeholder": "Введите ссылку..."
+      },
+      "vk": {
+        "invalid": "Неверный адрес сайта",
+        "label": "ВКонтакте",
+        "placeholder": "Введите ссылку..."
+      },
+      "weChat": {
+        "invalid": "Неверный адрес сайта",
+        "label": "WeChat",
+        "placeholder": "Введите ссылку..."
+      },
+      "reddit": {
+        "invalid": "Неверный адрес сайта",
+        "label": "Reddit",
+        "placeholder": "Введите ссылку..."
+      }
+    },
+    "documents": {
+      "logo": {
+        "min": "Логотип обязателен",
+        "label": "Логотип организации",
+        "placeholder": "Загрузите логотип..."
+      },
+      "presentation": {
+        "label": "Презентация компании (PDF)",
+        "placeholder": "Загрузите презентацию..."
+      },
+      "companyCard": {
+        "label": "Карточка компании (PDF)",
+        "placeholder": "Загрузите карточку компании..."
+      },
+      "taxReturn": {
+        "label": "Налоговая декларация (PDF)",
+        "placeholder": "Загрузите налоговую декларацию..."
+      },
+      "financialIndicators": {
+        "label": "Финансовые показатели (PDF)",
+        "placeholder": "Загрузите финансовые показатели..."
+      },
+      "additionalDocuments": {
+        "label": "Дополнительные документы (до 10, PNG, JPG, PDF, DOCX, XLSX)",
+        "placeholder": "Загрузите дополнительные документы..."
+      }
+    },
+    "description": {
+      "label": "Описание",
+      "max": "Описание не должно превышать 3000 символов"
+    },
+    "startPage": {
+      "amountForStart": {
+        "required": "Сумма должна быть числом",
+        "min": "Сумма должна быть больше 0",
+        "label": "Сумма для начала",
+        "placeholder": "Введите сумму..."
+      },
+      "files": {
+        "label": "Файлы (до 10, PNG, JPG)",
+        "placeholder": "Загрузите файлы..."
+      },
+      "financialInfo": {
+        "foundationYear": {
+          "required": "Год основания должен быть числом",
+          "min": "Год основания должен быть больше 1000",
+          "max": "Год основания не может превышать текущий год",
+          "label": "Год основания",
+          "placeholder": "Введите год..."
+        },
+        "annualTurnover": {
+          "required": "Годовой оборот должен быть числом",
+          "min": "Годовой оборот должен быть больше 0",
+          "label": "Годовой оборот",
+          "placeholder": "Введите оборот..."
+        },
+        "grossRevenue": {
+          "required": "Валовая выручка должна быть числом",
+          "min": "Валовая выручка должна быть больше 0",
+          "label": "Ежемесячная выручка",
+          "placeholder": "Введите выручку..."
+        }
+      },
+      "employee": {
+        "firstName": {
+          "min": "Введите имя",
+          "label": "Имя",
+          "placeholder": "Введите имя..."
+        },
+        "lastName": {
+          "min": "Введите фамилию или первую букву",
+          "label": "Фамилия",
+          "placeholder": "Введите фамилию или первую букву..."
+        },
+        "futurumAccount": {
+          "invalid": "Введите действительную ссылку",
+          "label": "Аккаунт Futurum",
+          "placeholder": "Введите ссылку..."
+        },
+        "phone": {
+          "invalid": "Введите действительный номер телефона",
+          "label": "Телефон",
+          "placeholder": "Введите номер телефона..."
+        },
+        "telegram": {
+          "min": "Введите Telegram",
+          "label": "Telegram",
+          "placeholder": "Введите Telegram..."
+        },
+        "avatar": {
+          "label": "Фотография сотрудника",
+          "placeholder": "Загрузите фотографию..."
+        }
+      },
+      "employees": {
+        "max": "Максимальное количество сотрудников - 10",
+        "addEmployee": "Добавить сотрудника",
+        "removeEmployee": "Удалить сотрудника"
+      }
+    },
+    "stepper": {
+      "businessStepper": {
+        "company": "Заполните основную информацию о компании",
+        "address": "Заполните адрес",
+        "financial": "Заполните финансовую информацию",
+        "description": "Заполните описание",
+        "contact": "Заполните контактную информацию",
+        "employees": "Заполните информацию о сотрудниках",
+        "files": "Загрузите документы"
+      },
+      "charityStepper": {
+        "company": "Заполните основную информацию о компании",
+        "address": "Заполните адрес",
+        "description": "Заполните описание",
+        "contact": "Заполните контактную информацию",
+        "employees": "Заполните информацию о сотрудниках",
+        "files": "Загрузите документы"
+      },
+      "startupStepper": {
+        "company": "Заполните основную информацию о компании",
+        "address": "Заполните адрес",
+        "startPage": "Заполните информацию о стартапе",
+        "description": "Заполните описание",
+        "contact": "Заполните контактную информацию",
+        "employees": "Заполните информацию о сотрудниках",
+        "files": "Загрузите документы"
+      },
+      "mainStepper": {
+        "createOrganization": "Создание организации",
+        "typeSelection": "Выберите тип организации, которую хотите создать",
+        "type": "Выберите тип организации",
+        "create": "Создание организации",
+        "success": "Организация создана",
+        "backToTypeSelection": "Назад к выбору типа организации",
+        "stepInfo": "Шаг {currentStep} из {totalSteps}"
+      }
+    }
+  },
+  "view": {
+    "description": "Описание",
+    "presentation": "Презентация",
+    "companyCard": "Карточка компании",
+    "taxDeduction": "Налоговый вычет",
+    "financialIndicators": "Финансовые показатели",
+    "additionalDocuments": "Дополнительные документы",
+    "employees": "Сотрудники",
+    "foundationYear": "Год основания",
+    "annualTurnover": "Годовой оборот",
+    "grossRevenue": "Валовая выручка",
+    "socialNetworks": "Социальные сети",
+    "startPage": "Стартовая страница",
+    "amountForStart": "Необходимое для начала",
+    "myOrganizations": "Мои организации",
+    "createOrganization": "Создать организацию",
+    "documents": "Документы",
+    "noOrganizations": "У вас еще нет организации. Создайте организацию сейчас"
+  },
+  "buttons": {
+    "back": "Назад",
+    "next": "Далее",
+    "submit": "Отправить",
+    "skip": "Пропустить",
+    "toTypeSelection": "К выбору типа организации",
+    "create": "Создать",
+    "createOrganization": "Создать организацию",
+    "edit": "Редактировать",
+    "addEmployee": "Добавить сотрудника",
+    "removeEmployee": "Удалить сотрудника",
+    "cancel": "Отмена",
+    "save": "Сохранить"
+  },
+  "types": {
+    "business": "Бизнес",
+    "startup": "Стартап",
+    "charity": "Благотворительность"
+  }
+}

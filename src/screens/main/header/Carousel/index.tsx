@@ -7,7 +7,7 @@ import Section from '../../section'
 import { useTranslations } from 'next-intl'
 
 export default function CarouselHeader() {
-  const t = useTranslations('Home.FeaturesSlider')
+  const t = useTranslations('default.Home.FeaturesSlider')
   const plugin = useRef(Autoplay({ delay: 2000, playOnInit: false }))
   return (
     <Section className='mt-[24px] lg:mt-[64px]'>

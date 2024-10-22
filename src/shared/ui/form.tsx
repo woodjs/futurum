@@ -14,6 +14,7 @@ import {
 
 import { cn } from '@/shared/lib/utils'
 import { Label } from '@/shared/ui/label'
+import { useTranslations } from 'next-intl'
 
 const Form = FormProvider
 
@@ -142,28 +143,36 @@ const FormDescription = React.forwardRef<
 })
 FormDescription.displayName = 'FormDescription'
 
-const FormMessage = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
->(({ className, children, ...props }, ref) => {
-  const { error, formMessageId } = useFormField()
-  const body = error ? String(error?.message) : children
+interface FormMessageProps extends React.HTMLAttributes<HTMLParagraphElement> {
+  useTranslate?: boolean
+}
 
-  if (!body) {
-    return null
-  }
+const FormMessage = React.forwardRef<HTMLParagraphElement, FormMessageProps>(
+  ({ className, useTranslate = false, children, ...props }, ref) => {
+    const t = useTranslations()
+    const { error, formMessageId } = useFormField()
+    const body = error
+      ? useTranslate
+        ? t(error?.message)
+        : String(error?.message)
+      : children
 
-  return (
-    <p
-      ref={ref}
-      id={formMessageId}
-      className={cn('text-sm font-medium text-destructive', className)}
-      {...props}
-    >
-      {body}
-    </p>
-  )
-})
+    if (!body) {
+      return null
+    }
+
+    return (
+      <p
+        ref={ref}
+        id={formMessageId}
+        className={cn('text-sm font-medium text-destructive', className)}
+        {...props}
+      >
+        {body}
+      </p>
+    )
+  },
+)
 FormMessage.displayName = 'FormMessage'
 
 export {

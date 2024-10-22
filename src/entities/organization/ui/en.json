@@ -1,0 +1,285 @@
+{
+  "form": {
+    "mainInfo": {
+      "label": "Company Information",
+      "description": "Enter the company information"
+    },
+    "companyInfo": {
+      "position": {
+        "required": "Enter the position",
+        "min": "Enter the position",
+        "label": "Your position in the company",
+        "placeholder": "Enter your position..."
+      },
+      "companyName": {
+        "required": "Enter the company name",
+        "min": "The company name must be at least 3 characters long",
+        "label": "Company Name",
+        "placeholder": "Enter the company name..."
+      },
+      "ownershipForm": {
+        "required": "Enter the form of ownership",
+        "min": "Enter the form of ownership",
+        "label": "Form of Ownership",
+        "placeholder": "Enter the form of ownership..."
+      }
+    },
+    "address": {
+      "address": {
+        "required": "Enter the address",
+        "min": "Enter the address",
+        "label": "Address",
+        "placeholder": "Enter the address..."
+      },
+      "city": {
+        "required": "Enter the city",
+        "min": "Enter the city",
+        "label": "City",
+        "placeholder": "Enter the city..."
+      },
+      "country": {
+        "required": "Enter the country",
+        "min": "Enter the country",
+        "label": "Country",
+        "placeholder": "Enter the country..."
+      }
+    },
+    "contactInfo": {
+      "website": {
+        "invalid": "Invalid website address",
+        "label": "Website",
+        "placeholder": "Enter the link..."
+      },
+      "phone": {
+        "invalid": "Invalid phone number",
+        "label": "Phone Number",
+        "placeholder": "Enter the phone number..."
+      },
+      "facebook": {
+        "invalid": "Invalid website address",
+        "label": "Facebook",
+        "placeholder": "Enter the link..."
+      },
+      "instagram": {
+        "invalid": "Invalid website address",
+        "label": "Instagram",
+        "placeholder": "Enter the link..."
+      },
+      "twitter": {
+        "invalid": "Invalid website address",
+        "label": "Twitter",
+        "placeholder": "Enter the link..."
+      },
+      "tiktok": {
+        "invalid": "Invalid website address",
+        "label": "TikTok",
+        "placeholder": "Enter the link..."
+      },
+      "telegram": {
+        "invalid": "Invalid website address",
+        "label": "Telegram",
+        "placeholder": "Enter the link..."
+      },
+      "youtube": {
+        "invalid": "Invalid website address",
+        "label": "YouTube",
+        "placeholder": "Enter the link..."
+      },
+      "whatsapp": {
+        "invalid": "Invalid website address",
+        "label": "WhatsApp",
+        "placeholder": "Enter the link..."
+      },
+      "vk": {
+        "invalid": "Invalid website address",
+        "label": "VK",
+        "placeholder": "Enter the link..."
+      },
+      "weChat": {
+        "invalid": "Invalid website address",
+        "label": "WeChat",
+        "placeholder": "Enter the link..."
+      },
+      "reddit": {
+        "invalid": "Invalid website address",
+        "label": "Reddit",
+        "placeholder": "Enter the link..."
+      }
+    },
+    "documents": {
+      "logo": {
+        "min": "Logo is required",
+        "label": "Organization Logo",
+        "placeholder": "Upload the logo..."
+      },
+      "presentation": {
+        "label": "Company Presentation (PDF)",
+        "placeholder": "Upload the presentation..."
+      },
+      "companyCard": {
+        "label": "Company Card (PDF)",
+        "placeholder": "Upload the company card..."
+      },
+      "taxReturn": {
+        "label": "Tax Return (PDF)",
+        "placeholder": "Upload the tax return..."
+      },
+      "financialIndicators": {
+        "label": "Financial Indicators (PDF)",
+        "placeholder": "Upload the financial indicators..."
+      },
+      "additionalDocuments": {
+        "label": "Additional Documents (up to 10, PNG, JPG, PDF, DOCX, XLSX)",
+        "placeholder": "Upload additional documents..."
+      }
+    },
+    "description": {
+      "label": "Description",
+      "max": "Description must not exceed 3000 characters"
+    },
+    "startPage": {
+      "amountForStart": {
+        "required": "The amount must be a number",
+        "min": "The amount must be greater than 0",
+        "label": "Amount for Start",
+        "placeholder": "Enter the amount..."
+      },
+      "files": {
+        "label": "Files (up to 10, PNG, JPG)",
+        "placeholder": "Upload the files..."
+      },
+      "financialInfo": {
+        "foundationYear": {
+          "required": "The foundation year must be a number",
+          "min": "The foundation year must be greater than 1000",
+          "max": "The foundation year cannot exceed the current year",
+          "label": "Foundation Year",
+          "placeholder": "Enter the year..."
+        },
+        "annualTurnover": {
+          "required": "The annual turnover must be a number",
+          "min": "The annual turnover must be greater than 0",
+          "label": "Annual Turnover",
+          "placeholder": "Enter the turnover..."
+        },
+        "grossRevenue": {
+          "required": "Gross revenue must be a number",
+          "min": "Gross revenue must be greater than 0",
+          "label": "Monthly Revenue",
+          "placeholder": "Enter the revenue..."
+        }
+      },
+      "employee": {
+        "firstName": {
+          "min": "Enter the first name",
+          "label": "First Name",
+          "placeholder": "Enter the first name..."
+        },
+        "lastName": {
+          "min": "Enter the last name or the first letter",
+          "label": "Last Name",
+          "placeholder": "Enter the last name or the first letter..."
+        },
+        "futurumAccount": {
+          "invalid": "Enter a valid link",
+          "label": "Futurum Account",
+          "placeholder": "Enter the link..."
+        },
+        "phone": {
+          "invalid": "Enter a valid phone number",
+          "label": "Phone",
+          "placeholder": "Enter the phone number..."
+        },
+        "telegram": {
+          "min": "Enter Telegram",
+          "label": "Telegram",
+          "placeholder": "Enter the Telegram..."
+        },
+        "avatar": {
+          "label": "Employee Photo",
+          "placeholder": "Upload the photo..."
+        }
+      },
+      "employees": {
+        "max": "The maximum number of employees is 10",
+        "addEmployee": "Add Employee",
+        "removeEmployee": "Remove Employee"
+      }
+    },
+    "stepper": {
+      "businessStepper": {
+        "company": "Fill in the basic company information",
+        "address": "Fill in the address",
+        "financial": "Fill in the financial information",
+        "description": "Fill in the description",
+        "contact": "Fill in the contact information",
+        "employees": "Fill in the employee information",
+        "files": "Upload the documents"
+      },
+      "charityStepper": {
+        "company": "Fill in the basic company information",
+        "address": "Fill in the address",
+        "description": "Fill in the description",
+        "contact": "Fill in the contact information",
+        "employees": "Fill in the employee information",
+        "files": "Upload the documents"
+      },
+      "startupStepper": {
+        "company": "Fill in the basic company information",
+        "address": "Fill in the address",
+        "startPage": "Fill in the startup information",
+        "description": "Fill in the description",
+        "contact": "Fill in the contact information",
+        "employees": "Fill in the employee information",
+        "files": "Upload the documents"
+      },
+      "mainStepper": {
+        "createOrganization": "Organization creation",
+        "typeSelection": "Select the type of organization you want to create",
+        "type": "Select the type of organization",
+        "create": "Creating the organization",
+        "success": "Organization created",
+        "backToTypeSelection": "Back to organization type selection",
+        "stepInfo": "Step {currentStep} of {totalSteps}"
+      }
+    }
+  },
+  "view": {
+    "description": "Description",
+    "presentation": "Presentation",
+    "companyCard": "Company Сard",
+    "taxDeduction": "Tax Deduction",
+    "financialIndicators": "Financial Indicators",
+    "additionalDocuments": "Additional Documents",
+    "employees": "Employees",
+    "foundationYear": "Foundation Year",
+    "annualTurnover": "Annual Turnover",
+    "grossRevenue": "Gross Revenue",
+    "socialNetworks": "Social Networks",
+    "startPage": "Start Page",
+    "amountForStart": "Necessary for Start",
+    "myOrganizations": "My Organizations",
+    "createOrganization": "Create Organization",
+    "documents": "Documents",
+    "noOrganizations": "You don't have an organization. Create an organization now"
+  },
+  "buttons": {
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit",
+    "skip": "Skip",
+    "toTypeSelection": "To organization type selection",
+    "create": "Create",
+    "createOrganization": "Create Organization",
+    "edit": "Edit",
+    "addEmployee": "Add Employee",
+    "removeEmployee": "Remove Employee",
+    "cancel": "Cancel",
+    "save": "Save"
+  },
+  "types": {
+    "business": "Business",
+    "startup": "Startup",
+    "charity": "Charity"
+  }
+}

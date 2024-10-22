@@ -18,6 +18,31 @@ import { Button, Typography } from '@/shared/ui'
 import { boolean } from 'zod'
 import { useState } from 'react'
 
+interface ISubscriptionPlanDetails {
+  nftTotalQuantity: number
+  nftArtwork: number
+  collectionsQuantity: number
+  collectibleSBT: string
+  commission: number
+  organizationAddition: number
+  customCollectionDesign: boolean
+  accountRating: boolean
+  nftPurchaseAbility: boolean
+  internalWalletCreation: boolean
+  prioritySupport: boolean
+  closedCommunity: boolean
+  personalManager: boolean
+  status: string
+  tokenCreation: number
+  referralConnection: number
+}
+
+export interface ISubscriptionPlan {
+  name: string
+  price: number
+  details: ISubscriptionPlanDetails
+}
+
 const Tariffs = () => {
   const t = useTranslations('Tariffs')
   const tariff = 'Premium'
@@ -145,7 +170,8 @@ const Tariffs = () => {
                 )}
               >
                 <Typography variant='subtitle-3'>
-                  {el.details[feature.key] === 0
+                  {el.details[feature.key as keyof ISubscriptionPlanDetails] ===
+                  0
                     ? '-'
                     : feature.key === 'referralConnection'
                       ? el.details[feature.key] +
@@ -153,11 +179,17 @@ const Tariffs = () => {
                         referlaLevelsTexts[index]
                       : feature.key === 'commission'
                         ? el.details[feature.key] + '%'
-                        : typeof el.details[feature.key] === 'boolean'
-                          ? el.details[feature.key]
+                        : typeof el.details[
+                              feature.key as keyof ISubscriptionPlanDetails
+                            ] === 'boolean'
+                          ? el.details[
+                              feature.key as keyof ISubscriptionPlanDetails
+                            ]
                             ? 'да'
                             : 'нет'
-                          : el.details[feature.key]}
+                          : el.details[
+                              feature.key as keyof ISubscriptionPlanDetails
+                            ]}
                 </Typography>
               </TableCell>
             ))}

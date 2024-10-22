@@ -77,4 +77,29 @@ const getShortNumber = (
     const formatter = getCurrencyFormatter(locale, options);
     return formatter.format(number);
 }
+
+
+const getFormattedNumber = (
+    number: number,
+    locale: TLocale = 'en',
+    currency?: string
+) => {
+    const options: Intl.NumberFormatOptions = {
+        notation: 'compact',
+        compactDisplay: 'long'
+    };
+
+    if (currency) {
+        options.style = 'currency';
+        options.currency = currency;
+    }
+
+    const formatter = getCurrencyFormatter(locale, options);
+    return formatter.format(number);
+}
+
+export {
+    getFormattedNumber
+};
+
 export default getShortNumber;

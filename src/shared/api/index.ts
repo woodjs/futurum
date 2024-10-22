@@ -1,95 +1,90 @@
-import axios from 'axios'
-import storeTokens from '@/utils/storeTokens'
-import { redirect } from '@/i18n/routing'
+import axios, { AxiosResponse } from 'axios'
+import Cookies from 'js-cookie'
+import { Router } from 'next/router'
+// import { getTranslations } from 'next-intl/server'
+import { Tokens } from '@/shared/api/types/tokens'
+import { API_URL, AUTH_LOGOUT_URL, AUTH_REFRESH_URL } from './config'
+import HTTP_CODES_ENUM from '@/shared/api/types/http-codes'
+import { redirect } from '../../i18n/routing'
+import {
+  getAccessToken,
+  redirectToSignIn,
+  removeAccessToken,
+} from './helpers/auth.helper'
 
-const instance = axios.create({
+const AUTH_TOKEN_KEY = 'auth-token-data'
+export type TokensInfo = Tokens | null
+export type RefreshTokenType = any | null
+
+const tokens = JSON.parse(Cookies.get(AUTH_TOKEN_KEY) ?? 'null') as TokensInfo
+const locale = Cookies.get('NEXT_LOCALE')
+
+let refreshingTokens: RefreshTokenType = null
+
+export const protectedAPI = axios.create({
+  baseURL: API_URL,
   withCredentials: true,
-  baseURL: process.env.SERVER_URL,
 })
 
-instance.interceptors.request.use(config => {
-  config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
+function refreshTokens() {
+  return protectedAPI.post('/v1/auth/refresh')
+}
+protectedAPI.interceptors.request.use(config => {
+  const accessToken = tokens?.token
+
+  if (config && config.headers)
+    if (accessToken)
+      // eslint-disable-next-line no-param-reassign
+      config.headers.Authorization = `Bearer ${accessToken}`
 
   return config
 })
 
-let isRefreshing = false
-let failedQueue: any[] = []
-
-const processQueue = (error: any, token = null) => {
-  failedQueue.forEach(prom => {
-    if (error) {
-      prom.reject(error)
-    } else {
-      prom.resolve(token)
-    }
-  })
-
-  failedQueue = []
-}
-
-instance.interceptors.response.use(
-  response => response,
-  error => {
-    const originalRequest = error.config
-
-    if (
-      (error.response.status === 401 ||
-        error.response.status === 419 ||
-        error.response.status === 406 ||
-        error.response.status === 400) &&
-      !originalRequest._retry
-    ) {
-      if (isRefreshing) {
-        return new Promise((resolve, reject) => {
-          failedQueue.push({ resolve, reject })
-
-          if (
-            originalRequest.url === '/auth/refresh-token' &&
-            (error.response.status === 401 ||
-              error.response.status === 419 ||
-              error.response.status === 406 ||
-              error.response.status === 400)
-          ) {
-            redirect('signIn')
+protectedAPI.interceptors.response.use(
+  res => res,
+  async error => {
+    // const t = await getTranslations('default.Errors')
+    const { config } = error
+    if (error.response) {
+      if (
+        error.response.status === HTTP_CODES_ENUM.UNAUTHORIZED &&
+        !config.isRetry
+      ) {
+        config.isRetry = true
+        try {
+          if (!refreshingTokens) {
+            refreshingTokens = refreshTokens()
           }
-        })
-          .then(token => {
-            originalRequest.headers.Authorization = `Bearer ${token}`
-            return instance(originalRequest)
-          })
-          .catch(err => {
-            redirect('signIn')
-            return Promise.reject(err)
-          })
+
+          await refreshingTokens()
+          refreshingTokens = null
+          return protectedAPI(config)
+        } catch (err) {
+          refreshingTokens = null
+          removeAccessToken()
+
+          redirectToSignIn(locale)
+          return false
+        }
       }
 
-      originalRequest._retry = true
-      isRefreshing = true
+      const errData = {
+        message: error.response?.data?.message || 'Uknnown server error',
+        status: error.response.status,
+      }
 
-      const refreshToken = window.localStorage.getItem('refreshToken')
-      return new Promise((resolve, reject) => {
-        instance
-          .post('/auth/refresh-token', { refreshToken }) // route must be changed to the actual one, this one is dummy url
-          .then(({ data }) => {
-            storeTokens(data.accessToken, data.refreshToken)
-            instance.defaults.headers.common.Authorization = `Bearer ${data.accessToken}`
-            originalRequest.headers.Authorization = `Bearer ${data.accessToken}`
-            processQueue(null, data.accessToken)
-            resolve(instance(originalRequest))
-          })
-          .catch(err => {
-            processQueue(err, null)
-            reject(err)
-          })
-          .finally(() => {
-            isRefreshing = false
-          })
-      })
+      // Это если удалось обновить токены, но сервер все равно не пускает
+      if (errData.status === 401) {
+        Cookies.remove('accessToken')
+        redirectToSignIn(locale)
+        return false
+      }
+
+      return Promise.reject(errData)
     }
 
-    return Promise.reject(error)
+    if (error.request) return Promise.reject(new Error('server-not-responsed'))
+
+    return Promise.reject(new Error('error-client'))
   },
 )
-
-export default instance

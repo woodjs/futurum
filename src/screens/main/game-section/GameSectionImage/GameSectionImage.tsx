@@ -3,7 +3,7 @@ import { landingImages } from '@/shared/images';
 import { useTranslations } from 'next-intl';
 
 const GameSectionImage = () => {
-	const t = useTranslations('Home.Categories');
+	const t = useTranslations('default.Home.Categories');
 	return (
 		// <Image
 		// 	src={landingImages.gameImg}

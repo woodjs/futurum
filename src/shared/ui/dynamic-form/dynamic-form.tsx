@@ -17,20 +17,33 @@ const DynamicForm = <T extends Record<keyof T, FieldConfig>>({
   useFormProps,
   renderFooter,
   onFormUpdate,
+  refine,
 }: FormProps<T>) => {
   const fieldKeys = useMemo(() => {
     return Object.keys(fields) as (keyof T)[]
   }, [fields])
   // Генерация схемы валидации Zod на основе полей
-  const schema = z.object(
-    Object.entries(fields as Record<string, FieldConfig>).reduce(
-      (acc, [key, field]) => {
-        acc[key] = field.validation || z.any().optional()
-        return acc
-      },
-      {} as Record<string, z.ZodTypeAny>,
-    ),
-  )
+  const schema = refine
+    ? z
+        .object(
+          Object.entries(fields as Record<string, FieldConfig>).reduce(
+            (acc, [key, field]) => {
+              acc[key] = field.validation || z.any().optional()
+              return acc
+            },
+            {} as Record<string, z.ZodTypeAny>,
+          ),
+        )
+        .refine(refine)
+    : z.object(
+        Object.entries(fields as Record<string, FieldConfig>).reduce(
+          (acc, [key, field]) => {
+            acc[key] = field.validation || z.any().optional()
+            return acc
+          },
+          {} as Record<string, z.ZodTypeAny>,
+        ),
+      )
 
   // Используем useForm, где данные формы имеют тип FormData<T>
   const form = useForm({
