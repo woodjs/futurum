@@ -7,6 +7,7 @@ import { Container } from '@/shared/ui'
 import Menu from '@/screens/main/header/Menu'
 import Footer from '@/screens/main/footer'
 import { Header } from '@/widgets/header'
+import AuthProvider from '../../../shared/auth/auth-provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -34,15 +35,17 @@ export default function RootLayout({
           locale={params?.locale || 'en'}
           messages={messages}
         >
-          <Menu />
-          <Header />
-          <Container className='flex'>
-            <div className='hidden xl:block'>
-              <Sidebar />
-            </div>
-            <div className='w-full'>{children}</div>
-          </Container>
-          <Footer />
+          <AuthProvider>
+            <Menu />
+            <Header />
+            <Container className='flex'>
+              <div className='hidden xl:block'>
+                <Sidebar />
+              </div>
+              <div className='w-full'>{children}</div>
+            </Container>
+            <Footer />
+          </AuthProvider>
         </NextIntlClientProvider>
       </body>
     </html>
