@@ -11,6 +11,7 @@ import { useSnackbar } from 'notistack'
 import { protectedAPI } from '../../../shared/api'
 import { AUTH_SIGN_IN } from '../../../shared/api/config'
 import HTTP_CODES_ENUM from '../../../shared/api/types/http-codes'
+import { z } from 'zod'
 
 interface IFormData {
   email?: string | null
@@ -20,7 +21,8 @@ interface IFormData {
 const AUTH_TOKEN_KEY = 'auth-token-data'
 
 export const LoginForm = () => {
-  const t = useTranslations('default.Auth.SignIn')
+  const signInT = useTranslations('default.Auth.SignIn')
+  const authT = useTranslations('auth')
   const { enqueueSnackbar, closeSnackbar } = useSnackbar()
   const [formData, setFormData] = useState<IFormData>({
     email: null,
@@ -42,10 +44,18 @@ export const LoginForm = () => {
             Cookies.set(AUTH_TOKEN_KEY, JSON.stringify(res.data))
 
             router.push('/')
+          } else {
+            enqueueSnackbar(authT('authError'), {
+              variant: 'error',
+              persist: true,
+            })
           }
         })
         .catch(error => {
-          enqueueSnackbar('Sign in error')
+          enqueueSnackbar(authT('authError'), {
+            variant: 'error',
+            persist: true,
+          })
         })
     }
   }
@@ -58,24 +68,29 @@ export const LoginForm = () => {
   return (
     <div className='flex h-[100vh] w-full items-center bg-[#E2E8F0]'>
       <div
-        className='m-auto flex w-full max-w-[560px] flex-col items-center rounded-[20px] bg-white
+        className='m-auto flex w-full max-w-[600px] flex-col items-center rounded-[20px] bg-white
           px-[76.5px] py-[48px]'
       >
         <GradientTypography className='pb-[16px] text-center'>
-          {t('title')}
+          {signInT('title')}
         </GradientTypography>
         <DynamicForm
           classNames={{ form: 'w-full' }}
+          useFormProps={{
+            reValidateMode: 'onChange',
+            defaultValues: { ...formData },
+          }}
           fields={{
             email: {
               type: 'text',
-              label: 'Email',
-              placeholder: 'Enter your email',
+              label: authT('email'),
+              placeholder: authT('enterEmail'),
+              validation: z.string().email().min(5),
             },
             password: {
               type: 'password',
-              label: 'Password',
-              placeholder: 'Enter your password',
+              label: authT('password'),
+              placeholder: authT('enterPassword'),
             },
           }}
           onFormUpdate={data => handleFormUpdate(data)}
@@ -85,10 +100,10 @@ export const LoginForm = () => {
                 href='/auth/signup'
                 className='m-0 flex self-center p-0 transition-colors hover:text-blue-400'
               >
-                Don't have an account?
+                {authT('accountDoesNotExist')}
               </Link>
               <NormalButton onClick={form.handleSubmit(() => handleSignIn())}>
-                Login
+                {authT('signIn')}
               </NormalButton>
             </div>
           )}

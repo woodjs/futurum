@@ -12,6 +12,7 @@ import { Routes } from '@/shared/model/routes'
 import BigButton from '@/shared/ui/big-button'
 import { Tariff } from '@/shared/api/types'
 import { Link } from '@/i18n/routing'
+import { useUser } from '../../../entities/user'
 
 const linkList = [
   {
@@ -85,13 +86,14 @@ interface IUserMe {
 const Sidebar = () => {
   const pathname = usePathname()
   const t = useTranslations('default.Menu')
+  const { user, isLoading } = useUser()
 
   // TODO update with real api
-  const {
-    data: user,
-    isLoading: isUserLoading,
-    isSuccess: isUserSuccess,
-  } = { data: userFake, isLoading: false, isSuccess: true }
+  // const {
+  //   data: user,
+  //   isLoading: isUserLoading,
+  //   isSuccess: isUserSuccess,
+  // } = { data: userFake, isLoading: false, isSuccess: true }
 
   return (
     <div
@@ -99,20 +101,20 @@ const Sidebar = () => {
         rounded-3xl border border-slate-200 bg-white p-[16px] pt-[24px]'
     >
       <div className='flex flex-col items-center justify-between gap-[8px] text-black'>
-        {isUserLoading && (
+        {isLoading && (
           <>
             <Skeleton className='my-[5px] size-[90px] rounded-full' />
             <Skeleton className='my-1 h-6 w-2/3 rounded-full' />
           </>
         )}
-        {isUserSuccess && (
+        {!isLoading && (
           <>
             <Avatar>
-              <AvatarImage src={user.avatar} alt={user.name} />
-              <AvatarFallback>{user.name[0]}</AvatarFallback>
+              <AvatarImage src={user?.photo?.path} alt={user.firstName} />
+              <AvatarFallback>{user.firstName[0]}</AvatarFallback>
             </Avatar>
             <div className='text-lg'>
-              {user.name}
+              {user.firstName}
               <span className='inline-flex items-center pl-[8px] text-base'>
                 {user.rating}
                 <span className='text-xs'>★</span>
@@ -121,9 +123,9 @@ const Sidebar = () => {
           </>
         )}
       </div>
-      <BigButton isLoading={isUserLoading} label={t('Balance')}>
+      {/* <BigButton isLoading={isLoading} label={t('Balance')}>
         {getShortNumber(user.balance, 'en', 'USDT')}
-      </BigButton>
+      </BigButton> */}
       <div className='flex flex-col gap-[4px]'>
         {linkList.map(item => (
           <SidebarLink
@@ -138,17 +140,17 @@ const Sidebar = () => {
         ))}
       </div>
       <Link href={Routes.TARIFFS}>
-        <BigButton
+        {/* <BigButton
           label={t('Tariff')}
           classNames={{
             value: 'text-2xl font-bold',
           }}
-          isLoading={isUserLoading}
+          isLoading={isLoading}
         >
           <div className={cn('text-2xl font-bold', tariffs[user.tariff.id])}>
             {user.tariff.name}
           </div>
-        </BigButton>
+        </BigButton> */}
       </Link>
     </div>
   )

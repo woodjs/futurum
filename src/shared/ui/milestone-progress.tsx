@@ -14,7 +14,7 @@ export const MilestoneProgress = ({
   const t = useTranslations('profile')
   return (
     <div className='w-full rounded-[15px] bg-[#F8F9FB] px-[14.5px] py-[16px]'>
-      <span className='text-[14px] font-bold leading-[18px] text-[#2D3748]'>
+      <span className='mb-5 text-[14px] font-bold leading-[18px] text-[#2D3748]'>
         {t('informationCompleteBy')}
       </span>
       <Progress
