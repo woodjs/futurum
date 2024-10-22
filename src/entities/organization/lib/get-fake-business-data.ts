@@ -123,9 +123,9 @@ const getFakeSlideDeck = (count: number): any => {
     let slides = [];
     for (let i = 0; i < count; i++) {
         slides.push({
-            type: 'image',
-            src: faker.image.urlLoremFlickr({ category: 'startup' }),
-            label: faker.system.commonFileName(),
+            // type: 'image',
+            // src: faker.image.urlLoremFlickr({ category: 'startup' }),
+            // label: faker.system.commonFileName(),
             file: {
                 url: faker.image.urlLoremFlickr({ category: 'startup' }),
                 name: faker.system.commonFileName(),

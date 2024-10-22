@@ -62,9 +62,9 @@ interface IEmployeeInfo {
 }
 
 interface ISlide {
-    label: string;
-    src: string;
-    type: 'image' | 'video';
+    // label: string;
+    // src: string;
+    // type: 'image' | 'video';
     file: IFile;
 }
 

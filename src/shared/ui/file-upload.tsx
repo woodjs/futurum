@@ -158,24 +158,32 @@ const FileUpload: React.FC<FileUploadProps> = ({
     formData.append('file', fileItem.file!)
 
     try {
-      const response = await protectedAPI.post<IFile>(
-        '/v11/files/upload',
-        formData,
-        {
-          onUploadProgress: progressEvent => {
-            const progress = Math.round(
-              (progressEvent.loaded * 100) / (progressEvent.total || 1),
-            )
-            setFileList(prevList =>
-              prevList.map(item =>
-                item.id === fileItem.id ? { ...item, progress } : item,
-              ),
-            )
-          },
+      const response = await protectedAPI.post<{
+        file: {
+          id: string
+          name: string
+          type: string
+          path: string
+        }
+      }>('/v1/files/upload', formData, {
+        onUploadProgress: progressEvent => {
+          const progress = Math.round(
+            (progressEvent.loaded * 100) / (progressEvent.total || 1),
+          )
+          setFileList(prevList =>
+            prevList.map(item =>
+              item.id === fileItem.id ? { ...item, progress } : item,
+            ),
+          )
         },
-      )
+      })
 
-      const iFile = response.data
+      const iFile = {
+        id: response.data.file.id,
+        name: response.data.file.name,
+        type: response.data.file.type,
+        url: response.data.file.path,
+      }
       // @ts-ignore
       setFileList(prevList => {
         const newList = prevList.map(item =>
@@ -211,7 +219,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
   }
 
   const removeFile = (id: string) => {
-    protectedAPI.delete(`/v11/files/${id}`)
+    protectedAPI.delete(`/v1/files/${id}`)
     setFileList(prevList => {
       const newList = prevList.filter(item => item.id !== id)
       const uploadedFiles = newList

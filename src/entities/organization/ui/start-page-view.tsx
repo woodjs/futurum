@@ -40,14 +40,14 @@ const StartPageView: FC<IStartPageView> = ({ fundingInfo, id, edit }) => {
             <CarouselContent className='-ml-1'>
               {fundingInfo.slideDeck.map(item => (
                 <CarouselItem
-                  key={item.src}
+                  key={item.file.id}
                   className='pl-1 sm:basis-1 md:basis-1/2 lg:basis-1/2'
                 >
                   <div className='relative h-[300px] w-full overflow-hidden rounded-xl'>
                     <Image
                       className='object-cover'
                       fill
-                      src={item.src}
+                      src={item.file.url}
                       alt={'slice image'}
                     />
                   </div>

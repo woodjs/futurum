@@ -260,7 +260,8 @@
     "amountForStart": "Необходимое для начала",
     "myOrganizations": "Мои организации",
     "createOrganization": "Создать организацию",
-    "documents": "Документы"
+    "documents": "Документы",
+    "noOrganizations": "У вас еще нет организации. Создайте организацию сейчас"
   },
   "buttons": {
     "back": "Назад",

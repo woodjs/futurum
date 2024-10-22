@@ -42,6 +42,20 @@ const MyOrganizationList = () => {
               <OrganizationCard organization={card} key={card.companyName} />
             </Link>
           ))}
+        {isSuccess && data.organizationList.length === 0 && (
+          <div className='col-span-2 flex w-full flex-col items-center justify-center'>
+            <div className='mt-8 text-center text-xl text-black'>
+              {t('organization.view.noOrganizations')}
+            </div>
+            <NormalButton className='mt-4' variant='default' asChild>
+              <Link href='/profile/organizations/create'>
+                <span className=''>
+                  {t('organization.buttons.createOrganization')}
+                </span>
+              </Link>
+            </NormalButton>
+          </div>
+        )}
       </div>
     </div>
   )

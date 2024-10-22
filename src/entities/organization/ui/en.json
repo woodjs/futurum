@@ -260,7 +260,8 @@
     "amountForStart": "Necessary for Start",
     "myOrganizations": "My Organizations",
     "createOrganization": "Create Organization",
-    "documents": "Documents"
+    "documents": "Documents",
+    "noOrganizations": "You don't have an organization. Create an organization now"
   },
   "buttons": {
     "back": "Back",
