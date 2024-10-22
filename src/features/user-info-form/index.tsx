@@ -1,18 +1,22 @@
 'use client'
 import { DynamicForm } from '../../shared/ui/dynamic-form'
-import Editor from '../../shared/ui/editor'
 import Section from '../../screens/main/section'
 import { z } from 'zod'
 import { MilestoneProgress } from '../../shared/ui/milestone-progress'
 import { useEffect, useState } from 'react'
 import { useTranslations } from 'next-intl'
-import { useUser } from '../../entities/user'
+// import { useUser } from '../../entities/user'
 import Loader from '../../shared/ui/loader'
 import { userInfoToProgress } from './helpers/userInfoToProgress'
 import { userToForm } from './helpers/userToForm'
 import { Button } from '../../shared/ui'
 import { protectedAPI } from '../../shared/api'
-import { AUTH_ME_URL } from '../../shared/api/config'
+// import { AUTH_ME_URL } from '../../shared/api/config'
+import FileUpload from '../../shared/ui/file-upload'
+import { useProfile } from '../../entities/profile/hooks'
+import { useMutation } from '@tanstack/react-query'
+import { profileKeysEnum } from '../../entities/profile/model'
+import { useSnackbar } from 'notistack'
 
 interface IUserInfoFormData {
   email?: string
@@ -31,17 +35,28 @@ interface IPasswordFormData {
   confirm?: string
 }
 
+interface IFile {
+  id: string
+  name: string
+  type: string
+  url: string
+}
+
 const UserInfoForm = () => {
   const t = useTranslations('profile')
-  const { user, isLoading } = useUser()
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar()
+  const { user, isLoading } = useProfile()
   const [progress, setProgress] = useState(0)
   const [checked, setChecked] = useState(false)
   const [formData, setFormData] = useState(userToForm({ ...user }))
+  const [avatar, setAvatar] = useState<IFile[]>([])
   const [passwords, setPasswords] = useState({
     oldPassword: '',
     password: '',
     confirm: '',
   })
+
+  const imageAccept = 'image/png, image/jpeg, image/jpg'
 
   const phoneRegex = new RegExp(
     /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/,
@@ -64,12 +79,35 @@ const UserInfoForm = () => {
   }
 
   const handleFormSubmit = async () => {
-    await protectedAPI.patch(AUTH_ME_URL, formData)
+    let finilizedData = { ...formData }
+    if (avatar.length) {
+      finilizedData = {
+        ...formData,
+        photo: {
+          id: avatar[0].id,
+        },
+      }
+    }
+    await protectedAPI.patch('/v1/profile', {
+      ...finilizedData,
+    })
   }
 
   const handlePasswordFormSubmit = async () => {
-    await protectedAPI.patch(AUTH_ME_URL, passwords)
+    await protectedAPI.patch(`/v1/profile/password`, passwords)
   }
+
+  const handleFileUpload = (file: IFile[]) => {
+    setAvatar([...file])
+  }
+
+  const mutation = useMutation({
+    mutationFn: handleFormSubmit,
+    mutationKey: profileKeysEnum.PROFILE_GET_KEY,
+    onSuccess: () => {
+      enqueueSnackbar('Profile information updated!')
+    },
+  })
 
   return (
     <Section className='gap-[32px]'>
@@ -82,6 +120,17 @@ const UserInfoForm = () => {
           <Loader />
         ) : (
           <>
+            <FileUpload
+              name='logo'
+              label='Upload Avatar'
+              accept={imageAccept}
+              multiple={false}
+              maxFiles={1}
+              required={false}
+              value={avatar}
+              onChange={handleFileUpload}
+              error='test'
+            />
             <DynamicForm
               useFormProps={{
                 defaultValues: userToForm({ ...user }),
@@ -151,7 +200,9 @@ const UserInfoForm = () => {
                 <Button
                   variant='outline'
                   className='max-w-[214px]'
-                  onClick={handleFormSubmit}
+                  onClick={() => {
+                    mutation.mutate()
+                  }}
                 >
                   {t('saveChanges')}
                 </Button>

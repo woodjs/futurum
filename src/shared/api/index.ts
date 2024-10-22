@@ -50,14 +50,11 @@ protectedAPI.interceptors.response.use(
         error.response.status === HTTP_CODES_ENUM.UNAUTHORIZED &&
         !config.isRetry
       ) {
-        console.log('UNAUTHORIZED')
         config.isRetry = true
         try {
           if (!refreshingTokens) {
             refreshingTokens = refreshTokens()
-            console.log('IS it working?222')
           }
-          console.log('IS it working?')
 
           await refreshingTokens()
           refreshingTokens = null
@@ -65,7 +62,7 @@ protectedAPI.interceptors.response.use(
         } catch (err) {
           refreshingTokens = null
           removeAccessToken()
-          console.log('UNAUTHORIZED2???')
+
           redirectToSignIn(locale)
           return false
         }
@@ -76,11 +73,8 @@ protectedAPI.interceptors.response.use(
         status: error.response.status,
       }
 
-      console.log('UNAUTHORIZED4???')
-
       // Это если удалось обновить токены, но сервер все равно не пускает
       if (errData.status === 401) {
-        console.log('UNAUTHORIZED3???')
         Cookies.remove('accessToken')
         redirectToSignIn(locale)
         return false
