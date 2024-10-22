@@ -56,8 +56,8 @@ export const SignUpForm = () => {
   }
 
   const handleFormUpdate = (data: IFormData) => {
-    const { email, password, firstName, lastName } = data
-    setFormData({ ...formData, email, password, firstName, lastName })
+    const { email, password } = data
+    setFormData({ ...formData, email, password })
   }
 
   return (

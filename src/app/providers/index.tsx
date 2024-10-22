@@ -7,8 +7,7 @@ import { SnackbarProvider } from 'notistack'
 export const AppProvider = ({ children }: { children: ReactNode }) => {
   return (
     <QueryProvider>
-      <SnackbarProvider />
-      {children}
+      <SnackbarProvider>{children}</SnackbarProvider>
     </QueryProvider>
   )
 }
