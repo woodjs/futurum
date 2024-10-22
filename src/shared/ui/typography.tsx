@@ -12,6 +12,9 @@ const textVariants = {
   h2: 'font-bold text-[24px] lg:text-[42px] leading-[44px]', //42 700
   'subtitle-1': 'font-bold text-[20px] leading-[26px]', //20 700
   'p-large': 'font-normal text-[20px] leading-[26px]', //20 400
+  'subtitle-2': 'text-[16px]/[20px] font-bold',
+  'subtitle-3': 'text-[14px]/[18px] font-bold',
+  h4: 'font-normal text-[24px]/[28px] font-bold',
   h5: 'text-[18px] font-bold leading-[24px]',
   p: 'font-normal text-[16px] leading-[20px]', //16 400
   'p-small': 'font-normal text-[12px] leading-[16px]', //12 400
