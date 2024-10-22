@@ -8,6 +8,7 @@ import { Typography } from '@/shared/ui/typography'
 import { tariffs } from '@/entities/tariff-card/lib/tariffs'
 import { ButtonName } from '@/entities/tariff-card/lib/buttonName'
 import { useTranslations } from 'next-intl'
+import { ISubscriptionPlan } from '@/widgets/tariffs2/ui/tariffs'
 
 interface IProps {
   variant?: Tariff
