@@ -5,5 +5,6 @@ export interface IOrganizationListFilters {
 }
 
 export interface IOrganizationListResponse {
-    organizationList: IOrganization[]
+    data: IOrganization[];
+    hasNextPage: boolean;
 }

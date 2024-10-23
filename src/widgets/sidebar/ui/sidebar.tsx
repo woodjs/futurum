@@ -1,5 +1,4 @@
 'use client'
-import usePathname from '@/shared/lib/use-pathname'
 import SidebarLink from './sidebar-link'
 import { cn } from '@/shared/lib/utils'
 import { ChevronRight } from 'lucide-react'
@@ -11,38 +10,49 @@ import { Skeleton } from '@/shared/ui/skeleton'
 import { Routes } from '@/shared/model/routes'
 import BigButton from '@/shared/ui/big-button'
 import { Tariff } from '@/shared/api/types'
-import { Link } from '@/i18n/routing'
+import { Link, usePathname } from '@/i18n/routing'
 import { useUser } from '../../../entities/user'
 
 const linkList = [
   {
     href: Routes.MY_ASSETS,
     name: 'MyAssets',
+    label: 'Скоро',
+    disable: true,
+    exact: false,
   },
   {
     href: Routes.MY_ORGANIZATIONS,
     name: 'MyOrganizations',
+    disable: false,
+    exact: false,
   },
   {
     href: Routes.PROFILE,
     name: 'Profile',
+    disable: false,
+    exact: true,
   },
   {
     href: Routes.MESSAGES,
     name: 'Messages',
-    notification: 4,
+    notification: 0,
+    disable: true,
   },
   {
     href: Routes.PURCHASES,
     name: 'MyPurchases',
+    disable: true,
   },
   {
     href: Routes.FAVORITES,
     name: 'Favorites',
+    disable: true,
   },
   {
     href: Routes.CART,
     name: 'Cart',
+    disable: true,
   },
 ]
 
@@ -94,7 +104,9 @@ const Sidebar = () => {
   //   isLoading: isUserLoading,
   //   isSuccess: isUserSuccess,
   // } = { data: userFake, isLoading: false, isSuccess: true }
-
+  linkList.forEach(link => {
+    console.log(link.href, pathname, pathname.startsWith(link.href))
+  })
   return (
     <div
       className='sticky top-40 mr-4 flex h-fit w-[300px] flex-shrink-0 flex-col gap-[36px]
@@ -115,10 +127,12 @@ const Sidebar = () => {
             </Avatar>
             <div className='text-lg'>
               {user.firstName}
-              <span className='inline-flex items-center pl-[8px] text-base'>
-                {user.rating}
-                <span className='text-xs'>★</span>
-              </span>
+              {user.rating && (
+                <span className='inline-flex items-center pl-[8px] text-base'>
+                  {user.rating}
+                  <span className='text-xs'>★</span>
+                </span>
+              )}
             </div>
           </>
         )}
@@ -129,10 +143,16 @@ const Sidebar = () => {
       <div className='flex flex-col gap-[4px]'>
         {linkList.map(item => (
           <SidebarLink
-            active={pathname === item.href}
+            active={
+              item.exact
+                ? item.href === pathname
+                : pathname.startsWith(item.href)
+            }
             key={item.name}
             href={item.href}
             name={t(item.name)}
+            disable={item.disable}
+            label={item.label}
             notification={
               Routes.MESSAGES === item.href ? user?.messages : undefined
             }

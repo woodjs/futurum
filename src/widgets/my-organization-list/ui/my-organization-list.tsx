@@ -34,7 +34,7 @@ const MyOrganizationList = () => {
             <Skeleton className='h-[300px] w-full rounded-md' key={index} />
           ))}
         {isSuccess &&
-          data.organizationList.map(card => (
+          data.data.map(card => (
             <Link
               href={`/profile/organizations/${card.id}`}
               key={card.companyName}
@@ -42,7 +42,7 @@ const MyOrganizationList = () => {
               <OrganizationCard organization={card} key={card.companyName} />
             </Link>
           ))}
-        {isSuccess && data.organizationList.length === 0 && (
+        {isSuccess && data.data.length === 0 && (
           <div className='col-span-2 flex w-full flex-col items-center justify-center'>
             <div className='mt-8 text-center text-xl text-black'>
               {t('organization.view.noOrganizations')}
