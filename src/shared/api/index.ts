@@ -8,6 +8,7 @@ import HTTP_CODES_ENUM from '@/shared/api/types/http-codes'
 import { redirect } from '../../i18n/routing'
 import {
   getAccessToken,
+  getRefreshToken,
   redirectToSignIn,
   removeAccessToken,
 } from './helpers/auth.helper'
@@ -16,7 +17,7 @@ const AUTH_TOKEN_KEY = 'auth-token-data'
 export type TokensInfo = Tokens | null
 export type RefreshTokenType = any | null
 
-const tokens = JSON.parse(Cookies.get(AUTH_TOKEN_KEY) ?? 'null') as TokensInfo
+// const tokens = JSON.parse(Cookies.get(AUTH_TOKEN_KEY) ?? 'null') as TokensInfo
 const locale = Cookies.get('NEXT_LOCALE')
 
 let refreshingTokens: RefreshTokenType = null
@@ -27,10 +28,17 @@ export const protectedAPI = axios.create({
 })
 
 function refreshTokens() {
-  return protectedAPI.post('/v1/auth/refresh')
+  const refreshToken = getRefreshToken()
+  return protectedAPI
+    .post('/v1/auth/refresh', {
+      headers: { Authorization: `Bearer ${refreshToken}` },
+    })
+    .then(res => {
+      Cookies.set(AUTH_TOKEN_KEY, JSON.stringify(res.data))
+    })
 }
 protectedAPI.interceptors.request.use(config => {
-  const accessToken = tokens?.token
+  const accessToken = getAccessToken()
 
   if (config && config.headers)
     if (accessToken)

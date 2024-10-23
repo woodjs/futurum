@@ -44,6 +44,7 @@ interface IFile {
 
 const UserInfoForm = () => {
   const t = useTranslations('profile')
+  const validationT = useTranslations('validation')
   const { enqueueSnackbar, closeSnackbar } = useSnackbar()
   const { user, isLoading } = useProfile()
   const [progress, setProgress] = useState(0)
@@ -235,19 +236,19 @@ const UserInfoForm = () => {
                   placeholder: '**************',
                   validation: z
                     .string()
-                    .min(8, { message: '8 characters minimum' })
-                    .max(20, { message: '20 characters max' })
+                    .min(8, { message: validationT('charactersMin') })
+                    .max(20, { message: validationT('charactersMax') })
                     .refine(password => /[A-Z]/.test(password), {
-                      message: 'Uppercase symbols required',
+                      message: validationT('uppercase'),
                     })
                     .refine(password => /[a-z]/.test(password), {
-                      message: 'Lowercase symbols required',
+                      message: validationT('lowercase'),
                     })
                     .refine(password => /[0-9]/.test(password), {
-                      message: 'Numbers required',
+                      message: validationT('numbers'),
                     })
                     .refine(password => /[!@#$%^&*]/.test(password), {
-                      message: 'Special characters required',
+                      message: validationT('specialCharacters'),
                     }),
                 },
                 confirm: {
