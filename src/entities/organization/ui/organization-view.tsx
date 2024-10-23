@@ -101,7 +101,7 @@ const OrganizationView: FC<IOrganizationViewProps> = ({
             {...organization.financialInfo}
           />
         )}
-      {employees && (
+      {employees && !!employees.length && (
         <EmployeesView
           id={organization.id}
           edit={employeesEdit}

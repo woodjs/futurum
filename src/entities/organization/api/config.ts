@@ -3,5 +3,5 @@ export enum OrganizationKeys {
 }
 
 export enum OrganizationEndpoints {
-    ORGANIZATIONS = '/fake/api/organizations',
+    ORGANIZATIONS = '/v1/organizations',
 }

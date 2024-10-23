@@ -50,6 +50,7 @@ const UserInfoForm = () => {
   const [checked, setChecked] = useState(false)
   const [formData, setFormData] = useState(userToForm({ ...user }))
   const [avatar, setAvatar] = useState<IFile[]>([])
+  const [avatarError, setAvatarError] = useState(undefined)
   const [passwords, setPasswords] = useState({
     oldPassword: '',
     password: '',
@@ -74,8 +75,6 @@ const UserInfoForm = () => {
 
   const handlePasswordChange = (data: IPasswordFormData) => {
     setPasswords({ ...passwords, ...data })
-
-    console.log(passwords, 'Passwords')
   }
 
   const handleFormSubmit = async () => {
@@ -110,7 +109,7 @@ const UserInfoForm = () => {
   })
 
   return (
-    <Section className='gap-[32px]'>
+    <Section className='mt-[32px] gap-[32px]'>
       <MilestoneProgress progressValue={progress} checked={checked} />
       <div>
         <h5 className='text-bold mb-[18px] text-[18px]'>
@@ -122,19 +121,19 @@ const UserInfoForm = () => {
           <>
             <FileUpload
               name='logo'
-              label='Upload Avatar'
+              label={t('uploadAvatar')}
               accept={imageAccept}
               multiple={false}
               maxFiles={1}
               required={false}
               value={avatar}
               onChange={handleFileUpload}
-              error='test'
+              error={avatarError}
             />
+            <div className='pt-4'></div>
             <DynamicForm
               useFormProps={{
                 defaultValues: userToForm({ ...user }),
-                reValidateMode: 'onChange',
               }}
               onFormUpdate={data => handleFormChange(data)}
               classNames={{
@@ -143,66 +142,64 @@ const UserInfoForm = () => {
               fields={{
                 login: {
                   type: 'text',
-                  label: 'Login',
-                  placeholder: 'Enter your login',
+                  label: t('login'),
+                  placeholder: t('enterLogin'),
                   validation: z.string(),
                 },
                 email: {
                   type: 'email',
-                  label: 'Email',
-                  placeholder: 'Enter your email',
+                  label: t('email'),
+                  placeholder: t('enterEmail'),
                   validation: z.string().email().min(5),
                 },
                 firstName: {
                   type: 'text',
-                  label: 'Name',
-                  placeholder: 'Enter your first name',
+                  label: t('firstName'),
+                  placeholder: t('enterFirstName'),
                   validation: z.string(),
                 },
                 lastName: {
                   type: 'text',
-                  label: 'Last Name',
-                  placeholder: 'Enter your last name(or first letter)',
+                  label: t('lastName'),
+                  placeholder: t('enterLastName'),
                   validation: z.string(),
                 },
                 country: {
                   type: 'text',
-                  label: 'Country',
-                  placeholder: 'Enter your country',
+                  label: t('country'),
+                  placeholder: t('enterCountry'),
                   validation: z.string(),
                 },
                 phone: {
                   type: 'text',
-                  label: 'Phone',
-                  placeholder: 'Enter your phone number',
+                  label: t('phone'),
+                  placeholder: t('enterPhone'),
                   validation: z.string().regex(phoneRegex, 'Invalid Number!'),
                 },
                 whatsapp: {
                   type: 'text',
                   label: 'Whatsapp',
-                  placeholder: 'Enter your Whatsapp',
+                  placeholder: t('enterWhatsapp'),
                   validation: z.string(),
                 },
                 telegram: {
                   type: 'text',
                   label: 'Telegram',
-                  placeholder: 'Enter your Telegram',
+                  placeholder: t('enterTelegram'),
                   validation: z.string(),
                 },
                 about: {
                   type: 'richText',
-                  label: 'About',
-                  placeholder: 'Tell about yourself',
+                  label: t('about'),
+                  placeholder: t('tellAbout'),
                   validation: z.string(),
                 },
               }}
-              renderFooter={() => (
+              renderFooter={form => (
                 <Button
                   variant='outline'
-                  className='max-w-[214px]'
-                  onClick={() => {
-                    mutation.mutate()
-                  }}
+                  className='max-w-[230px]'
+                  onClick={form.handleSubmit(() => mutation.mutate())}
                 >
                   {t('saveChanges')}
                 </Button>
@@ -228,13 +225,13 @@ const UserInfoForm = () => {
               fields={{
                 oldPassword: {
                   type: 'password',
-                  label: 'Current Password',
+                  label: t('currentPassword'),
                   placeholder: '************',
                   validation: z.string(),
                 },
                 password: {
                   type: 'password',
-                  label: 'New Password',
+                  label: t('newPassword'),
                   placeholder: '**************',
                   validation: z
                     .string()
@@ -255,16 +252,16 @@ const UserInfoForm = () => {
                 },
                 confirm: {
                   type: 'password',
-                  label: 'Confirm Password',
+                  label: t('confirmPassword'),
                   placeholder: '************',
                   validation: z.string(),
                 },
               }}
-              renderFooter={() => (
+              renderFooter={form => (
                 <Button
                   variant='secondary'
-                  className='max-w-[214px]'
-                  onClick={handlePasswordFormSubmit}
+                  className='max-w-[230px]'
+                  onClick={form.handleSubmit(() => handlePasswordFormSubmit())}
                 >
                   {t('saveChanges')}
                 </Button>
