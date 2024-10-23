@@ -17,7 +17,7 @@ const linkList = [
   {
     href: Routes.MY_ASSETS,
     name: 'MyAssets',
-    label: 'Скоро',
+    label: 'soon',
     disable: true,
     exact: false,
   },
@@ -96,6 +96,7 @@ interface IUserMe {
 const Sidebar = () => {
   const pathname = usePathname()
   const t = useTranslations('default.Menu')
+  const tProfile = useTranslations('profile')
   const { user, isLoading } = useUser()
 
   // TODO update with real api
@@ -152,7 +153,7 @@ const Sidebar = () => {
             href={item.href}
             name={t(item.name)}
             disable={item.disable}
-            label={item.label}
+            label={item.label && tProfile(item.label)}
             notification={
               Routes.MESSAGES === item.href ? user?.messages : undefined
             }

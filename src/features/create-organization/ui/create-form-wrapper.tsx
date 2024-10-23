@@ -2,6 +2,7 @@
 import { useForm } from 'react-hook-form'
 import {
   businessStepper,
+  employeesSchema,
   IOrganizationFormData,
   IOrganizationStep,
   OrganizationType,
@@ -50,6 +51,18 @@ export const CreateFormWrapper: FC<ICreateBusinessFormProps> = ({
   const form = useForm({
     mode: 'onTouched',
     resolver: zodResolver(stepper.current.schema),
+    defaultValues: {
+      employees: [
+        {
+          firstName: '',
+          lastName: '',
+          futurumAccount: '',
+          phone: '',
+          telegram: '',
+          avatar: null,
+        },
+      ],
+    },
   })
   const [data, setData] = useState({})
   const [isLoading, setIsLoading] = useState(false)
