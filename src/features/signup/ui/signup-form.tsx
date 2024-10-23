@@ -26,6 +26,7 @@ interface IFormData {
 export const SignUpForm = () => {
   const signUpT = useTranslations('default.Auth.SignUp')
   const authT = useTranslations('auth')
+  const validationT = useTranslations('validation')
   const { enqueueSnackbar, closeSnackbar } = useSnackbar()
   const [formData, setFormData] = useState<IFormData>({
     email: '',
@@ -46,19 +47,30 @@ export const SignUpForm = () => {
           ...formData,
         })
         .then(res => {
-          if (res.status === HTTP_CODES_ENUM.OK) {
-            Cookies.set(AUTH_TOKEN_KEY, JSON.stringify(res.data))
+          Cookies.set(AUTH_TOKEN_KEY, JSON.stringify(res.data))
 
-            router.push('/')
-          } else {
-            enqueueSnackbar(authT('authError'), {
-              variant: 'error',
-              persist: true,
-            })
-          }
+          router.push('/')
         })
         .catch(error => {
-          enqueueSnackbar(authT('authError'))
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data)
+            console.log(error.response.status)
+            console.log(error.response.headers)
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser
+            // and an instance of http.ClientRequest in node.js
+            console.log(error.request)
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', error.message)
+          }
+          enqueueSnackbar(authT('authError'), {
+            variant: 'error',
+            persist: true,
+          })
         })
     }
   }
@@ -70,10 +82,7 @@ export const SignUpForm = () => {
 
   return (
     <div className='flex h-[100vh] w-full items-center bg-[#E2E8F0]'>
-      <div
-        className='m-auto flex w-full max-w-[600px] flex-col items-center rounded-[20px] bg-white
-          px-[76.5px] py-[48px]'
-      >
+      <div className='m-auto flex flex-col items-center rounded-[20px] bg-white px-[76.5px] py-[48px]'>
         <GradientTypography className='pb-[16px] text-center'>
           {signUpT('title')}
         </GradientTypography>
@@ -95,19 +104,19 @@ export const SignUpForm = () => {
               placeholder: authT('enterPassword'),
               validation: z
                 .string()
-                .min(8, { message: '8 characters minimum' })
-                .max(20, { message: '20 characters max' })
+                .min(8, { message: validationT('charactersMin') })
+                .max(20, { message: validationT('charactersMax') })
                 .refine(password => /[A-Z]/.test(password), {
-                  message: 'Uppercase symbols required',
+                  message: validationT('uppercase'),
                 })
                 .refine(password => /[a-z]/.test(password), {
-                  message: 'Lowercase symbols required',
+                  message: validationT('lowercase'),
                 })
                 .refine(password => /[0-9]/.test(password), {
-                  message: 'Numbers required',
+                  message: validationT('numbers'),
                 })
                 .refine(password => /[!@#$%^&*]/.test(password), {
-                  message: 'Special characters required',
+                  message: validationT('specialCharacters'),
                 }),
             },
             firstName: {
@@ -133,8 +142,8 @@ export const SignUpForm = () => {
                 {authT('accountExists')}
               </Link>
               <NormalButton
-                onClick={form.handleSubmit(() => {
-                  handleSignUp()
+                onClick={form.handleSubmit(async () => {
+                  await handleSignUp()
                 })}
               >
                 {authT('signUp')}

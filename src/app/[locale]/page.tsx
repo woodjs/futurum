@@ -28,26 +28,24 @@ export default function Home({ params: { locale } }) {
   const t = useTranslations('default.Home.Header')
 
   return (
-    <AuthProvider>
-      <div className={'relative'}>
-        <Menu />
-        <Header />
-        <Container>
-          <FeatureSection />
-          <CarouselHeader />
-          <CarouselTop />
-          <Exchange />
-          <Stories />
-          <CarouselProfit />
-          <JoinUs />
-          <CarouselDigital />
-          <CommunitySection />
-          <CarouselToday />
-          <GameSection />
-        </Container>
-        <ScrollToTop />
-        <Footer />
-      </div>
-    </AuthProvider>
+    <div className={'relative'}>
+      <Menu />
+      <Header />
+      <Container>
+        <FeatureSection />
+        <CarouselHeader />
+        <CarouselTop />
+        <Exchange />
+        <Stories />
+        <CarouselProfit />
+        <JoinUs />
+        <CarouselDigital />
+        <CommunitySection />
+        <CarouselToday />
+        <GameSection />
+      </Container>
+      <ScrollToTop />
+      <Footer />
+    </div>
   )
 }

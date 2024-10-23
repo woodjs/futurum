@@ -5,15 +5,14 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination:
-          'https://futurum-backend-production.up.railway.app/api/:path*', // Proxy to Backend
-      },
-    ]
-  },
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: '/api/:path*',
+  //       destination: `${process.env.NEXT_MAIN_API_URL}/:path*`, // Proxy to Backend
+  //     },
+  //   ]
+  // },
   images: {
     remotePatterns: [
       {

@@ -40,18 +40,26 @@ export const LoginForm = () => {
           ...formData,
         })
         .then(res => {
-          if (res.status === HTTP_CODES_ENUM.OK) {
-            Cookies.set(AUTH_TOKEN_KEY, JSON.stringify(res.data))
+          Cookies.set(AUTH_TOKEN_KEY, JSON.stringify(res.data))
 
-            router.push('/')
-          } else {
-            enqueueSnackbar(authT('authError'), {
-              variant: 'error',
-              persist: true,
-            })
-          }
+          router.push('/')
         })
         .catch(error => {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data)
+            console.log(error.response.status)
+            console.log(error.response.headers)
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser
+            // and an instance of http.ClientRequest in node.js
+            console.log(error.request)
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', error.message)
+          }
           enqueueSnackbar(authT('authError'), {
             variant: 'error',
             persist: true,
@@ -67,10 +75,7 @@ export const LoginForm = () => {
 
   return (
     <div className='flex h-[100vh] w-full items-center bg-[#E2E8F0]'>
-      <div
-        className='m-auto flex w-full max-w-[600px] flex-col items-center rounded-[20px] bg-white
-          px-[76.5px] py-[48px]'
-      >
+      <div className='m-auto flex flex-col items-center rounded-[20px] bg-white px-[76.5px] py-[48px]'>
         <GradientTypography className='pb-[16px] text-center'>
           {signInT('title')}
         </GradientTypography>
