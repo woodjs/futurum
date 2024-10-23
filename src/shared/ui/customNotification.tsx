@@ -14,3 +14,5 @@ export const CustomNotification = forwardRef<
     </SnackbarContent>
   )
 })
+
+CustomNotification.displayName = 'CustomNotification'
