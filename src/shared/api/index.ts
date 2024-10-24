@@ -62,6 +62,7 @@ protectedAPI.interceptors.response.use(
     // const t = await getTranslations('default.Errors')
     const config = error.config as AxiosRequestConfigRetry
 
+    console.log(error)
     if (error.response) {
       if (
         error.response.status === HTTP_CODES_ENUM.UNAUTHORIZED &&
