@@ -69,6 +69,8 @@ protectedAPI.interceptors.response.use(
       ) {
         config.isRetry = true
         try {
+          const refreshToken = getRefreshToken()
+          if (!refreshToken) throw Error('No refresh token')
           if (!refreshingTokens) {
             refreshingTokens = refreshTokens()
           }

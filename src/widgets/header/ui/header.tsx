@@ -13,10 +13,11 @@ import { useTranslations } from 'next-intl'
 import { useUser } from '../../../entities/user'
 import { Link } from '../../../i18n/routing'
 import Loader from '../../../shared/ui/loader'
+import { getAccessToken } from '../../../shared/api/helpers/auth.helper'
 
 export const Header = () => {
   const t = useTranslations('default.Home.Header')
-  const { user, isLoading } = useUser()
+  const token = getAccessToken()
 
   return (
     <div className='sticky left-0 top-[52px] z-50 mb-2 w-full bg-white/80 backdrop-blur-lg'>
@@ -25,9 +26,7 @@ export const Header = () => {
           <div className='hidden lg:block'>
             <LogoFull />
           </div>
-          {isLoading ? (
-            <Loader />
-          ) : user ? null : (
+          {token ? null : (
             <Button className='hidden lg:block'>{t('Registration')}</Button>
           )}
 
@@ -40,9 +39,7 @@ export const Header = () => {
           />
 
           <div className='hidden items-center gap-[26px] lg:flex'>
-            {isLoading ? (
-              <Loader />
-            ) : user ? null : (
+            {token ? null : (
               <Link href='/auth/signin'>
                 <IconLabelBadge
                   icon={
