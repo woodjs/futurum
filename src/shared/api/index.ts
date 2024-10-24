@@ -24,7 +24,6 @@ let refreshingTokens: RefreshTokenType = null
 
 export const protectedAPI = axios.create({
   baseURL: API_URL,
-  withCredentials: true,
 })
 
 function refreshTokens() {
@@ -53,6 +52,7 @@ protectedAPI.interceptors.response.use(
   async error => {
     // const t = await getTranslations('default.Errors')
     const { config } = error
+    console.log(error)
     if (error.response) {
       if (
         error.response.status === HTTP_CODES_ENUM.UNAUTHORIZED &&
