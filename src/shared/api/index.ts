@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios'
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import Cookies from 'js-cookie'
 import { Router } from 'next/router'
 // import { getTranslations } from 'next-intl/server'
@@ -15,10 +15,10 @@ import {
 
 const AUTH_TOKEN_KEY = 'auth-token-data'
 export type TokensInfo = Tokens | null
-export type RefreshTokenType = any | null
+export type RefreshTokenType = Promise<void> | null
 
 // const tokens = JSON.parse(Cookies.get(AUTH_TOKEN_KEY) ?? 'null') as TokensInfo
-const locale = Cookies.get('NEXT_LOCALE')
+const locale = Cookies.get('NEXT_LOCALE') || 'ru'
 
 let refreshingTokens: RefreshTokenType = null
 
@@ -29,13 +29,22 @@ export const protectedAPI = axios.create({
 function refreshTokens() {
   const refreshToken = getRefreshToken()
   return protectedAPI
-    .post('/v1/auth/refresh', {
-      headers: { Authorization: `Bearer ${refreshToken}` },
-    })
+    .post(
+      '/v1/auth/refresh',
+      {},
+      {
+        headers: { Authorization: `Bearer ${refreshToken}` },
+      },
+    )
     .then(res => {
       Cookies.set(AUTH_TOKEN_KEY, JSON.stringify(res.data))
     })
 }
+
+interface AxiosRequestConfigRetry extends AxiosRequestConfig {
+  isRetry?: boolean
+}
+
 protectedAPI.interceptors.request.use(config => {
   const accessToken = getAccessToken()
 
@@ -51,8 +60,8 @@ protectedAPI.interceptors.response.use(
   res => res,
   async error => {
     // const t = await getTranslations('default.Errors')
-    const { config } = error
-    console.log(error)
+    const config = error.config as AxiosRequestConfigRetry
+
     if (error.response) {
       if (
         error.response.status === HTTP_CODES_ENUM.UNAUTHORIZED &&
@@ -64,7 +73,7 @@ protectedAPI.interceptors.response.use(
             refreshingTokens = refreshTokens()
           }
 
-          await refreshingTokens()
+          await refreshingTokens
           refreshingTokens = null
           return protectedAPI(config)
         } catch (err) {
@@ -77,13 +86,13 @@ protectedAPI.interceptors.response.use(
       }
 
       const errData = {
-        message: error.response?.data?.message || 'Uknnown server error',
+        message: error.response?.data?.message || 'Unknown server error',
         status: error.response.status,
       }
 
       // Это если удалось обновить токены, но сервер все равно не пускает
       if (errData.status === 401) {
-        Cookies.remove('accessToken')
+        Cookies.remove(AUTH_TOKEN_KEY)
         redirectToSignIn(locale)
         return false
       }
@@ -91,7 +100,7 @@ protectedAPI.interceptors.response.use(
       return Promise.reject(errData)
     }
 
-    if (error.request) return Promise.reject(new Error('server-not-responsed'))
+    if (error.request) return Promise.reject(new Error('server-not-responded'))
 
     return Promise.reject(new Error('error-client'))
   },
