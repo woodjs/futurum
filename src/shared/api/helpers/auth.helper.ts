@@ -4,14 +4,14 @@ const AUTH_TOKEN_KEY = 'auth-token-data'
 
 export const getAccessToken = () => {
   const tokens = JSON.parse(Cookies.get(AUTH_TOKEN_KEY) ?? 'null')
-  console.log(tokens)
-  return tokens.token
+
+  return tokens?.token || null
 }
 
 export const getRefreshToken = () => {
   const tokens = JSON.parse(Cookies.get(AUTH_TOKEN_KEY) ?? 'null')
 
-  return tokens.refreshToken
+  return tokens?.refreshToken || null
 }
 export const removeAccessToken = () => Cookies.remove('AUTH_TOKEN_KEY')
 export const redirectToSignIn = (locale: string | undefined): void => {
