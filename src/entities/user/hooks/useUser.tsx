@@ -9,7 +9,9 @@ const fetchUserData = () => {
   return protectedAPI
     .get(AUTH_ME_URL)
     .then(res => res.data)
-    .catch(error => {})
+    .catch(error => {
+      errorClientHandler(error?.errors)
+    })
 }
 
 export const useUser = () => {
