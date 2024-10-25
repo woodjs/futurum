@@ -24,6 +24,12 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'backend.futurum.city',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   // i18n: i18n.i18n,
