@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { OrganizationEndpoints } from "../config";
-import { IOrganizationFormData } from '../../model';
+import { IOrganization, IOrganizationFormData } from '../../model';
 import { protectedAPI } from '@/shared/api';
+import { ICreateOrganizationResponse } from '../types';
 
-export const createOrganization = async (data: IOrganizationFormData) => {
+export const createOrganization = async (data: IOrganizationFormData): Promise<IOrganization> => {
     try {
         const response = await protectedAPI.post(`${OrganizationEndpoints.ORGANIZATIONS}`, data);
         return response.data;

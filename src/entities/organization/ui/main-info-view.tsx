@@ -31,7 +31,7 @@ const MainInfoView: FC<IMainInfoViewProps> = ({
         <div className='flex items-center justify-between'>
           <div className='flex flex-wrap items-center text-xl font-bold text-slate-800 md:text-3xl'>
             {companyName}{' '}
-            {!verified && (
+            {verified && (
               <CheckBadgeIcon className='ml-2 inline-block size-5 flex-shrink-0 text-blue-500 md:size-7' />
             )}
           </div>

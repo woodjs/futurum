@@ -43,7 +43,10 @@ const MyOrganizationList = () => {
             </Link>
           ))}
         {isSuccess && data.data.length === 0 && (
-          <div className='col-span-2 flex w-full flex-col items-center justify-center'>
+          <div
+            className='col-span-2 flex min-h-[calc(90vh-700px)] w-full flex-col items-center
+              justify-center'
+          >
             <div className='mt-8 text-center text-xl text-black'>
               {t('organization.view.noOrganizations')}
             </div>

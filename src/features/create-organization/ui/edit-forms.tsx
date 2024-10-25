@@ -7,6 +7,7 @@ import {
   descriptionFormSchema,
   documentsFormSchema,
   employeesSchema,
+  financialInfoSchema,
   organizationToForm,
   OrganizationType,
   startPageSchema,
@@ -23,6 +24,7 @@ import {
   DescriptionForm,
   DocumentsForm,
   EmployeeForm,
+  FinancialInfoForm,
   StartPageForm,
 } from './forms'
 import { useUpdateOrganization } from '@/entities/organization/api/hooks/use-update-organization'
@@ -438,7 +440,7 @@ export const EditEmployeesForm: FC<IEditIdProps> = ({ id }) => {
     return (
       <EditFromBase
         title={t('organization.view.employees')}
-        description={t('organization.form.stepper.business.employees')}
+        description={t('organization.form.stepper.businessStepper.employees')}
         schema={employeesSchema}
         form={EmployeeForm}
         isLoading={isLoading}
@@ -471,8 +473,8 @@ export const EditFinancialForm: FC<IEditIdProps> = ({ id }) => {
       <EditFromBase
         title={t('organization.view.financialIndicators')}
         description={t('organization.form.stepper.businessStepper.financial')}
-        schema={employeesSchema}
-        form={EmployeeForm}
+        schema={financialInfoSchema}
+        form={FinancialInfoForm}
         isLoading={isLoading}
         defaultValues={data}
         onSubmit={financial => mutate({ id, organizationData: { financial } })}

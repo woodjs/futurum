@@ -3,6 +3,7 @@ import { FC } from 'react'
 import { IOrganizationDocuments } from '../model'
 import FileList from '@/shared/ui/file-list'
 import { useTranslations } from 'next-intl'
+import EmptyView from './empty'
 
 interface IDocumentsViewProps extends IOrganizationDocuments {
   id: string
@@ -35,6 +36,14 @@ export const DocumentsView: FC<IDocumentsViewProps> = props => {
           <FileList files={[presentation]} />
         </div>
       )}
+      {!presentation && edit && (
+        <EmptyView
+          isFile
+          title={t('organization.view.presentation')}
+          edit={edit}
+          id={id}
+        />
+      )}
 
       {companyCard && (
         <div className=''>
@@ -46,6 +55,15 @@ export const DocumentsView: FC<IDocumentsViewProps> = props => {
           </div>
           <FileList files={[companyCard]} />
         </div>
+      )}
+
+      {!companyCard && edit && (
+        <EmptyView
+          isFile
+          title={t('organization.view.companyCard')}
+          edit={edit}
+          id={id}
+        />
       )}
 
       {taxReturn && (
@@ -60,6 +78,15 @@ export const DocumentsView: FC<IDocumentsViewProps> = props => {
         </div>
       )}
 
+      {!taxReturn && edit && (
+        <EmptyView
+          isFile
+          title={t('organization.view.taxDeduction')}
+          edit={edit}
+          id={id}
+        />
+      )}
+
       {financialIndicators && (
         <div className=''>
           <div className='mb-4 flex items-center justify-between'>
@@ -72,6 +99,15 @@ export const DocumentsView: FC<IDocumentsViewProps> = props => {
         </div>
       )}
 
+      {!financialIndicators && edit && (
+        <EmptyView
+          isFile
+          title={`${t('organization.view.financialIndicators')}`}
+          edit={edit}
+          id={id}
+        />
+      )}
+
       {additionalDocuments && (
         <div className=''>
           <div className='mb-4 flex items-center justify-between'>
@@ -82,6 +118,15 @@ export const DocumentsView: FC<IDocumentsViewProps> = props => {
           </div>
           <FileList files={additionalDocuments} />
         </div>
+      )}
+
+      {!additionalDocuments && edit && (
+        <EmptyView
+          isFile
+          title={t('organization.view.additionalDocuments')}
+          edit={edit}
+          id={id}
+        />
       )}
     </div>
   )

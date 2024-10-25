@@ -19,20 +19,21 @@ const organizationToForm = (
                 },
                 description: { description: organization.description },
                 files: {
-                    logo: [organization.documents.logo],
+                    logo: organization?.documents.logo
+                        ? [organization.documents.logo] : [],
                     additionalDocuments: organization.documents.additionalDocuments,
-                    companyCard: organization.documents.companyCard && [
+                    companyCard: organization.documents.companyCard ? [
                         organization.documents.companyCard,
-                    ],
-                    financialIndicators: organization.documents.financialIndicators && [
+                    ] : [],
+                    financialIndicators: organization.documents.financialIndicators ? [
                         organization.documents.financialIndicators,
-                    ],
-                    presentation: organization.documents.presentation && [
+                    ] : [],
+                    presentation: organization.documents.presentation ? [
                         organization.documents.presentation,
-                    ],
-                    taxReturn: organization.documents.taxReturn && [
-                        organization.documents.taxReturn,
-                    ],
+                    ] : [],
+                    taxReturn: organization.documents.taxReturn ? [
+                        organization.documents.taxReturn,]
+                        : [],
                 },
                 startPage: {
                     amountForStart: organization.fundingInfo.requiredFunding,

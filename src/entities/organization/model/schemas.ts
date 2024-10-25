@@ -32,16 +32,16 @@ const phoneSchema = z.string().regex(
 const contactInfoSchema = z.object({
     website: z.string().url({ message: 'organization.form.contactInfo.website.invalid' }).optional().nullable().or(z.literal('')),
     phone: phoneSchema.optional().nullable().or(z.literal('')),
-    facebook: z.string().url({ message: 'organization.form.contactInfo.facebook.invalid' }).optional().nullable(),
-    instagram: z.string().url({ message: 'organization.form.contactInfo.instagram.invalid' }).optional().nullable(),
-    twitter: z.string().url({ message: 'organization.form.contactInfo.twitter.invalid' }).optional().nullable(),
-    tiktok: z.string().url({ message: 'organization.form.contactInfo.tiktok.invalid' }).optional().nullable(),
-    telegram: z.string().url({ message: 'organization.form.contactInfo.telegram.invalid' }).optional().nullable(),
-    youtube: z.string().url({ message: 'organization.form.contactInfo.youtube.invalid' }).optional().nullable(),
-    whatsapp: z.string().url({ message: 'organization.form.contactInfo.whatsapp.invalid' }).optional().nullable(),
-    vk: z.string().url({ message: 'organization.form.contactInfo.vk.invalid' }).optional().nullable(),
-    weChat: z.string().url({ message: 'organization.form.contactInfo.weChat.invalid' }).optional().nullable(),
-    reddit: z.string().url({ message: 'organization.form.contactInfo.reddit.invalid' }).optional().nullable()
+    facebook: z.string().url({ message: 'organization.form.contactInfo.facebook.invalid' }).optional().nullable().or(z.literal('')),
+    instagram: z.string().url({ message: 'organization.form.contactInfo.instagram.invalid' }).optional().nullable().or(z.literal('')),
+    twitter: z.string().url({ message: 'organization.form.contactInfo.twitter.invalid' }).optional().nullable().or(z.literal('')),
+    tiktok: z.string().url({ message: 'organization.form.contactInfo.tiktok.invalid' }).optional().nullable().or(z.literal('')),
+    telegram: z.string().url({ message: 'organization.form.contactInfo.telegram.invalid' }).optional().nullable().or(z.literal('')),
+    youtube: z.string().url({ message: 'organization.form.contactInfo.youtube.invalid' }).optional().nullable().or(z.literal('')),
+    whatsapp: z.string().url({ message: 'organization.form.contactInfo.whatsapp.invalid' }).optional().nullable().or(z.literal('')),
+    vk: z.string().url({ message: 'organization.form.contactInfo.vk.invalid' }).optional().nullable().or(z.literal('')),
+    weChat: z.string().url({ message: 'organization.form.contactInfo.weChat.invalid' }).optional().nullable().or(z.literal('')),
+    reddit: z.string().url({ message: 'organization.form.contactInfo.reddit.invalid' }).optional().nullable().or(z.literal(''))
 });
 
 const fileSchema = z.object({

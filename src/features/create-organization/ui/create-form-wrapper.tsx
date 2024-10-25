@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form'
 import {
   businessStepper,
   employeesSchema,
+  FailedOrganizationView,
+  IOrganization,
   IOrganizationFormData,
   IOrganizationStep,
   OrganizationType,
@@ -30,7 +32,7 @@ import Loader from '@/shared/ui/loader'
 import { useTranslations } from 'next-intl'
 
 interface ICreateBusinessFormProps {
-  onSuccess: () => void
+  onSuccess: (organization: IOrganization) => void
   onBack: () => void
   onReject?: () => void
   stepper: Stepper<IOrganizationStep[]>
@@ -66,6 +68,7 @@ export const CreateFormWrapper: FC<ICreateBusinessFormProps> = ({
   })
   const [data, setData] = useState({})
   const [isLoading, setIsLoading] = useState(false)
+  const [isError, setIsError] = useState(false)
 
   const { mutateAsync: mutate } = useCreateOrganization()
 
@@ -76,13 +79,13 @@ export const CreateFormWrapper: FC<ICreateBusinessFormProps> = ({
       setIsLoading(true)
       console.log(newData)
       mutate(newData as IOrganizationFormData)
-        .then(e => {
-          console.log(e)
-          if (onSuccess) onSuccess()
+        .then(data => {
+          if (onSuccess) onSuccess(data)
         })
         .catch(e => {
-          console.log(e)
-          if (onReject) onReject()
+          console.log(e.res)
+          setIsError(true)
+          // if (onReject) onReject()
         })
         .finally(() => {
           setIsLoading(false)
@@ -91,6 +94,7 @@ export const CreateFormWrapper: FC<ICreateBusinessFormProps> = ({
       stepper.next()
     }
   }
+  if (isError) return <FailedOrganizationView back={() => setIsError(false)} />
 
   return (
     <Form {...form}>

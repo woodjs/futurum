@@ -103,12 +103,17 @@ const FileUpload: React.FC<FileUploadProps> = ({
   useEffect(() => {
     // Инициализируем состояние при получении значения из props
     if (value && value.length > 0 && fileList.length === 0) {
-      const initialFileItems = value.map(iFile => ({
-        id: iFile.id,
-        iFile,
-        status: 'uploaded' as const,
-        progress: 100,
-      }))
+      const initialFileItems = value
+        .map(
+          iFile =>
+            iFile && {
+              id: iFile.id,
+              iFile,
+              status: 'uploaded' as const,
+              progress: 100,
+            },
+        )
+        .filter(file => file)
       setFileList(initialFileItems)
     }
   }, [value])

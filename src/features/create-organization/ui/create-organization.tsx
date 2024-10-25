@@ -3,8 +3,11 @@ import {
   businessStepper,
   charityStepper,
   CreateCompanyCard,
+  FailedOrganizationView,
+  IOrganization,
   OrganizationType,
   startupStepper,
+  SuccessOrganizationView,
 } from '@/entities/organization'
 import { useState } from 'react'
 import { mainStepper } from '@/entities/organization'
@@ -12,6 +15,7 @@ import { CreateBusinessForm } from './create-business-form'
 import { CreateFormWrapper } from './create-form-wrapper'
 import { useRouter } from '@/i18n/routing'
 import { useTranslations } from 'next-intl'
+import { getFakeOrganizationData } from '@/entities/organization/lib/get-fake-business-data'
 
 const fakeCards = [
   {
@@ -37,6 +41,7 @@ const fakeCards = [
 const { useStepper } = mainStepper
 
 const CreateOrganizationForm = () => {
+  const [organization, setOrganization] = useState<IOrganization>()
   const stepper = useStepper()
   const router = useRouter()
   const businessStepperInstance = businessStepper.useStepper()
@@ -50,6 +55,8 @@ const CreateOrganizationForm = () => {
     <>
       {stepper.switch({
         type: () => (
+          // <FailedOrganizationView back={() => stepper.goTo('create')} />
+          // <SuccessOrganizationView organization={getFakeOrganizationData()} />
           <div>
             <div className='my-8 text-center text-xl text-black'>
               {t('organization.form.stepper.mainStepper.typeSelection')}
@@ -74,10 +81,14 @@ const CreateOrganizationForm = () => {
           <CreateFormWrapper
             type={selectedType as OrganizationType}
             onBack={() => stepper.prev()}
-            onSuccess={() => {
-              router.push('/profile/organizations')
+            onSuccess={(organization: IOrganization) => {
+              if (!organization) return router.push('/profile/organizations')
+              setOrganization(organization)
+              stepper.goTo('success')
+              // router.push('/profile/organizations')
             }}
             onReject={() => {
+              stepper.goTo('failed')
               // setSelectedType(undefined)
               // stepper.reset()
             }}
@@ -97,8 +108,12 @@ const CreateOrganizationForm = () => {
             }
           />
         ),
-        success: () => (
-          <div>{t('organization.form.stepper.mainStepper.success')}</div>
+        success: () =>
+          organization && (
+            <SuccessOrganizationView organization={organization} />
+          ),
+        failed: () => (
+          <FailedOrganizationView back={() => stepper.goTo('create')} />
         ),
       })}
     </>

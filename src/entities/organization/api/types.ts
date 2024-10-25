@@ -8,3 +8,7 @@ export interface IOrganizationListResponse {
     data: IOrganization[];
     hasNextPage: boolean;
 }
+
+export interface ICreateOrganizationResponse {
+    id: string;
+}

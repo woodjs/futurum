@@ -45,7 +45,8 @@ const startupStepper = defineStepper<IOrganizationStep[]>(
 const mainStepper = defineStepper(
     { id: 'type', label: 'organization.form.stepper.mainStepper.typeSelection', description: 'organization.form.stepper.mainStepper.typeSelection' },
     { id: 'create', label: 'organization.form.stepper.mainStepper.create', description: 'organization.form.stepper.mainStepper.create' },
-    { id: 'success', label: 'organization.form.stepper.mainStepper.success', description: 'organization.form.stepper.mainStepper.success' }
+    { id: 'success', label: 'organization.form.stepper.mainStepper.success', description: 'organization.form.stepper.mainStepper.success' },
+    { id: 'failed', label: 'organization.form.stepper.mainStepper.failed', description: 'organization.form.stepper.mainStepper.failed' },
 );
 
 

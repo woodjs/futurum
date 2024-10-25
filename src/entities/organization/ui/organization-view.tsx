@@ -1,4 +1,5 @@
-import { FC } from 'react'
+'use client'
+import { FC, use } from 'react'
 import {
   IBusinessOrganization,
   IOrganization,
@@ -14,6 +15,9 @@ import DescriptionView from './description-view'
 import LogoView from './logo-view'
 import MainInfoView from './main-info-view'
 import StartPageView from './start-page-view'
+import EmptyView from './empty'
+import { getTranslations } from 'next-intl/server'
+import { useTranslations } from 'next-intl'
 
 interface IEditProps {
   id: string
@@ -57,6 +61,8 @@ const OrganizationView: FC<IOrganizationViewProps> = ({
     verified,
   } = organization
 
+  const t = useTranslations()
+
   return (
     <div className='w-full space-y-6 rounded-2xl border border-slate-200 bg-white p-6 text-black'>
       {logo && <LogoView id={organization.id} logo={logo} edit={logoEdit} />}
@@ -71,49 +77,93 @@ const OrganizationView: FC<IOrganizationViewProps> = ({
         positionInCompany={positionInCompany}
         verified={verified}
       />
-      {description && (
+      {description ? (
         <DescriptionView
           id={organization.id}
           edit={descriptionEdit}
           description={description}
         />
-      )}
-      {socialMedia && (
+      ) : descriptionEdit ? (
+        <EmptyView
+          id={organization.id}
+          edit={descriptionEdit}
+          title={t('organization.view.description')}
+        />
+      ) : null}
+      {socialMedia ? (
         <SocialList
           id={organization.id}
           edit={socialMediaEdit}
           links={socialMedia}
         />
-      )}
+      ) : socialMediaEdit ? (
+        <EmptyView
+          id={organization.id}
+          edit={socialMediaEdit}
+          title={t('organization.view.socialNetworks')}
+        />
+      ) : null}
       {organization.type === OrganizationType.STARTUP &&
-        organization.fundingInfo && (
+        (organization.fundingInfo ? (
           <StartPageView
             id={organization.id}
             edit={startPageEdit}
             fundingInfo={organization.fundingInfo}
           />
-        )}
+        ) : (
+          startPageEdit && (
+            <EmptyView
+              id={organization.id}
+              edit={startPageEdit}
+              title={t('organization.view.startPage')}
+            />
+          )
+        ))}
       {organization.type === OrganizationType.BUSINESS &&
-        organization.financialInfo && (
+        (organization.financialInfo ? (
           <FinancialView
             id={organization.id}
             edit={financialInfoEdit}
             {...organization.financialInfo}
           />
-        )}
-      {employees && !!employees.length && (
+        ) : (
+          financialInfoEdit && (
+            <EmptyView
+              id={organization.id}
+              edit={financialInfoEdit}
+              title={t('organization.view.financialIndicators')}
+            />
+          )
+        ))}
+      {employees && !!employees.length ? (
         <EmployeesView
           id={organization.id}
           edit={employeesEdit}
           employees={employees}
         />
+      ) : (
+        employeesEdit && (
+          <EmptyView
+            id={organization.id}
+            edit={employeesEdit}
+            title={t('organization.view.employees')}
+          />
+        )
       )}
-      {documents && (
+      {documents ? (
         <DocumentsView
           id={organization.id}
           edit={documentsEdit}
           {...documents}
         />
+      ) : (
+        documentsEdit && (
+          <EmptyView
+            id={organization.id}
+            edit={documentsEdit}
+            title={t('organization.view.documents')}
+          />
+        )
       )}
     </div>
   )
