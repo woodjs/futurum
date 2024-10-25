@@ -1,28 +1,28 @@
 'use client'
-// import { useEffect, useState } from 'react'
 import { AUTH_ME_URL } from '../../../shared/api/config'
 import { protectedAPI } from '../../../shared/api'
-// import { useUserStore } from '../model'
 import { useQuery } from '@tanstack/react-query'
-import { SnackbarProvider, useSnackbar } from 'notistack'
+import { errorClientHandler } from '../../../shared/api/helpers/auth.helper'
+import { userKeysEnum } from '../model'
 
 const fetchUserData = () => {
   return protectedAPI
     .get(AUTH_ME_URL)
     .then(res => res.data)
+<<<<<<< HEAD
+    .catch(error => {
+      errorClientHandler(error?.errors)
+    })
+=======
     .catch(error => {})
+>>>>>>> development
 }
 
 export const useUser = () => {
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar()
-  const { isPending, isError, data, error } = useQuery({
-    queryKey: ['user'],
+  const { isPending, data } = useQuery({
+    queryKey: [userKeysEnum.USER_GET_KEY],
     queryFn: fetchUserData,
   })
-
-  if (isError) {
-    enqueueSnackbar(error.message)
-  }
 
   return { user: data, isLoading: isPending }
 }

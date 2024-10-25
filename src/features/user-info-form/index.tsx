@@ -14,9 +14,10 @@ import { protectedAPI } from '../../shared/api'
 // import { AUTH_ME_URL } from '../../shared/api/config'
 import FileUpload from '../../shared/ui/file-upload'
 import { useProfile } from '../../entities/profile/hooks'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { profileKeysEnum } from '../../entities/profile/model'
 import { useSnackbar } from 'notistack'
+import { userKeysEnum } from '../../entities/user/model'
 
 interface IUserInfoFormData {
   email?: string
@@ -57,7 +58,7 @@ const UserInfoForm = () => {
     password: '',
     confirm: '',
   })
-
+  const queryClient = useQueryClient()
   const imageAccept = 'image/png, image/jpeg, image/jpg'
 
   const phoneRegex = new RegExp(
@@ -66,6 +67,10 @@ const UserInfoForm = () => {
 
   useEffect(() => {
     const newProgress = userInfoToProgress(user)
+    if (user?.photo) {
+      const photo = { ...user?.photo, url: user?.photo?.path }
+      setAvatar([{ ...photo }])
+    }
 
     setProgress(newProgress)
   }, [user])
@@ -101,11 +106,27 @@ const UserInfoForm = () => {
     setAvatar([...file])
   }
 
-  const mutation = useMutation({
+  const infoMutation = useMutation({
     mutationFn: handleFormSubmit,
-    mutationKey: profileKeysEnum.PROFILE_GET_KEY,
     onSuccess: () => {
-      enqueueSnackbar('Profile information updated!')
+      queryClient.invalidateQueries({
+        queryKey: [profileKeysEnum.PROFILE_GET_KEY],
+      })
+      queryClient.invalidateQueries({
+        queryKey: [userKeysEnum.USER_GET_KEY],
+      })
+      enqueueSnackbar(t('profileUpdated'), {
+        variant: 'success',
+      })
+    },
+  })
+
+  const passwordMutation = useMutation({
+    mutationFn: handlePasswordFormSubmit,
+    onSuccess: () => {
+      enqueueSnackbar(t('profileUpdated'), {
+        variant: 'success',
+      })
     },
   })
 
@@ -145,62 +166,66 @@ const UserInfoForm = () => {
                   type: 'text',
                   label: t('login'),
                   placeholder: t('enterLogin'),
-                  validation: z.string(),
+                  validation: z.string().optional(),
                 },
                 email: {
                   type: 'email',
                   label: t('email'),
                   placeholder: t('enterEmail'),
-                  validation: z.string().email().min(5),
+                  validation: z.string().email().min(5).optional(),
                 },
                 firstName: {
                   type: 'text',
                   label: t('firstName'),
                   placeholder: t('enterFirstName'),
-                  validation: z.string(),
+                  validation: z.string().optional(),
                 },
                 lastName: {
                   type: 'text',
                   label: t('lastName'),
                   placeholder: t('enterLastName'),
-                  validation: z.string(),
+                  validation: z.string().optional(),
                 },
                 country: {
                   type: 'text',
                   label: t('country'),
                   placeholder: t('enterCountry'),
-                  validation: z.string(),
+                  validation: z.string().optional(),
                 },
                 phone: {
                   type: 'text',
                   label: t('phone'),
                   placeholder: t('enterPhone'),
-                  validation: z.string().regex(phoneRegex, 'Invalid Number!'),
+                  validation: z
+                    .string()
+                    .regex(phoneRegex, 'Invalid Number!')
+                    .optional(),
                 },
                 whatsapp: {
                   type: 'text',
                   label: 'Whatsapp',
                   placeholder: t('enterWhatsapp'),
-                  validation: z.string(),
+                  validation: z.string().optional(),
                 },
                 telegram: {
                   type: 'text',
                   label: 'Telegram',
                   placeholder: t('enterTelegram'),
-                  validation: z.string(),
+                  validation: z.string().optional(),
                 },
                 about: {
                   type: 'richText',
                   label: t('about'),
                   placeholder: t('tellAbout'),
-                  validation: z.string(),
+                  validation: z.string().optional(),
                 },
               }}
               renderFooter={form => (
                 <Button
                   variant='outline'
                   className='max-w-[230px]'
-                  onClick={form.handleSubmit(() => mutation.mutate())}
+                  disabled={infoMutation.isPending}
+                  onClick={form.handleSubmit(() => infoMutation.mutate())}
                 >
                   {t('saveChanges')}
                 </Button>
@@ -228,7 +253,7 @@ const UserInfoForm = () => {
                   type: 'password',
                   label: t('currentPassword'),
                   placeholder: '************',
-                  validation: z.string(),
+                  validation: z.string().optional(),
                 },
                 password: {
                   type: 'password',
@@ -249,20 +274,22 @@ const UserInfoForm = () => {
                     })
                     .refine(password => /[!@#$%^&*]/.test(password), {
                       message: validationT('specialCharacters'),
-                    }),
+                    })
+                    .optional(),
                 },
                 confirm: {
                   type: 'password',
                   label: t('confirmPassword'),
                   placeholder: '************',
-                  validation: z.string(),
+                  validation: z.string().optional(),
                 },
               }}
               renderFooter={form => (
                 <Button
                   variant='secondary'
                   className='max-w-[230px]'
-                  onClick={form.handleSubmit(() => handlePasswordFormSubmit())}
+                  disabled={passwordMutation.isPending}
+                  onClick={form.handleSubmit(() => passwordMutation.mutate())}
                 >
                   {t('saveChanges')}
                 </Button>

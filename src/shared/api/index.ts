@@ -6,7 +6,9 @@ import { Tokens } from '@/shared/api/types/tokens'
 import { API_URL, AUTH_LOGOUT_URL, AUTH_REFRESH_URL } from './config'
 import HTTP_CODES_ENUM from '@/shared/api/types/http-codes'
 import { redirect } from '../../i18n/routing'
+
 import {
+  errorHandler,
   getAccessToken,
   getRefreshToken,
   redirectToSignIn,
@@ -99,7 +101,8 @@ protectedAPI.interceptors.response.use(
         return false
       }
 
-      return Promise.reject(errData)
+      errorHandler(error.response?.data)
+      return Promise.reject(error.response?.data)
     }
 
     if (error.request) return Promise.reject(new Error('server-not-responded'))
