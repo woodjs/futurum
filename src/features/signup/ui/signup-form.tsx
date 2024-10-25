@@ -49,14 +49,7 @@ export const SignUpForm = () => {
           router.push('/')
         })
         .catch(error => {
-<<<<<<< HEAD
           errorClientHandler(error?.errors)
-=======
-          enqueueSnackbar(authT('authError'), {
-            variant: 'error',
-            persist: true,
-          })
->>>>>>> development
         })
     }
   }
