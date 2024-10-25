@@ -10,6 +10,7 @@ import {
 import { z } from 'zod'
 import { Progress } from './progress'
 import { protectedAPI } from '../api'
+import { useTranslations } from 'next-intl'
 
 const shortTypes = {
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
@@ -68,11 +69,12 @@ const FileUpload: React.FC<FileUploadProps> = ({
   maxFiles = 10,
   maxSizeMB = 2,
   required = false,
-  placeholder = 'Добавить файлы',
+  placeholder,
   value,
   onChange,
   error,
 }) => {
+  const t = useTranslations('fileUpload')
   const [fileList, setFileList] = useState<FileItem[]>([])
   const [isDragOver, setIsDragOver] = useState(false)
   const [validationError, setValidationError] = useState<string>('')
@@ -85,20 +87,19 @@ const FileUpload: React.FC<FileUploadProps> = ({
         maxSizeMB,
         maxFiles,
         required,
-        'Необходимо выбрать файлы.',
-        'Неверный тип файла.',
-        `Размер файла не должен превышать ${maxSizeMB} МБ.`,
-        `Можно загрузить не более ${maxFiles} файлов.`,
+        t('multiple.fileSelection'),
+        t('multiple.invalidFileType'),
+        t('multiple.fileSizeLimit', { maxSizeMB }),
+        t('multiple.maxFilesLimit', { maxFiles }),
       )
     : createFileSchema(
         accept.split(',').map(type => type.trim()),
         maxSizeMB,
         required,
-        'Необходимо выбрать файл.',
-        'Неверный тип файла.',
-        `Размер файла не должен превышать ${maxSizeMB} МБ.`,
+        t('single.fileSelection'),
+        t('single.invalidFileType'),
+        t('single.fileSizeLimit', { maxSizeMB }),
       )
-
   useEffect(() => {
     // Инициализируем состояние при получении значения из props
     if (value && value.length > 0 && fileList.length === 0) {
@@ -210,7 +211,10 @@ const FileUpload: React.FC<FileUploadProps> = ({
 
         // Отображаем сообщение об ошибке
         setValidationError(
-          `Ошибка загрузки файла "${fileItem.file?.name}": ${error.message}`,
+          t('errors.uploadError', {
+            fileName: fileItem.file?.name,
+            errorMessage: error.message,
+          }),
         )
 
         return newList
@@ -264,7 +268,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
         onDrop={handleDrop}
       >
         {fileList.length === 0 ? (
-          <p>{placeholder}</p>
+          <p>{placeholder || t('labels.addFile')}</p>
         ) : (
           <div className='flex flex-wrap gap-8'>
             {fileList.map(fileItem => (
@@ -275,7 +279,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
                 {fileItem.status === 'uploading' && (
                   <div className='flex flex-col items-center'>
                     <div className='size-40 rounded-md bg-slate-100 text-black'>
-                      Загрузка...
+                      {t('labels.loading')}
                     </div>
                     <Progress
                       value={fileItem.progress}
@@ -296,7 +300,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
                         {/* @ts-ignore */}
                         {shortTypes[fileItem.iFile.type] ||
                           fileItem.iFile.type ||
-                          'Файл'}
+                          t('labels.file')}
                       </div>
                     )}
                     <span className='w-40 truncate text-black'>
@@ -307,7 +311,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
                       onClick={() => removeFile(fileItem.id)}
                       className='text-sm text-red-600 underline'
                     >
-                      Удалить
+                      {t('labels.delete')}
                     </button>
                   </>
                 )}
@@ -319,7 +323,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
                 className='size-40 rounded-md bg-slate-50 text-black hover:bg-slate-100'
                 onClick={() => inputRef.current?.click()}
               >
-                Добавить файл
+                {t('labels.addFile')}
               </button>
             )}
           </div>
@@ -331,7 +335,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
             onClick={() => inputRef.current?.click()}
             className='mt-2'
           >
-            Добавить файл
+            {t('labels.addFile')}
           </NormalButton>
         )}
 
