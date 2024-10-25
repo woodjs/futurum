@@ -14,6 +14,7 @@ import { useUser } from '../../../entities/user'
 import { Link } from '../../../i18n/routing'
 import Loader from '../../../shared/ui/loader'
 import { getAccessToken } from '../../../shared/api/helpers/auth.helper'
+import { UserMenu } from '../../user-menu'
 
 export const Header = () => {
   const t = useTranslations('default.Home.Header')
@@ -27,7 +28,9 @@ export const Header = () => {
             <LogoFull />
           </div>
           {token ? null : (
-            <Button className='hidden lg:block'>{t('Registration')}</Button>
+            <Link href='/auth/signup'>
+              <Button className=''>{t('Registration')}</Button>
+            </Link>
           )}
 
           <Input
@@ -38,8 +41,10 @@ export const Header = () => {
             className='flex-1'
           />
 
-          <div className='hidden items-center gap-[26px] lg:flex'>
-            {token ? null : (
+          <div className='flex items-center gap-[26px]'>
+            {token ? (
+              <UserMenu />
+            ) : (
               <Link href='/auth/signin'>
                 <IconLabelBadge
                   icon={

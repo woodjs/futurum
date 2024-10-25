@@ -7,11 +7,10 @@ import { useTranslations } from 'next-intl'
 import { Link, useRouter } from '../../../i18n/routing'
 import Cookies from 'js-cookie'
 import { useState } from 'react'
-import { useSnackbar } from 'notistack'
 import { protectedAPI } from '../../../shared/api'
 import { AUTH_SIGN_IN } from '../../../shared/api/config'
-import HTTP_CODES_ENUM from '../../../shared/api/types/http-codes'
 import { z } from 'zod'
+import { errorClientHandler } from '../../../shared/api/helpers/auth.helper'
 
 interface IFormData {
   email?: string | null
@@ -23,7 +22,6 @@ const AUTH_TOKEN_KEY = 'auth-token-data'
 export const LoginForm = () => {
   const signInT = useTranslations('default.Auth.SignIn')
   const authT = useTranslations('auth')
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar()
   const [formData, setFormData] = useState<IFormData>({
     email: null,
     password: null,
@@ -42,13 +40,10 @@ export const LoginForm = () => {
         .then(res => {
           Cookies.set(AUTH_TOKEN_KEY, JSON.stringify(res.data))
 
-          router.push('/')
+          router.push('/profile')
         })
         .catch(error => {
-          enqueueSnackbar(authT('authError'), {
-            variant: 'error',
-            persist: true,
-          })
+          errorClientHandler(error?.errors)
         })
     }
   }

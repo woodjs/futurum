@@ -5,13 +5,12 @@ import { NormalButton } from '@/shared/ui/normal-button'
 import { GradientTypography } from '../../../shared/ui'
 import { useTranslations } from 'next-intl'
 import { AUTH_SIGN_UP } from '../../../shared/api/config'
-import HTTP_CODES_ENUM from '@/shared/api/types/http-codes'
 import Cookies from 'js-cookie'
 import { useState } from 'react'
 import { protectedAPI } from '../../../shared/api'
 import { Link, useRouter } from '../../../i18n/routing'
-import { useSnackbar } from 'notistack'
 import { z } from 'zod'
+import { errorClientHandler } from '../../../shared/api/helpers/auth.helper'
 
 const AUTH_TOKEN_KEY = 'auth-token-data'
 
@@ -27,7 +26,6 @@ export const SignUpForm = () => {
   const signUpT = useTranslations('default.Auth.SignUp')
   const authT = useTranslations('auth')
   const validationT = useTranslations('validation')
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar()
   const [formData, setFormData] = useState<IFormData>({
     email: '',
     password: '',
@@ -51,10 +49,7 @@ export const SignUpForm = () => {
           router.push('/')
         })
         .catch(error => {
-          enqueueSnackbar(authT('authError'), {
-            variant: 'error',
-            persist: true,
-          })
+          errorClientHandler(error?.errors)
         })
     }
   }
