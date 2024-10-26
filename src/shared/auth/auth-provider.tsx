@@ -4,8 +4,8 @@ import { useEffect, useState, PropsWithChildren } from 'react'
 import Cookies from 'js-cookie'
 import { useRouter } from '../../i18n/routing'
 import { Tokens } from '@/shared/api/types/tokens'
-import { removeAccessToken } from '../api/helpers/auth.helper'
-import { protectedAPI } from '../api'
+import { getRefreshToken, removeAccessToken } from '../api/helpers/auth.helper'
+import { protectedAPI, publicAPI } from '../api'
 import Loader from '../ui/loader'
 
 type TokensInfo = Tokens | null
@@ -29,7 +29,23 @@ const AuthProvider = (props: PropsWithChildren<{}>) => {
 
       try {
         if (tokens?.tokenExpires && tokens.tokenExpires <= Date.now()) {
-          await protectedAPI.post('/auth/refresh-tokens')
+          const refreshToken = getRefreshToken()
+
+          await publicAPI
+            .post(
+              '/v1/auth/refresh',
+              {},
+              {
+                headers: { Authorization: `Bearer ${refreshToken}` },
+              },
+            )
+            .then(res => {
+              Cookies.set(AUTH_TOKEN_KEY, JSON.stringify(res?.data))
+            })
+            .catch(() => {
+              removeAccessToken()
+              return router.push('/auth/signin')
+            })
         }
       } catch (error) {
         removeAccessToken()

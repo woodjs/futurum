@@ -1,11 +1,8 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import Cookies from 'js-cookie'
-import { Router } from 'next/router'
-// import { getTranslations } from 'next-intl/server'
 import { Tokens } from '@/shared/api/types/tokens'
 import { API_URL, AUTH_LOGOUT_URL, AUTH_REFRESH_URL } from './config'
 import HTTP_CODES_ENUM from '@/shared/api/types/http-codes'
-import { redirect } from '../../i18n/routing'
 
 import {
   errorHandler,
@@ -28,9 +25,13 @@ export const protectedAPI = axios.create({
   baseURL: API_URL,
 })
 
+export const publicAPI = axios.create({
+  baseURL: API_URL,
+})
+
 function refreshTokens() {
   const refreshToken = getRefreshToken()
-  return protectedAPI
+  return publicAPI
     .post(
       '/v1/auth/refresh',
       {},
@@ -39,7 +40,7 @@ function refreshTokens() {
       },
     )
     .then(res => {
-      Cookies.set(AUTH_TOKEN_KEY, JSON.stringify(res.data))
+      Cookies.set(AUTH_TOKEN_KEY, JSON.stringify(res?.data))
     })
 }
 
@@ -96,7 +97,7 @@ protectedAPI.interceptors.response.use(
 
       // Это если удалось обновить токены, но сервер все равно не пускает
       if (errData.status === 401) {
-        Cookies.remove(AUTH_TOKEN_KEY)
+        removeAccessToken()
         redirectToSignIn(locale)
         return false
       }

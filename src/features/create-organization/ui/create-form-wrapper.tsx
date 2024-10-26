@@ -77,13 +77,12 @@ export const CreateFormWrapper: FC<ICreateBusinessFormProps> = ({
     setData(newData)
     if (stepper.isLast) {
       setIsLoading(true)
-      console.log(newData)
+
       mutate(newData as IOrganizationFormData)
         .then(data => {
           if (onSuccess) onSuccess(data)
         })
         .catch(e => {
-          console.log(e.res)
           setIsError(true)
           // if (onReject) onReject()
         })
