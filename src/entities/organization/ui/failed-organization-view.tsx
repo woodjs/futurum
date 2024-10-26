@@ -7,9 +7,13 @@ import { FC } from 'react'
 
 interface IFailedOrganizationViewProps {
   back: () => void
+  error?: string
 }
 
-const FailedOrganizationView: FC<IFailedOrganizationViewProps> = ({ back }) => {
+const FailedOrganizationView: FC<IFailedOrganizationViewProps> = ({
+  back,
+  error,
+}) => {
   const t = useTranslations('organization')
 
   return (
@@ -19,7 +23,7 @@ const FailedOrganizationView: FC<IFailedOrganizationViewProps> = ({ back }) => {
     >
       <ExclamationTriangleIcon className='size-32 text-red-500' />
       <div className='text-center text-3xl font-bold'>
-        {t('failure.somethingWentWrong')}
+        {error || t('failure.somethingWentWrong')}
       </div>
       <NormalButton onClick={back}>{t('failure.backToCreation')}</NormalButton>
       <NormalButton variant='ghost' asChild>

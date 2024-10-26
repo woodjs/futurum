@@ -9,6 +9,6 @@ export const createOrganization = async (data: IOrganizationFormData): Promise<I
         const response = await protectedAPI.post(`${OrganizationEndpoints.ORGANIZATIONS}`, data);
         return response.data;
     } catch (error) {
-        throw new Error('Failed to update organization');
+        throw error;
     }
 }

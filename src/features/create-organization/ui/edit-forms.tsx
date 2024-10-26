@@ -333,7 +333,7 @@ export const EditMainInfoForm: FC<IEditIdProps> = ({ id }) => {
   if (isSuccess)
     return (
       <EditFromBase
-        title={t('organization.form.mainInfo.title')}
+        title={t('organization.form.mainInfo.label')}
         description={t('organization.form.mainInfo.description')}
         schema={companyInfoSchema.merge(addressSchema)}
         form={MainInfoForm}
@@ -410,7 +410,7 @@ export const EditDocumentsForm: FC<IEditIdProps> = ({ id }) => {
     return (
       <EditFromBase
         title={t('organization.view.documents')}
-        description={t('organization.form.stepper.businessStepper.documents')}
+        description={t('organization.form.stepper.businessStepper.files')}
         schema={documentsFormSchema}
         form={DocumentsForm}
         isLoading={isLoading}

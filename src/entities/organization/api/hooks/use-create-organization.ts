@@ -9,6 +9,6 @@ export const useCreateOrganization = () => useMutation({
         return createOrganization(data);
     },
     onSuccess: (data) => {
-        console.log('Организация создана', data);
+        // console.log('Организация создана', data);
     }
 })
