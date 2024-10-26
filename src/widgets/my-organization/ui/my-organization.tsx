@@ -10,6 +10,7 @@ import {
   EditMainInfoForm,
   EditStartPageForm,
 } from '@/features/create-organization'
+import DeleteOrganization from '@/features/delete-organization/ui/delete-form'
 import { Skeleton } from '@/shared/ui/skeleton'
 
 export const MyOrganization = ({ id }: { id: string }) => {
@@ -38,15 +39,19 @@ export const MyOrganization = ({ id }: { id: string }) => {
   if (isError) return <div>Ошибка загрузки</div>
   if (isSuccess)
     return (
-      <OrganizationView
-        documentsEdit={EditDocumentsForm}
-        employeesEdit={EditEmployeesForm}
-        financialInfoEdit={EditFinancialForm}
-        startPageEdit={EditStartPageForm}
-        mainInfoEdit={EditMainInfoForm}
-        descriptionEdit={EditDescriptionForm}
-        socialMediaEdit={EditContactInfoForm}
-        organization={data}
-      />
+      <>
+        <OrganizationView
+          documentsEdit={EditDocumentsForm}
+          employeesEdit={EditEmployeesForm}
+          financialInfoEdit={EditFinancialForm}
+          startPageEdit={EditStartPageForm}
+          mainInfoEdit={EditMainInfoForm}
+          descriptionEdit={EditDescriptionForm}
+          socialMediaEdit={EditContactInfoForm}
+          organization={data}
+        />
+        <div className='h-6' />
+        <DeleteOrganization id={id} />
+      </>
     )
 }

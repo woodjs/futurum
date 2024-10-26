@@ -83,7 +83,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
   // Создаем схему валидации в зависимости от того, multiple или нет
   const fileValidationSchema = multiple
     ? createMultipleFilesSchema(
-        accept.split(',').map(type => type.trim()),
+        accept ? accept.split(',').map(type => type.trim()) : [],
         maxSizeMB,
         maxFiles,
         required,
@@ -93,7 +93,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
         t('multiple.maxFilesLimit', { maxFiles }),
       )
     : createFileSchema(
-        accept.split(',').map(type => type.trim()),
+        accept ? accept.split(',').map(type => type.trim()) : [],
         maxSizeMB,
         required,
         t('single.fileSelection'),

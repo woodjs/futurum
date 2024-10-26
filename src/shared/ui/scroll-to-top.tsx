@@ -40,7 +40,7 @@ const ScrollToTop = () => {
     <button
       className={cn(
         `sticky left-[calc(100vw-140px)] hidden items-center justify-center rounded-[50%]
-        bg-gray duration-200 lg:flex lg:h-[96px] lg:w-[96px]`,
+        bg-gray duration-200 lg:flex lg:h-[96px] lg:w-[96px] xl:translate-x-[110%]`,
         scrollPosition ? 'opacity-100' : 'pointer-events-none opacity-0',
       )}
       style={{ bottom: `${40}px` }}

@@ -30,6 +30,7 @@ import StartPageForm from './start-page-form'
 import EmployeeForm from './employee-form'
 import Loader from '@/shared/ui/loader'
 import { useTranslations } from 'next-intl'
+import { errorsFlatEntriesParser } from '@/shared/api/helpers/auth.helper'
 
 interface ICreateBusinessFormProps {
   onSuccess: (organization: IOrganization) => void
@@ -77,13 +78,23 @@ export const CreateFormWrapper: FC<ICreateBusinessFormProps> = ({
     setData(newData)
     if (stepper.isLast) {
       setIsLoading(true)
-
       mutate(newData as IOrganizationFormData)
         .then(data => {
           if (onSuccess) onSuccess(data)
         })
         .catch(e => {
-          setIsError(true)
+          if (e.errors) {
+            const firstKey = Object.keys(e.errors)[0]
+            if (firstKey) {
+              stepper.goTo(firstKey)
+            }
+            console.log(e.errors, firstKey)
+            errorsFlatEntriesParser(e.errors).forEach(([key, value]) => {
+              form.setError(key as any, { message: value })
+            })
+          } else {
+            setIsError(true)
+          }
           // if (onReject) onReject()
         })
         .finally(() => {

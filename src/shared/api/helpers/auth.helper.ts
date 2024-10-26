@@ -21,6 +21,22 @@ export const redirectToSignIn = (locale: string | undefined): void => {
   window.location.href = signInURL
 }
 
+export const errorsFlatEntriesParser = (errors: { [key: string]: string | { [key: string]: string } }): [string, string][] => {
+  const entries: [string, string][] = [];
+
+  for (const [key, value] of Object.entries(errors)) {
+    if (typeof value === 'string') {
+      entries.push([key, value]);
+    } else {
+      const subEntries = errorsFlatEntriesParser(value);
+      entries.push(...subEntries);
+    }
+  }
+
+  return entries;
+}
+
+
 export const errorHandler = (error: any) => {
   if (error.message) {
     enqueueSnackbar(error.message, {
