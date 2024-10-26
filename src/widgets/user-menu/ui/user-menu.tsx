@@ -2,7 +2,7 @@
 import { Popover, PopoverContent, PopoverTrigger } from '@/shared/ui/popover'
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar'
 import { useUser } from '../../../entities/user'
-import { Link, usePathname, useRouter } from '../../../i18n/routing'
+import { usePathname, useRouter } from '../../../i18n/routing'
 import { removeAccessToken } from '../../../shared/api/helpers/auth.helper'
 import { protectedAPI } from '../../../shared/api'
 import { AUTH_LOGOUT_URL } from '../../../shared/api/config'
@@ -131,7 +131,7 @@ export const UserMenu = () => {
             text-red-500 outline-none hover:text-red-400'
           onClick={handleLogOut}
         >
-          Log out
+          {t('logout')}
         </button>
       </PopoverContent>
     </Popover>
