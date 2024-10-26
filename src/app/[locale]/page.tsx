@@ -25,8 +25,6 @@ import { useUser } from '../../entities/user'
 import { Header } from '../../widgets/header'
 
 export default function Home({ params: { locale } }) {
-  const t = useTranslations('default.Home.Header')
-
   return (
     <div className={'relative'}>
       <Menu />
