@@ -38,7 +38,7 @@ export const CreateBusinessForm: FC<ICreateBusinessFormProps> = ({
 
   const onSubmit = (values: z.infer<typeof stepper.current.schema>) => {
     // biome-ignore lint/suspicious/noConsoleLog: <We want to log the form values>
-    console.log(`Form values for step ${stepper.current.id}:`, values)
+
     if (stepper.isLast) {
       if (onSuccess) onSuccess()
       // stepper.reset()

@@ -105,9 +105,7 @@ const Sidebar = () => {
   //   isLoading: isUserLoading,
   //   isSuccess: isUserSuccess,
   // } = { data: userFake, isLoading: false, isSuccess: true }
-  linkList.forEach(link => {
-    console.log(link.href, pathname, pathname.startsWith(link.href))
-  })
+
   return (
     <div
       className='sticky top-40 mr-4 flex h-fit w-[300px] flex-shrink-0 flex-col gap-[36px]

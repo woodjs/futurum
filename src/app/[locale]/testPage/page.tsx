@@ -5,10 +5,6 @@ import { IncomeTable } from '../../../widgets/tables'
 import AuthProvider from '../../../shared/auth/auth-provider'
 
 export default function TestPage() {
-  const onValueChange = (values: number[]): void => {
-    console.log(values)
-  }
-
   return (
     <AuthProvider>
       <div className='p-10'>

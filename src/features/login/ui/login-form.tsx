@@ -31,7 +31,6 @@ export const LoginForm = () => {
 
   const handleSignIn = async () => {
     const { email, password } = formData
-    console.log('test')
 
     if (email && password) {
       await protectedAPI
