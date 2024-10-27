@@ -14,6 +14,7 @@ import { FormInput } from '@/shared/ui/form-input'
 import { NormalButton } from '@/shared/ui/normal-button'
 import FileUpload from '@/shared/ui/file-upload'
 import { useTranslations } from 'next-intl'
+import { cn } from '@/shared/lib/utils'
 
 type EmployeeFormValues = z.infer<typeof employeesSchema>
 
@@ -200,6 +201,7 @@ const EmployeeForm = () => {
       ))}
 
       <NormalButton
+        className={cn(fields.length === 0 && 'h-64 rounded-xl')}
         variant='ghost'
         type='button'
         onClick={() =>

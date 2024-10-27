@@ -100,7 +100,7 @@ const employeeSchema = z.object({
 
 const employeesSchema =
     z.object({
-        employees: z.array(employeeSchema).max(10, 'organization.form.startPage.employees.max')
+        employees: z.array(employeeSchema).min(1, 'organization.form.startPage.employees.min').max(10, 'organization.form.startPage.employees.max')
     });
 
 export {

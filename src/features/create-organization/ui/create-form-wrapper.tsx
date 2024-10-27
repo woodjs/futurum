@@ -1,8 +1,7 @@
 'use client'
+
 import { useForm } from 'react-hook-form'
 import {
-  businessStepper,
-  employeesSchema,
   FailedOrganizationView,
   IOrganization,
   IOrganizationFormData,
@@ -10,20 +9,15 @@ import {
   OrganizationType,
   useCreateOrganization,
 } from '@/entities/organization'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { Form } from '@/shared/ui/form'
 import CompanyInfo from './company-info'
 import Address from './address'
-import { Button } from '@/shared/ui'
-import Description from './description'
 import { NormalButton } from '@/shared/ui/normal-button'
+import Description from './description'
 import ContactInfo from './contact-info'
 import DocumentsForm from './documents-form'
-import { useRouter } from 'next/navigation'
-import { Link } from '@/i18n/routing'
 import { ChevronLeftIcon } from '@heroicons/react/16/solid'
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import FinancialInfoForm from './financial-info-form'
 import { Stepper } from '@stepperize/react'
 import StartPageForm from './start-page-form'
@@ -31,6 +25,10 @@ import EmployeeForm from './employee-form'
 import Loader from '@/shared/ui/loader'
 import { useTranslations } from 'next-intl'
 import { errorsFlatEntriesParser } from '@/shared/api/helpers/auth.helper'
+import { enqueueSnackbar } from 'notistack'
+
+// Импортируем ваш компонент формы
+import { Form } from '@/shared/ui/form'
 
 interface ICreateBusinessFormProps {
   onSuccess: (organization: IOrganization) => void
@@ -51,64 +49,105 @@ export const CreateFormWrapper: FC<ICreateBusinessFormProps> = ({
 }) => {
   const t = useTranslations()
 
-  const form = useForm({
-    mode: 'onTouched',
-    resolver: zodResolver(stepper.current.schema),
-    defaultValues: {
-      employees: [
-        {
-          firstName: '',
-          lastName: '',
-          futurumAccount: '',
-          phone: '',
-          telegram: '',
-          avatar: null,
-        },
-      ],
-    },
-  })
-  const [data, setData] = useState({})
+  const [data, setData] = useState<Record<string, any>>({})
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
 
   const { mutateAsync: mutate } = useCreateOrganization()
 
-  const onSubmit = (values: z.infer<typeof stepper.current.schema>) => {
-    const newData = { ...data, [stepper.current.id]: values, type }
+  // Пользовательский resolver для текущего шага
+  const resolver = async (values: any) => {
+    const schema = stepper.current.schema
+    try {
+      const validatedData = await schema.parseAsync(values)
+      return { values: validatedData, errors: {} }
+    } catch (e) {
+      if (e instanceof z.ZodError) {
+        // Преобразуем ошибки в формат, ожидаемый react-hook-form
+        const errors = e.errors.reduce((acc: any, currError) => {
+          const path = currError.path.join('.')
+          acc[path] = {
+            type: currError.code,
+            message: currError.message,
+          }
+          return acc
+        }, {})
+        return { values: {}, errors }
+      }
+      return { values: {}, errors: {} }
+    }
+  }
+
+  // Инициализируем useForm с defaultValues для текущего шага
+  const form = useForm({
+    mode: 'onTouched', // или 'onChange', если предпочитаете
+    resolver,
+    defaultValues: data[stepper.current.id] || {},
+    shouldUnregister: false,
+  })
+
+  useEffect(() => {
+    // Сбрасываем форму и загружаем данные текущего шага при смене шага
+    form.reset(data[stepper.current.id] || {}, { keepErrors: true })
+    // Не вызываем form.trigger(), чтобы избежать запуска валидации при смене шага
+  }, [stepper.current.id])
+
+  const onSubmit = async (values: any) => {
+    // Сохраняем данные текущего шага под ключом stepper.current.id
+    const newData = { ...data, [stepper.current.id]: values }
     setData(newData)
+
     if (stepper.isLast) {
       setIsLoading(true)
-      mutate(newData as IOrganizationFormData)
-        .then(data => {
-          if (onSuccess) onSuccess(data)
-        })
-        .catch(e => {
-          if (e.errors) {
-            const firstKey = Object.keys(e.errors)[0]
-            if (firstKey) {
-              stepper.goTo(firstKey)
-            }
-            console.log(e.errors, firstKey)
-            errorsFlatEntriesParser(e.errors).forEach(([key, value]) => {
-              form.setError(key as any, { message: value })
-            })
-          } else {
-            setIsError(true)
+      try {
+        // Объединяем данные всех шагов для отправки на сервер
+        const mergedData = Object.values(newData).reduce(
+          (acc, curr) => ({ ...acc, ...curr }),
+          {},
+        )
+
+        const response = await mutate({
+          ...newData,
+          type,
+        } as IOrganizationFormData)
+        if (onSuccess) onSuccess(response)
+      } catch (e: any) {
+        if (e.errors) {
+          const firstKey = Object.keys(e.errors)[0]
+          if (firstKey) {
+            stepper.goTo(firstKey)
           }
-          // if (onReject) onReject()
-        })
-        .finally(() => {
-          setIsLoading(false)
-        })
+          // Устанавливаем ошибки с корректными именами полей
+          errorsFlatEntriesParser(e.errors).forEach(([key, value]) => {
+            enqueueSnackbar(value, { variant: 'error' })
+            form.setError(key as any, {
+              type: 'server',
+              message: value,
+            })
+          })
+        } else {
+          setIsError(true)
+        }
+      } finally {
+        setIsLoading(false)
+      }
     } else {
       stepper.next()
     }
   }
+
+  const clearSkippedData = (key: keyof typeof data) => {
+    const newData = { ...data }
+    delete newData[key]
+    setData(newData)
+  }
+
   if (isError) return <FailedOrganizationView back={() => setIsError(false)} />
 
   return (
     <Form {...form}>
       <button
+        type='button'
         className='mb-4 flex items-center text-slate-600'
         onClick={() => {
           if (onBack) onBack()
@@ -150,6 +189,7 @@ export const CreateFormWrapper: FC<ICreateBusinessFormProps> = ({
       <div className='mt-8 flex justify-between'>
         {!stepper.isFirst && (
           <NormalButton
+            type='button'
             variant='ghost'
             onClick={() => {
               stepper.prev()
@@ -160,13 +200,21 @@ export const CreateFormWrapper: FC<ICreateBusinessFormProps> = ({
         )}
         <div className='ml-auto flex gap-4'>
           {stepper.current.skip && (
-            <NormalButton variant='ghost' onClick={() => stepper.next()}>
+            <NormalButton
+              type='button'
+              variant='ghost'
+              onClick={() => {
+                clearSkippedData(stepper.current.id)
+                stepper.next()
+              }}
+            >
               {t('organization.buttons.skip')}
             </NormalButton>
           )}
           <NormalButton
+            type='button'
             onClick={form.handleSubmit(onSubmit)}
-            disabled={!form.formState.isValid || isLoading}
+            disabled={isLoading || !form.formState.isValid}
           >
             {stepper.isLast
               ? t('organization.buttons.submit')

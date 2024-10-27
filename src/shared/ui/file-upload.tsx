@@ -228,7 +228,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
   }
 
   const removeFile = (id: string) => {
-    protectedAPI.delete(`/v1/files/${id}`)
+    // protectedAPI.delete(`/v1/files/${id}`)
     setFileList(prevList => {
       const newList = prevList.filter(item => item.id !== id)
       const uploadedFiles = newList

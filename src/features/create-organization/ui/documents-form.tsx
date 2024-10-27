@@ -35,7 +35,7 @@ const DocumentsForm = () => {
             required={false}
             value={field.value}
             onChange={field.onChange}
-            error={t(errors.logo?.message as string)}
+            error={errors.logo?.message && t(errors.logo?.message as string)}
           />
         )}
       />
@@ -52,7 +52,10 @@ const DocumentsForm = () => {
             required={false}
             value={field.value}
             onChange={field.onChange}
-            error={t(errors.presentation?.message as string)}
+            error={
+              errors.presentation?.message &&
+              t(errors.presentation?.message as string)
+            }
           />
         )}
       />
@@ -69,7 +72,10 @@ const DocumentsForm = () => {
             required={false}
             value={field.value}
             onChange={field.onChange}
-            error={t(errors.companyCard?.message as string)}
+            error={
+              errors.companyCard?.message &&
+              t(errors.companyCard?.message as string)
+            }
           />
         )}
       />
@@ -86,7 +92,10 @@ const DocumentsForm = () => {
             required={false}
             value={field.value}
             onChange={field.onChange}
-            error={t(errors.taxReturn?.message as string)}
+            error={
+              errors.taxReturn?.message &&
+              t(errors.taxReturn?.message as string)
+            }
           />
         )}
       />
@@ -103,7 +112,10 @@ const DocumentsForm = () => {
             required={false}
             value={field.value}
             onChange={field.onChange}
-            error={t(errors.financialIndicators?.message as string)}
+            error={
+              errors.financialIndicators?.message &&
+              t(errors.financialIndicators?.message as string)
+            }
           />
         )}
       />
@@ -120,7 +132,10 @@ const DocumentsForm = () => {
             required={false}
             value={field.value}
             onChange={field.onChange}
-            error={t(errors.additionalDocuments?.message as string)}
+            error={
+              errors.additionalDocuments?.message &&
+              t(errors.additionalDocuments?.message as string)
+            }
           />
         )}
       />
