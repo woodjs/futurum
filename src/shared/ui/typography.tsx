@@ -19,6 +19,7 @@ const textVariants = {
   p: 'font-normal text-[16px] leading-[20px]', //16 400
   'p-small': 'font-normal text-[12px] leading-[16px]', //12 400
   'p-small2': 'font-bold text-[12px] leading-[16px]', //12 700
+  overline: 'text-[10px]/[14px] tracking-[2%] font-semibold',
 }
 
 const Typography = <T extends React.ElementType = 'p'>({

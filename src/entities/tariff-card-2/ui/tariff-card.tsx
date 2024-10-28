@@ -8,81 +8,80 @@ import { Typography } from '@/shared/ui/typography'
 import { tariffs } from '@/entities/tariff-card/lib/tariffs'
 import { ButtonName } from '@/entities/tariff-card/lib/buttonName'
 import { useTranslations } from 'next-intl'
-import { ISubscriptionPlan } from '@/widgets/tariffs2/ui/tariffs'
+import {
+  IFeature,
+  ISubscriptionPlan,
+  ISubscriptionPlanDetails,
+} from '@/widgets/tariffs2/ui/tariffs'
+import { object } from 'zod'
 
 interface IProps {
-  variant?: Tariff
-  subscriptionPlan: ISubscriptionPlan
-  buttonName: ButtonName
-  onButtonClick: (variant: string) => void
+  details: ISubscriptionPlanDetails
+  name: Tariff
+  price: number
   mode?: 'Month' | 'Year'
+  features: IFeature[]
+  selected?: Boolean
 }
 
 const TariffCard: FC<IProps> = ({
-  variant = Tariff.BASIC,
-  buttonName,
-  onButtonClick,
-  mode = 'Month',
-  subscriptionPlan,
+  details,
+  name,
+  price,
+  features,
+  selected = false,
 }) => {
-  const t = useTranslations('Tariffs')
   return (
-    <div
-      className={`relative flex h-[361px] w-[306px] items-center justify-center rounded-[15px]
-        p-[1px]`}
-    >
+    <div className={cn('flex flex-col')}>
       <div
-        className={cn(
-          tariffs[variant].gradient,
-          `hover:from-auto hover:to-auto absolute -top-[24px] left-1/2 w-[192px]
-          -translate-x-1/2`,
-        )}
+        className={cn(selected && 'rounded-[15px] border-[1px] border-black')}
       >
-        {variant}
-        {subscriptionPlan.price ? subscriptionPlan.price : 'Бесплатно'}
-      </div>
-      <div className={'absolute flex flex-col items-center justify-center'}>
-        <div
-          className={'flex h-[96px] max-w-[242px] items-center justify-center'}
-        >
-          <Typography
-            variant={'h5'}
-            className={'text-center leading-6'}
-            dangerouslySetInnerHTML={{
-              __html: t(`TariffTypes.Description.${variant}`),
-            }}
-          />
-        </div>
-        <GradientTypography
-          variant={'h3'}
-          className={cn(tariffs[variant].gradient, 'mt-6')}
-        >
-          {t(`TariffTypes.Price.${mode}.${variant}`)}
-        </GradientTypography>
         <div
           className={cn(
-            tariffs[Tariff.BASIC],
-            'my-6 h-[48px] w-[192px] rounded-[500px] p-[1px]',
+            tariffs[name].gradient,
+            'rounded-t-[15px] py-[10px] text-center',
+            name === Tariff.BLACK ? 'text-white' : 'text-black',
           )}
         >
-          <Button
-            variant={'outline'}
-            className={'h-full w-full'}
-            onClick={() => onButtonClick(variant)}
-          >
-            {t(buttonName)}
-          </Button>
-        </div>
-        {variant !== Tariff.BASIC && (
-          <Typography
-            variant={'p-small'}
-            className={'text-center text-[#A0AEC0E5]'}
-          >
-            {t('Condition')}
+          <Typography variant='h4' className={cn('mb-[8px]')}>
+            {name}
           </Typography>
-        )}
+          <Typography variant='subtitle-2' className={cn()}>
+            {price} USDT/мес.
+          </Typography>
+        </div>
+        <div className='flex flex-col rounded-b-[15px] bg-gray'>
+          {features.map((feature, index) => (
+            <div
+              key={feature.key}
+              className='flex items-center border-b border-transparent-gray px-[16px] py-[8px]
+                last:border-none'
+            >
+              <Typography variant='overline'>{feature.value}</Typography>
+              <Typography className='ml-auto' variant='subtitle-3'>
+                {details[feature.key as keyof ISubscriptionPlanDetails] === 0
+                  ? '-'
+                  : feature.key === 'referralConnection'
+                    ? details[feature.key] + ' '
+                    : feature.key === 'commission'
+                      ? details[feature.key] + '%'
+                      : typeof details[
+                            feature.key as keyof ISubscriptionPlanDetails
+                          ] === 'boolean'
+                        ? details[feature.key as keyof ISubscriptionPlanDetails]
+                          ? 'да'
+                          : 'нет'
+                        : details[
+                            feature.key as keyof ISubscriptionPlanDetails
+                          ]}
+              </Typography>
+            </div>
+          ))}
+        </div>
       </div>
-      <Image src={tariffs[variant].card} alt={variant} />
+      <Button className='mt-[15px]' size={'default'}>
+        {selected ? 'Продлить' : 'Купить'}
+      </Button>
     </div>
   )
 }

@@ -1,6 +1,7 @@
 import { Tariff } from '@/shared/api/types'
+import { ISubscriptionPlan } from './ui/tariffs'
 
-export const subscriptionPlans = [
+export const subscriptionPlans: ISubscriptionPlan[] = [
   {
     name: Tariff.BASIC,
     price: 0,
