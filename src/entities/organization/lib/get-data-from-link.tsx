@@ -82,9 +82,9 @@ export const getDataFromLink = (link: string, key: keyof ISocialMediaLinks) => {
       }
     case 'whatsapp':
       return {
-        link: link,
+        link: `https://wa.me/${link}`,
         key: key,
-        label: `@${getIdFromLink(link, key)}`,
+        label: link,
         icon: '/images/social/whatsapp.png',
       }
     case 'wechat':

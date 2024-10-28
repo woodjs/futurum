@@ -38,7 +38,7 @@ const contactInfoSchema = z.object({
     tiktok: z.string().url({ message: 'organization.form.contactInfo.tiktok.invalid' }).optional().nullable().or(z.literal('')),
     telegram: z.string().url({ message: 'organization.form.contactInfo.telegram.invalid' }).optional().nullable().or(z.literal('')),
     youtube: z.string().url({ message: 'organization.form.contactInfo.youtube.invalid' }).optional().nullable().or(z.literal('')),
-    whatsapp: z.string().url({ message: 'organization.form.contactInfo.whatsapp.invalid' }).optional().nullable().or(z.literal('')),
+    whatsapp: phoneSchema.optional().nullable().or(z.literal('')),
     vk: z.string().url({ message: 'organization.form.contactInfo.vk.invalid' }).optional().nullable().or(z.literal('')),
     weChat: z.string().url({ message: 'organization.form.contactInfo.weChat.invalid' }).optional().nullable().or(z.literal('')),
     reddit: z.string().url({ message: 'organization.form.contactInfo.reddit.invalid' }).optional().nullable().or(z.literal(''))
