@@ -17,8 +17,7 @@ const linkList = [
   {
     href: Routes.MY_ASSETS,
     name: 'MyAssets',
-    label: 'soon',
-    disable: true,
+    disable: false,
     exact: false,
   },
   {
