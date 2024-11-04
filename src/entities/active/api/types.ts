@@ -1,7 +1,7 @@
 import { IActiveBaseData } from "../model"
 
 export interface IActiveListFilters {
-    my?: boolean
+    id: number;
 }
 
 export interface IActiveListResponse {
@@ -11,4 +11,8 @@ export interface IActiveListResponse {
 
 export interface ICreatActiveResponse {
     id: string;
+}
+
+export interface ICollectListFilters {
+    id: number;
 }

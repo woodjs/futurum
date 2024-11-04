@@ -8,15 +8,13 @@ import { Routes } from '@/shared/model/routes'
 import ScrollToTop from '@/shared/ui/scroll-to-top'
 import { StatusFilter } from '@/features/actives-filter/ui/status-filter'
 import { ActivesList } from '@/widgets/active-list'
-import { useGetActivesList } from '@/entities/active/api'
 
 
 export default function Home() {
   const { push } = useRouter()
-  const { data: activeData, isLoading, isSuccess } = useGetActivesList({ my: true })
   const handleButtonClick = () => push(Routes.CREATE_ASSET)
   const handleButtonClick2 = () => push(Routes.CREATE_ASSET_NFT)
-  
+  console.log("activeData");
   // Пример входящего JSON
 const jsonData = {
   "data": [
@@ -83,22 +81,22 @@ data.forEach(item => {
   console.log('--------------------------------');
 });
 
-// Пример использования данных
-activeData?.data.forEach(item => {
-  console.log(`ID: ${item.id}`);
-  console.log(`Категория: ${item.cathegory}`);
-  console.log(`Название: ${item.activeName}`);
-  console.log(`Заголовок: ${item.headline}`);
-  console.log(`Описание: ${item.description}`);
-  console.log(`Теги: ${item.tags.join(', ')}`);
-  console.log(`Минимальный взнос: ${item.minContribution}`);
-  console.log(`Цель сбора: ${item.purposeCollection}`);
-  console.log(`Дата окончания: ${new Date(item.endingDate).toLocaleString()}`);
-  console.log(`ID документов: ${item.documentIds.join(', ')}`);
-  console.log(`NFT ID: ${item.nftId}`);
-  console.log(`ID изображений галереи: ${item.galeryImagesIds}`);
-  console.log('--------------------------------');
-});
+// // Пример использования данных
+// activeData?.data.forEach(item => {
+//   console.log(`ID: ${item.id}`);
+//   console.log(`Категория: ${item.cathegory}`);
+//   console.log(`Название: ${item.activeName}`);
+//   console.log(`Заголовок: ${item.headline}`);
+//   console.log(`Описание: ${item.description}`);
+//   console.log(`Теги: ${item.tags.join(', ')}`);
+//   console.log(`Минимальный взнос: ${item.minContribution}`);
+//   console.log(`Цель сбора: ${item.purposeCollection}`);
+//   console.log(`Дата окончания: ${new Date(item.endingDate).toLocaleString()}`);
+//   console.log(`ID документов: ${item.documentIds.join(', ')}`);
+//   console.log(`NFT ID: ${item.nftId}`);
+//   console.log(`ID изображений галереи: ${item.galeryImagesIds}`);
+//   console.log('--------------------------------');
+// });
 
 // Состояние пагинации
 console.log(`Есть ли следующая страница: ${hasNextPage}`);

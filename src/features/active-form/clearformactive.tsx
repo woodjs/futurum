@@ -11,11 +11,14 @@ import { CREATE_NFT } from '@/shared/api/config';
 import { protectedAPI } from '@/shared/api';
 import { useRouter } from '@/i18n/routing';
 import { errorClientHandler } from '@/shared/api/helpers/auth.helper';
-import { FormFields, IFile } from './types';
+import { IFile } from './types';
 import { z } from 'zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { register } from 'module';
 import { categories_list, collections_list, organizations_list } from './list-default';
+import { useCreateActive } from '@/entities/active/api/hooks/use-create-active';
+import { IActiveBaseData } from '@/entities/active';
+import { useGetOrganizationList } from '@/entities/organization';
 
 const AUTH_TOKEN_KEY = 'auth-token-data'
 
@@ -36,7 +39,7 @@ interface Collection {
 
 const ActiveCreate: React.FC = () => {
     // Для всех полей
-    const [formData, setFormData] = useState<FormFields>({
+    const [formData, setFormData] = useState<IActiveBaseData>({
         id: 0,
         cathegory: '',
         organizationId: '',
@@ -50,11 +53,14 @@ const ActiveCreate: React.FC = () => {
         documentIds: [''],
         nftId: '',
         galeryImagesIds: [''],
-        collectionId: '',
     });
     const [organizations, setOrganizations] = useState<Organization[]>([]);
     const [collections, setCollections] = useState<Collection[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
+
+    const { mutateAsync: mutate } = useCreateActive()
+    const { data: organizations_list, isLoading, isSuccess } = useGetOrganizationList({ my: true })
+
 
     const [uploadedFile1, setUploadedFiles1] = useState<IFile[]>([]);
     const [uploadedFiles2, setUploadedFiles2] = useState<IFile[]>([]);
@@ -62,42 +68,7 @@ const ActiveCreate: React.FC = () => {
 
     const [loading, setLoading] = useState<boolean>(true);
 
-    useEffect(() => {
-        console.log('Загрузка данных при первоначальной загрузке страницы');
-        const fetchData = async () => {
-            setLoading(true);
-            try {
-                // Замените URL на соответствующие адреса вашего бэкэнда
-                const [categoriesResponse, organizationsResponse, collectionsResponse] = await Promise.all([
-                    fetch('http://localhost:3000/api/v1/organization-categories'),
-                    fetch('http://localhost:3000/api/v1/organizations'),
-                    fetch('http://localhost:3000/api/v1/organization-startups'),
-                ]);
 
-                if (!categoriesResponse.ok || !organizationsResponse.ok || !collectionsResponse.ok) {
-                    throw new Error('Ошибка при получении данных');
-                }
-
-                const categoriesData = await categoriesResponse.json();
-                const organizationsData = await organizationsResponse.json();
-                const collectionsData = await collectionsResponse.json();
-
-                setCategories(categoriesData);
-                setOrganizations(organizationsData);
-                setCollections(collectionsData);
-            } catch (error) {
-                console.error('Ошибка при загрузке данных:', error);
-                // Используем дефолтные данные при ошибке
-                setCategories(categories_list);
-                setOrganizations(organizations_list);
-                setCollections(collections_list);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchData();
-    }, []); // Пустой массив зависимостей
     const [selectedCollection, setSelectedCollection] = useState<number | string>('');
 
     const handleCollectionSelect = (value: number | string) => {
@@ -178,17 +149,10 @@ const ActiveCreate: React.FC = () => {
         try {
             // Логируем преобразованные значения перед отправкой для отладки
             console.log('Prepared formData:', formData);
-
-            // Отправляем данные
-            await protectedAPI.post(CREATE_NFT, formData)
-                .then(res => {
-                    Cookies.set(AUTH_TOKEN_KEY, JSON.stringify(res.data));
-                    router.push('/');
-                })
-                .catch(error => {
-                    console.error('Ошибка при отправке данных:', error);
-                    errorClientHandler(error?.errors);
-                });
+            // Отправляем данны
+            const response = await mutate({
+                ...formData
+            })
         } catch (error) {
             console.error('Ошибка при отправке:', error);
         }
@@ -268,8 +232,8 @@ const ActiveCreate: React.FC = () => {
                             label: 'Организация',
                             value: formData.organizationId,
                             placeholder: 'Выберите вашу организацию',
-                            options: organizations?.map((organization) => ({
-                                label: organization.name, // Имя категории для отображения
+                            options: organizations_list?.data?.map((organization) => ({
+                                label: organization.companyName, // Имя категории для отображения
                                 value: organization.id, // Уникальный идентификатор категории
                             })) || [],
                         }

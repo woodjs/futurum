@@ -1,8 +1,10 @@
+import { ICollectListFilters } from '@/entities/active';
+import { useGetCollectList } from '@/entities/active/api';
+import { useCreateCollection } from '@/entities/active/api/hooks/use-create-collects';
 import { Button } from '@/shared/ui';
 import React, { useState } from 'react';
 
 interface Collection {
-  id: number;
   name: string;
   color: string;
 }
@@ -12,11 +14,7 @@ interface CollectionFormProps {
 }
 
 const CollectionForm: React.FC<CollectionFormProps> = ({ onCollectionSelect }) => {
-  const [collections, setCollections] = useState<Collection[]>([
-    { id: 1, name: 'Коллекция 1', color: '#0000ff' },
-    { id: 2, name: 'Коллекция 2', color: '#ff0000' },
-  ]);
-
+  const [collections, setCollections] = useState<Collection[]>([]);
   const [selectedCollection, setSelectedCollection] = useState<number | string>('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [newCollectionName, setNewCollectionName] = useState('');
@@ -28,50 +26,28 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ onCollectionSelect }) =
     onCollectionSelect(selectedValue); // Передача значения в родительский компонент
   };
 
-  const handleCreateCollection = async () => {
-    if (newCollectionName.trim() === '') {
-      alert('Введите название коллекции');
-      return;
-    }
-
-    const newCollection: Collection = {
-      id: collections.length + 1,
-      name: newCollectionName,
-      color: newCollectionColor,
-    };
-
-    try {
-      // Отправка данных на сервер
-      const response = await fetch('http://lockalhost:3000/collections', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: newCollectionName,
-          color: newCollectionColor,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Ошибка при отправке данных');
-      }
-
-      const result = await response.json();
-      console.log('Данные успешно отправлены:', result);
-
-      // Обновление локального состояния
-      setCollections([...collections, newCollection]);
-      setNewCollectionName('');
-      setNewCollectionColor('#000000');
-      setIsDialogOpen(false);
-    } catch (error) {
-      console.error('Ошибка:', error);
-      alert('Ошибка при отправке данных на сервер');
-    }
+  const { data: activeData, isLoading, isSuccess } = useGetCollectList();
+  const newCollection: Collection = {
+    name: newCollectionName,
+    color: newCollectionColor,
   };
+  const handleCreateCollection = () => {
+    
 
-
+    // Вызов функции мутации для отправки данных на сервер
+    createCollection(newCollection, {
+      onSuccess: () => {
+        setCollections([...collections, newCollection]);
+        setNewCollectionName('');
+        setNewCollectionColor('#000000');
+        setIsDialogOpen(false);
+      },
+      onError: (error) => {
+        console.error('Ошибка при создании коллекции:', error);
+      },
+    });
+  };
+  const { mutate: createCollection } = useCreateCollection(newCollection);
 
   return (
     <div className="p-4">
@@ -84,14 +60,13 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ onCollectionSelect }) =
           className="w-full p-2 border border-gray-300 rounded-md"
         >
           <option value="">Выберите коллекцию</option>
-          {collections.map((collection) => (
+          {activeData?.data.map((collection) => (
             <option
               key={collection.id}
               value={collection.id}
               style={{ color: collection.color }}
             >
               {collection.name}
-
             </option>
           ))}
         </select>
@@ -140,7 +115,7 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ onCollectionSelect }) =
                 onClick={handleCreateCollection}
                 className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
               >
-                Сохранить
+               Сохранить
               </Button>
             </div>
           </div>
