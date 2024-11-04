@@ -7,8 +7,8 @@ import {
   IOrganizationFormData,
   IOrganizationStep,
   OrganizationType,
-  useCreateOrganization,
 } from '@/entities/organization'
+import { useCreateOrganization} from '@/entities/organization/api/'
 import { z } from 'zod'
 import CompanyInfo from './company-info'
 import Address from './address'

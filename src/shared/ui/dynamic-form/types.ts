@@ -26,6 +26,9 @@ export interface FiledBase {
   label?: string
   description?: string
   className?: string
+  postText?: string
+  value?: any
+  onChange?: (event: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => void;
 }
 
 export interface FieldInput extends FiledBase {

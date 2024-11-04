@@ -47,14 +47,26 @@ export const errorHandler = (error: any) => {
 }
 
 export const errorClientHandler = (error: any) => {
-  const entries: [string, string][] = Object.entries(error)
+  if (typeof error === 'string') {
+    console.error('Ошибка в виде строки:', error);
+    return;
+  }
 
-  if (entries.length > 0) {
-    for (let i = 0; i < 1; i += 1) {
-      enqueueSnackbar(`${entries[i][0]}: ${entries[i][1]}`, {
-        variant: 'error',
-        persist: false,
-      })
+  if (Array.isArray(error)) {
+    console.error('Ошибка в виде массива:', error);
+    return;
+  }
+
+  // Основная логика для объектов
+  if (error && typeof error === 'object') {
+    const entries: [string, string][] = Object.entries(error);
+
+    if (entries.length > 0) {
+      for (let i = 0; i < 1; i += 1) {
+        console.log('Обработка ошибки:', entries[i]);
+      }
+    } else {
+      console.error('Пустой объект ошибки:', error);
     }
   }
-}
+};

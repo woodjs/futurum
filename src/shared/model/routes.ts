@@ -12,6 +12,7 @@ export enum Routes {
   WALLET = '/profile/wallet',
   MY_ASSETS = '/profile/assets',
   CREATE_ASSET = '/profile/assets/create',
+  CREATE_ASSET_NFT = '/profile/assets/create-nft',
   MY_ORGANIZATIONS = '/profile/organizations',
   PURCHASES = '/profile/purchases',
   MESSAGES = '/profile/messages',
