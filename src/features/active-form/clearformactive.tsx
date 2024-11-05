@@ -412,7 +412,7 @@ const ActiveCreate: React.FC = () => {
                 <div className="flex pt-6 space-x-9 w-full">
 
                     <Button type="submit">
-                        Submit
+                        Создать актив
                     </Button>
                 </div>
             </form>

@@ -22,22 +22,27 @@ const ActiveCard: FC<IProps> = ({
   tag,
   image,
   params,
+  description,
+  collection:color,
   price,
   purchaseDate,
   title,
   menuSlot,
 }) => {
   const locale = useLocale()
+  console.log("color color color color color")
+  console.log(color.color)
+  const colors = color.color;
   return (
     <>
-      <div className='flex gap-6'>
+      <div className='flex gap-6 ' style={{ color: colors  }}>
         <ActiveBodyCard
           Header={<NftcardHeader content={tag} />}
           Image={<NftImage imageSrc={image} />}
-          // Content={<ActiveInnerContent content={params} />}
+          Content={<ActiveInnerContent />}
           Footer={<ActiveFooter ButtonSlot={menuSlot} price={price.toString()} />}
         />
-        <div className='flex flex-col justify-around'>
+        <div className='flex flex-col justify-around '>
           <div className={'mt-2 text-xs text-slate-500 '}>
             {format(purchaseDate, 'dd MMMM HH:MM', {
               locale: getDateLocale(locale),

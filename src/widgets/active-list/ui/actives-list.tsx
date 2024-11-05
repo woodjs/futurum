@@ -11,6 +11,7 @@ import { useGetActivesList } from '@/entities/active/api'
 import { API_URL } from '@/shared/api/config'
 
 
+
 const generatePurchaseItems = (data: any[]): IPurchaseItem[] => {
   const purchaseItems: IPurchaseItem[] = []
   const count = 30
@@ -24,6 +25,7 @@ const generatePurchaseItems = (data: any[]): IPurchaseItem[] => {
       const result_url_nft = url.slice(secondSlashIndex);
       console.log("result_url_nft"); // 'api/v1/files/9b46e8bfa13c53995f99c.png'
       console.log(result_url_nft); // 'api/v1/files/9b46e8bfa13c53995f99c.png'
+      console.log(data[i].collection.color); // 'api/v1/files/9b46e8bfa13c53995f99c.png'
 
       const purchaseItem: IPurchaseItem = {
         id: data[i].id,
@@ -33,6 +35,7 @@ const generatePurchaseItems = (data: any[]): IPurchaseItem[] => {
         price: data[i].purposeCollection,
         type: faker.word.words(),
         category: data[i].category,
+        collection: data[i].collection,
         tag: data[i].tags,
         params: [
           {
@@ -49,6 +52,7 @@ const generatePurchaseItems = (data: any[]): IPurchaseItem[] => {
           name: faker.person.firstName(),
           image: '',
         },
+        
         expired: faker.date.future(),
         likes: faker.number.int({ min: 0, max: 100 }),
         isLiked: faker.datatype.boolean(),
@@ -57,43 +61,10 @@ const generatePurchaseItems = (data: any[]): IPurchaseItem[] => {
 
       purchaseItems.push(purchaseItem)
     }
-  } else {
-    for (let i = 0; i < count; i++) {
-      const purchaseItem: IPurchaseItem = {
-        id: faker.string.uuid(),
-        image: `/images/nfts/profit-${faker.number.int({ min: 1, max: 5 })}.jpg`,
-        title: faker.commerce.productName(),
-        description: faker.commerce.productDescription(),
-        price: parseFloat(faker.commerce.price()),
-        type: faker.word.words(),
-        category: faker.word.words(1),
-        tag: `#${faker.word.words(1)}`,
-        params: [
-          {
-            title: faker.finance.transactionType(),
-            value: faker.finance.amount(),
-          },
-          {
-            title: faker.finance.transactionType(),
-            value: faker.finance.amount(),
-          },
-        ],
-        author: {
-          id: faker.string.uuid(),
-          name: faker.person.firstName(),
-          image: '',
-        },
-        expired: faker.date.future(),
-        likes: faker.number.int({ min: 0, max: 100 }),
-        isLiked: faker.datatype.boolean(),
-        purchaseDate: faker.date.past(),
-      }
+  } 
 
-      purchaseItems.push(purchaseItem)
-    }
-  }
-
-
+  console.log("purchaseItems")
+  console.log(purchaseItems)
   return purchaseItems
 }
 
