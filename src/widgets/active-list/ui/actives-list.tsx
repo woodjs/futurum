@@ -34,7 +34,9 @@ const generatePurchaseItems = (data: any[]): IPurchaseItem[] => {
         description: data[i].description,
         price: data[i].purposeCollection,
         type: faker.word.words(),
+        endingDate: data[i].endingDate,
         category: data[i].category,
+        minContribution: data[i].minContribution,
         collection: data[i].collection,
         tag: data[i].tags,
         params: [

@@ -13,8 +13,10 @@ export interface INft {
     description: string;
     price: number;
     type: string;
+    endingDate?: string;
     color?: string;
     category: string;
+    minContribution?: number;
     tag: string;
     params: { title: string; value: string }[];
     author: {

@@ -29,7 +29,7 @@ interface IActiveBaseData2 {
     endingDate: string;
     userId?: number;
     documentIds: string[] | any;
-    nft: string;
+    nft: string | undefined;
     nftId?: string;
     galeryImagesIds: string[] | any;
     organizationId: string;

@@ -10,6 +10,7 @@ interface IProps {
   bgColor?: string
   stylebg?: string
   borderColor?: string
+  endingDate?: string
   height?: 'h-[149px]' | 'h-[75px]'
   price: string
   priceColor?: string
@@ -18,6 +19,7 @@ interface IProps {
 const ActiveFooter: FC<IProps> = ({
   bgColor = 'bg-gray',
   borderColor,
+  endingDate,
   Description,
   stylebg,
   ButtonSlot,
@@ -38,7 +40,7 @@ const ActiveFooter: FC<IProps> = ({
       )}
     >
       <div className={'absolute -top-[12px] left-1/2 z-10 -translate-x-1/2'}>
-        <ActiveCardTimer content={'40d:12h:06m'} />
+        <ActiveCardTimer content={ endingDate || '40d:12h:06m'} />
       </div>
       {Description && (
         <div className={'mb-[12px] mt-[16px]'}>{Description}</div>
@@ -51,13 +53,13 @@ const ActiveFooter: FC<IProps> = ({
       >
         <div>
           <p className={cn('text-[12px] font-bold', priceColor)}>
-            {t('Price')}
+            Цена
           </p>
-          <p className={cn('text-[14px] font-bold', priceColor)}>{price}</p>
+          <p className={cn('text-[12px] font-bold', priceColor)}>{price} USDT</p>
         </div>
         <div>
           {ButtonSlot || (
-            <Button className={'w-[135px] p-4 text-[14px]'}>Редактировать</Button>
+            <Button className={'w-[115px] p-2 text-[12px]'}>Редактировать</Button>
           )}
         </div>
       </div>
