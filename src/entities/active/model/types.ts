@@ -11,9 +11,11 @@ interface IActiveBaseData {
     endingDate: string;
     userId?: number;
     documentIds: string[] | any;
-    nft: string;
+    nft?: string;
+    nftId?: string;
     galeryImagesIds: string[] | any;
     organizationId: string;
+    collectionId?: string;
 }
 
 interface ICollectBaseData {
