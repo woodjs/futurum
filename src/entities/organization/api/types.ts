@@ -1,4 +1,4 @@
-import { IOrganization } from "../model"
+import { IOrganization, ICathegory } from "../model"
 
 export interface IOrganizationListFilters {
     my?: boolean
@@ -11,4 +11,8 @@ export interface IOrganizationListResponse {
 
 export interface ICreateOrganizationResponse {
     id: string;
+}
+
+export interface ICathegoryListResponse {
+    data: ICathegory[] | any;
 }

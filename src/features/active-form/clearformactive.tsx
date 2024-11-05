@@ -40,7 +40,6 @@ interface Collection {
 const ActiveCreate: React.FC = () => {
     // Для всех полей
     const [formData, setFormData] = useState<IActiveBaseData>({
-        id: 0,
         cathegory: '',
         organizationId: '',
         activeName: '',
@@ -51,7 +50,7 @@ const ActiveCreate: React.FC = () => {
         purposeCollection: 0,
         endingDate: '',
         documentIds: [''],
-        nftId: '',
+        nft: '',
         galeryImagesIds: [''],
     });
     const [organizations, setOrganizations] = useState<Organization[]>([]);
@@ -105,7 +104,7 @@ const ActiveCreate: React.FC = () => {
         // Обновляем documentIds в formData
         setFormData(prevState => ({
             ...prevState,
-            nftId: String(prevState.nftId), // Проверяем, что это string[]
+            nftId: String(prevState.nft), // Проверяем, что это string[]
             minContribution: Number(prevState.minContribution) >= 0 ? Number(prevState.minContribution) : 0,
             purposeCollection: Number(prevState.purposeCollection) >= 0 ? Number(prevState.purposeCollection) : 0,
             tags: typeof prevState.tags === 'string' ? prevState.tags.split(' ').filter(tag => tag) : prevState.tags,
@@ -142,7 +141,7 @@ const ActiveCreate: React.FC = () => {
             purposeCollection,
             endingDate,
             documentIds,
-            nftId,
+            nft,
             galeryImagesIds } = formData
 
 
@@ -156,19 +155,6 @@ const ActiveCreate: React.FC = () => {
         } catch (error) {
             console.error('Ошибка при отправке:', error);
         }
-        //   await protectedAPI
-        //     .post(CREATE_NFT, {
-        //       ...formData,
-        //     })
-        //     .then(res => {
-
-        //       Cookies.set(AUTH_TOKEN_KEY, JSON.stringify(res.data))
-
-        //       router.push('/')
-        //     })
-        //     .catch(error => {
-        //       errorClientHandler(error?.errors)
-        //     })
     }
 
     const handleFormUpdate = (data: Record<string, any>, info: any) => {

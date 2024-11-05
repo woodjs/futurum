@@ -1,8 +1,7 @@
 
 interface IActiveBaseData {
-    id: number;
+    id?: string;
     cathegory: string;
-    organizationId: string;
     activeName: string;
     headline: string;
     description: string;
@@ -10,9 +9,11 @@ interface IActiveBaseData {
     minContribution: number;
     purposeCollection: number;
     endingDate: string;
+    userId?: number;
     documentIds: string[] | any;
-    nftId: string;
+    nft: string;
     galeryImagesIds: string[] | any;
+    organizationId: string;
 }
 
 interface ICollectBaseData {

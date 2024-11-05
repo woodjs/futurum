@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { ActivesKeys, CollectKeys } from "../config";
 import { IActiveListFilters, ICollectListFilters } from "../types";
-import { getActivesList, getCollect } from "../services/get";
+import { getActives, getActivesList, getCollect } from "../services/get";
 
 export const useGetActivesListFilterId = (filters: IActiveListFilters) => useQuery({
     queryKey: [ActivesKeys.ACTIVES, filters],

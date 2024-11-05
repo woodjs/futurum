@@ -14,6 +14,7 @@ import DeleteOrganization from '@/features/delete-organization/ui/delete-form'
 import { Skeleton } from '@/shared/ui/skeleton'
 
 export const MyOrganization = ({ id }: { id: string }) => {
+  console.log(id)
   const { data, isLoading, isSuccess, isError } = useGetOrganizationById(id)
   if (isLoading)
     return (

@@ -11,12 +11,14 @@ import { getDateLocale } from '@/shared/lib/get-date-locale'
 import { useLocale } from 'next-intl'
 import { Button, GradientTypography } from '@/shared/ui'
 import ActiveCardTimer from '@/shared/ui/active-timer'
+import Link from 'next/link'
 
 interface IProps extends IPurchaseItem {
   menuSlot?: React.ReactNode
 }
 
 const ActiveCard: FC<IProps> = ({
+  id,
   tag,
   image,
   params,
@@ -42,7 +44,9 @@ const ActiveCard: FC<IProps> = ({
             })}
           </div>
           <GradientTypography className=' text-4xl'>
+            <Link href={`/${locale}/active/${id}`}>
             {title}
+            </Link>
           </GradientTypography>
           <div className='w-[600px]'><p>Ты готов к приключению, которое откроет перед тобой
             двери в мир больших возможностей и успеха? Играя, ты не только проводишь время с интересом, 

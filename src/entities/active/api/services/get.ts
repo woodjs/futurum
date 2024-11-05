@@ -18,7 +18,7 @@ export const getActivesListFilter = async (filters: IActiveListFilters): Promise
 export const getActivesList = async (): Promise<IActiveListResponse> => {
     try {
         const response = await protectedAPI.get<IActiveListResponse>(ActivesEndpoints.ACTIVES, {
-            
+
         });
         return response.data;
     } catch (error) {
@@ -38,6 +38,17 @@ export const getActives = async (id: string) => {
 export const getCollect = async () => {
     try {
         const response = await protectedAPI.get<ActiveResponseType>(`${CollectEndpoints.COLLECT}`);
+        return response.data;
+    } catch (error) {
+        throw new Error('Failed to fetch organization');
+    }
+}
+
+export const getActiveById = async (id: string) => {
+    try {
+        console.log("ДОЛГОЖДАННЫЙ ЗАПРОС")
+
+        const response = await protectedAPI.get<IActiveBaseData>(`${ActivesEndpoints.ACTIVES}/${id}`);
         return response.data;
     } catch (error) {
         throw new Error('Failed to fetch organization');

@@ -19,15 +19,10 @@ export default function Home() {
     <div className={'relative'}>
       <Container>
         <div className='flex flex-col gap-6'>
-          <GradientTypography>Мои активы</GradientTypography>
-          <div className='flex gap-6'>
-          <Button onClick={handleButtonClick} className='max-w-40' size='sm'>
-            Создать актив
-          </Button>
-          </div>
-          <StatusFilter />
+          <GradientTypography>Доброе сердце</GradientTypography>
+          
 
-          <ActivesList />
+          
         </div>
       </Container>
       <ScrollToTop />

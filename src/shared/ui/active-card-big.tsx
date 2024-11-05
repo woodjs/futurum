@@ -1,6 +1,8 @@
 'use client'
 import React, { FC } from 'react';
 import { cn } from '@/shared/lib/utils';
+import { Button, GradientTypography, Typography } from '@/shared/ui'
+
 
 interface IProps {
 	Content?: React.ReactNode;
@@ -11,7 +13,7 @@ interface IProps {
 	className?: string;
 }
 
-const ActiveBodyCard: FC<IProps> = ({
+const ActiveBodyCardBig: FC<IProps> = ({
 	Content,
 	Header,
 	Footer,
@@ -33,8 +35,12 @@ const ActiveBodyCard: FC<IProps> = ({
 				</div>
 			)}
 			{Footer}
+			
+			<Button type='button' className='my-1 w-[220px] text-sm'>Написать сообщение</Button>
+			<Button type='button' className='my-1 w-[220px] text-sm'>Другие активы пользователя</Button>
+			<Button type='button' className='my-1 w-[220px] text-sm'>Написать сообщение</Button>
 		</div>
 	);
 };
 
-export default ActiveBodyCard;
+export default ActiveBodyCardBig;

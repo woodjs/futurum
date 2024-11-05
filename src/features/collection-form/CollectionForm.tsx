@@ -26,20 +26,19 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ onCollectionSelect }) =
     onCollectionSelect(selectedValue); // Передача значения в родительский компонент
   };
 
-  const { data: activeData, isLoading, isSuccess } = useGetCollectList();
+  const { data: activeData } = useGetCollectList();
   const newCollection: Collection = {
     name: newCollectionName,
     color: newCollectionColor,
   };
   const handleCreateCollection = () => {
-    
+
 
     // Вызов функции мутации для отправки данных на сервер
     createCollection(newCollection, {
       onSuccess: () => {
         setCollections([...collections, newCollection]);
-        setNewCollectionName('');
-        setNewCollectionColor('#000000');
+        
         setIsDialogOpen(false);
       },
       onError: (error) => {
@@ -115,7 +114,7 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ onCollectionSelect }) =
                 onClick={handleCreateCollection}
                 className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
               >
-               Сохранить
+                Сохранить
               </Button>
             </div>
           </div>
