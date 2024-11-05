@@ -34,7 +34,7 @@ const ActiveCard: FC<IProps> = ({
         <ActiveBodyCard
           Header={<NftcardHeader content={tag} />}
           Image={<NftImage imageSrc={image} />}
-          Content={<ActiveInnerContent content={params} />}
+          // Content={<ActiveInnerContent content={params} />}
           Footer={<ActiveFooter ButtonSlot={menuSlot} price={price.toString()} />}
         />
         <div className='flex flex-col justify-around'>
@@ -48,10 +48,7 @@ const ActiveCard: FC<IProps> = ({
             {title}
             </Link>
           </GradientTypography>
-          <div className='w-[600px]'><p>Ты готов к приключению, которое откроет перед тобой
-            двери в мир больших возможностей и успеха? Играя, ты не только проводишь время с интересом, 
-обучаясь основам криптоиндустрии и финансового мра,
-            но и зарабатываешь реальные деньги, которые сможешь потратить по своему усмотрению!</p>
+          <div className='w-[600px]'><p></p>
             </div>
             <div className='flex'><span>Активный</span><ActiveCardTimer content={'40d:12h:06m'} /></div>
             <div>иконки</div>

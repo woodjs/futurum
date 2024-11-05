@@ -50,12 +50,13 @@ const ActiveCreate: React.FC = () => {
         purposeCollection: 0,
         endingDate: '',
         documentIds: [''],
-        nft: '',
+        nftId: '',
         galeryImagesIds: [''],
+        collectionId: '',
     });
     const [organizations, setOrganizations] = useState<Organization[]>([]);
     const [collections, setCollections] = useState<Collection[]>([]);
-    const [categories, setCategories] = useState<Category[]>([]);
+    const [categories, setCategories] = useState<Category[]>(categories_list);
 
     const { mutateAsync: mutate } = useCreateActive()
     const { data: organizations_list, isLoading, isSuccess } = useGetOrganizationList({ my: true })
@@ -73,7 +74,24 @@ const ActiveCreate: React.FC = () => {
     const handleCollectionSelect = (value: number | string) => {
         console.log('Выбрана коллекция:', value);
         setSelectedCollection(value);
+    
+        // Обновляем состояние формы с новым значением collectionId
+        setFormData(prevState => ({
+            ...prevState,
+            collectionId: String(value)
+        }));
     };
+    const handleInputTag = (value: number | string) => {
+        console.log('Выбрана коллекция:', value);
+        setSelectedCollection(value);
+    
+        // Обновляем состояние формы с новым значением collectionId
+        setFormData(prevState => ({
+            ...prevState,
+            collectionId: String(value)
+        }));
+    };
+
     const handleFileUpload1 = (files: IFile[]) => {
         const fileItems1: IFile[] = files.map(fileItem => ({
             id: fileItem.id, // Существующий ID
@@ -104,10 +122,7 @@ const ActiveCreate: React.FC = () => {
         // Обновляем documentIds в formData
         setFormData(prevState => ({
             ...prevState,
-            nftId: String(prevState.nft), // Проверяем, что это string[]
-            minContribution: Number(prevState.minContribution) >= 0 ? Number(prevState.minContribution) : 0,
-            purposeCollection: Number(prevState.purposeCollection) >= 0 ? Number(prevState.purposeCollection) : 0,
-            tags: typeof prevState.tags === 'string' ? prevState.tags.split(' ').filter(tag => tag) : prevState.tags,
+            nftId: String(fileItems2.map(file => file.id)),
         }));
     };
 
@@ -142,7 +157,8 @@ const ActiveCreate: React.FC = () => {
             endingDate,
             documentIds,
             nft,
-            galeryImagesIds } = formData
+            galeryImagesIds,
+            collectionId } = formData
 
 
         try {
@@ -162,12 +178,16 @@ const ActiveCreate: React.FC = () => {
         setFormData(prevState => ({
             ...prevState,
             ...data, // Обновляем существующее состояние с новыми данными
+
+            minContribution: Number(prevState.minContribution) >= 0 ? Number(prevState.minContribution) : 0,
+            purposeCollection: Number(prevState.purposeCollection) >= 0 ? Number(prevState.purposeCollection) : 0,
+            tags: typeof prevState.tags === 'string' ? prevState.tags.split(' ').filter(tag => tag) : prevState.tags,
         }));
     };
 
-
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
+
 
         // Обновление состояния в одном вызове
         setFormData(prevState => ({
@@ -362,7 +382,7 @@ const ActiveCreate: React.FC = () => {
                         renderFooter={form => <></>}
                     /> */}
                     <FileUpload
-                        name='nftId'
+                        name='nft'
                         label={'Загрузите изображение для NFT'}
                         accept={'image/png, image/jpeg, image/jpg'}
                         multiple={true}

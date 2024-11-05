@@ -37,8 +37,8 @@ const ActiveBodyCardBig: FC<IProps> = ({
 			{Footer}
 			
 			<Button type='button' className='my-1 w-[220px] text-sm'>Написать сообщение</Button>
-			<Button type='button' className='my-1 w-[220px] text-sm'>Другие активы пользователя</Button>
-			<Button type='button' className='my-1 w-[220px] text-sm'>Написать сообщение</Button>
+			<Button variant='secondary' type='button' className='my-1 w-[220px] text-sm'>Другие активы пользователя</Button>
+			<Button variant='secondary' 	type='button' className='my-1 w-[220px] text-sm'>Написать сообщение</Button>
 		</div>
 	);
 };
