@@ -8,6 +8,7 @@ interface IProps {
   ButtonSlot?: React.ReactNode
   Description?: React.ReactNode
   bgColor?: string
+  stylebg?: string
   borderColor?: string
   height?: 'h-[149px]' | 'h-[75px]'
   price: string
@@ -18,6 +19,7 @@ const ActiveFooter: FC<IProps> = ({
   bgColor = 'bg-gray',
   borderColor,
   Description,
+  stylebg,
   ButtonSlot,
   height = 'h-[75px]',
   price,
@@ -27,6 +29,7 @@ const ActiveFooter: FC<IProps> = ({
 
   return (
     <div
+    style={{background: stylebg}}
       className={cn(
         'relative -top-[22px] w-full rounded-b-[14px] border border-solid pl-2 pr-2',
         bgColor,

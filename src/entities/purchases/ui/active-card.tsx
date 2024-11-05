@@ -35,12 +35,12 @@ const ActiveCard: FC<IProps> = ({
   const colors = color.color;
   return (
     <>
-      <div className='flex gap-6 ' style={{ color: colors  }}>
+      <div className='flex gap-6 ' >
         <ActiveBodyCard
           Header={<NftcardHeader content={tag} />}
           Image={<NftImage imageSrc={image} />}
           Content={<ActiveInnerContent />}
-          Footer={<ActiveFooter ButtonSlot={menuSlot} price={price.toString()} />}
+          Footer={<ActiveFooter ButtonSlot={menuSlot} price={price.toString()} stylebg={colors}/>}
         />
         <div className='flex flex-col justify-around '>
           <div className={'mt-2 text-xs text-slate-500 '}>
