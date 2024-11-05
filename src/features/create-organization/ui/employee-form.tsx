@@ -43,6 +43,7 @@ const EmployeeForm = () => {
               <FormItem>
                 <FormLabel>
                   {t('organization.form.startPage.employee.firstName.label')}
+                  <span>*</span>
                 </FormLabel>
                 <FormControl>
                   <FormInput
@@ -67,7 +68,8 @@ const EmployeeForm = () => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  {t('organization.form.startPage.employee.lastName.label')}
+                  {t('organization.form.startPage.employee.lastName.label')}{' '}
+                  <span>*</span>
                 </FormLabel>
                 <FormControl>
                   <FormInput
@@ -120,6 +122,7 @@ const EmployeeForm = () => {
               <FormItem>
                 <FormLabel>
                   {t('organization.form.startPage.employee.phone.label')}
+                  <span>*</span>
                 </FormLabel>
                 <FormControl>
                   <FormInput
