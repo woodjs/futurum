@@ -17,6 +17,24 @@ interface IActiveBaseData {
     organizationId: string;
     collectionId?: string;
 }
+interface IActiveBaseData2 {
+    id?: string;
+    cathegory: string;
+    activeName: string;
+    headline: string;
+    description: string;
+    tags: string[] | any;
+    minContribution: number;
+    purposeCollection: number;
+    endingDate: string;
+    userId?: number;
+    documentIds: string[] | any;
+    nft: string;
+    nftId?: string;
+    galeryImagesIds: string[] | any;
+    organizationId: string;
+    collectionId?: string;
+}
 
 interface ICollectBaseData {
     id: number;
@@ -42,5 +60,6 @@ export type {
     ActiveResponseType,
     ICollectBaseData,
     ICollectListFilters,
-    ICollectCreate
+    ICollectCreate,
+    IActiveBaseData2
 }

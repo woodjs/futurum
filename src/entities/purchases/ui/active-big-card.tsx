@@ -11,7 +11,7 @@ import { getDateLocale } from '@/shared/lib/get-date-locale'
 import { useLocale } from 'next-intl'
 import { Button, GradientTypography, Typography } from '@/shared/ui'
 import ActiveCardTimer from '@/shared/ui/active-timer'
-import { IActiveBaseData } from '@/entities/active'
+import { IActiveBaseData2 } from '@/entities/active'
 import Link from 'next/link'
 import Image from 'next/image';
 import ActiveBodyCardBig from '@/shared/ui/active-card-big'
@@ -20,7 +20,7 @@ interface IProps extends IPurchaseItem {
   menuSlot?: React.ReactNode
 }
 
-const ActiveBigCard: FC<IActiveBaseData> = ({
+const ActiveBigCard: FC<IActiveBaseData2> = ({
   id,
   cathegory,
   activeName,
@@ -81,6 +81,7 @@ const ActiveBigCard: FC<IActiveBaseData> = ({
           </div>
           <div className='w-[800px]'>
             <Typography className='py-1 text-lg font-bold'>Описание:</Typography>
+            <div dangerouslySetInnerHTML={{ __html: text }} />
             <p>
               {isExpanded ? text : text.slice(0, maxCharacters) + (text.length > maxCharacters ? '...' : '')}
             </p>

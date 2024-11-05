@@ -10,6 +10,14 @@ interface IProps {
 	height?: 'h-[418px]' | 'h-[344px]';
 	className?: string;
 }
+interface IActive {
+	id?: string;
+	name: string;
+	description?: string;
+	price?: string | any;
+	date?: string;
+	image?: string;
+}
 
 const ActiveBodyCard: FC<IProps> = ({
 	Content,
