@@ -12,9 +12,11 @@ interface IProps {
   height?: 'h-[149px]' | 'h-[75px]'
   price: string
   priceColor?: string
+  stylebg?: string;
 }
 
 const NftFooter: FC<IProps> = ({
+  stylebg,
   bgColor = 'bg-gray',
   borderColor,
   Description,
@@ -27,12 +29,15 @@ const NftFooter: FC<IProps> = ({
 
   return (
     <div
+      style={{ background: stylebg }}
       className={cn(
         'relative -top-[22px] w-full rounded-b-[14px] border border-solid pl-2 pr-2',
         bgColor,
         borderColor,
         height,
       )}
+
+
     >
       <div className={'absolute -top-[12px] left-1/2 z-10 -translate-x-1/2'}>
         <NftcardTimer content={'40d:12h:06m'} />
