@@ -41,7 +41,7 @@ interface FileUploadProps {
   required?: boolean
   placeholder?: string
   value?: IFile[]
-  onChange?: (files: IFile[]) => void 
+  onChange?: (files: IFile[]) => void
   error?: string
 }
 
@@ -77,8 +77,6 @@ const FileUpload: React.FC<FileUploadProps> = ({
   const t = useTranslations('fileUpload')
   const [fileList, setFileList] = useState<FileItem[]>([])
   const [isDragOver, setIsDragOver] = useState(false)
-  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]); // Состояние для загруженных файлов
-
   const [validationError, setValidationError] = useState<string>('')
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -119,9 +117,6 @@ const FileUpload: React.FC<FileUploadProps> = ({
       setFileList(initialFileItems)
     }
   }, [value])
-  const handleFileUpload = (files: File[]) => {
-    setUploadedFiles(files); // Обновляем состояние с загруженными файлами
-  };
 
   const handleFileChange = (filesList: FileList | null) => {
     if (filesList) {
@@ -150,7 +145,6 @@ const FileUpload: React.FC<FileUploadProps> = ({
 
       setFileList(prevList => {
         const combinedList = [...prevList, ...newFileItems].slice(0, maxFiles)
-        console.log(combinedList);
         return combinedList
       })
 
@@ -241,10 +235,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
         .filter(item => item.status === 'uploaded')
         .map(item => item.iFile!)
       onChange?.(uploadedFiles)
-      console.log(newList)
-
       return newList
-      
     })
   }
 
@@ -303,7 +294,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
                 )}
                 {fileItem.status === 'uploaded' && fileItem.iFile && (
                   <>
-                    {fileItem.iFile.type && fileItem.iFile.type.includes('image') ? (
+                    {fileItem.iFile.type.includes('image') ? (
                       <img
                         src={fileItem.iFile.url}
                         alt={fileItem.iFile.name}

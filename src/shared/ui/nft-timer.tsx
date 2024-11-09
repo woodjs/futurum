@@ -1,7 +1,5 @@
 import {FC} from "react";
 import {cn} from "@/shared/lib/utils";
-import ActiveCardTimer from '@/shared/ui/nft-timer'
-import { useTranslations } from 'next-intl'
 
 interface IProps {
     content: string;

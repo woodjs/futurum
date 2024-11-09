@@ -94,12 +94,6 @@ interface ICharityOrganization extends IOrganizationBaseData {
 
 type IOrganization = IBusinessOrganization | IStartupOrganization | ICharityOrganization
 
-interface ICathegory {
-    id: string;
-    name: string;
-    type: string;
-}
-
 export type {
     IOrganization,
     IBusinessOrganization,
@@ -109,7 +103,5 @@ export type {
     IEmployeeInfo,
     IOrganizationDocuments,
     IFinancialInfo,
-    IOrganizationBaseData,
-    ICathegory,
-    
+    IOrganizationBaseData
 }

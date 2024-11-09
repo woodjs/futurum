@@ -18,17 +18,20 @@ const linkList = [
     href: Routes.MY_ASSETS,
     name: 'MyAssets',
     disable: false,
+    label: undefined,
     exact: false,
   },
   {
     href: Routes.MY_ORGANIZATIONS,
     name: 'MyOrganizations',
     disable: false,
+    label: undefined,
     exact: false,
   },
   {
     href: Routes.PROFILE,
     name: 'Profile',
+    label: undefined,
     disable: false,
     exact: true,
   },
@@ -36,22 +39,26 @@ const linkList = [
     href: Routes.MESSAGES,
     name: 'Messages',
     notification: 0,
+    label: undefined,
     disable: true,
   },
   {
     href: Routes.PURCHASES,
     name: 'MyPurchases',
+    label: undefined,
     disable: true,
   },
   {
     href: Routes.FAVORITES,
     name: 'Favorites',
     disable: true,
+    label: undefined,
   },
   {
     href: Routes.CART,
     name: 'Cart',
     disable: true,
+    label: undefined,
   },
 ]
 
@@ -97,7 +104,6 @@ const Sidebar = () => {
   const t = useTranslations('default.Menu')
   const tProfile = useTranslations('profile')
   const { user, isLoading } = useUser()
-
   // TODO update with real api
   // const {
   //   data: user,

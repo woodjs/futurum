@@ -22,7 +22,7 @@ const ActiveBodyCardBig: FC<IProps> = ({
 	className,
 }) => {
 	return (
-		<div className={cn('w-[220px] relative ', className, height)}>
+		<div className={cn('w-[260px] relative ', className, height)}>
 			<div className={'flex justify-center align-middle'}>{Header}</div>
 			{Image}
 			{Content && (
