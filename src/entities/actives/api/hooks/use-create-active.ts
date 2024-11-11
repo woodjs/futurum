@@ -1,10 +1,10 @@
 import { useMutation } from '@tanstack/react-query'
 import { createActive } from '../services'
-import { ActiveSchema } from '../../model/form-types'
+import { ActiveSchema, ActiveSchema2 } from '../../model/form-types'
 
 export const useCreateActive = () =>
   useMutation({
-    mutationFn: (data: ActiveSchema) => {
+    mutationFn: (data: ActiveSchema2) => {
       return createActive(data)
     },
     onSuccess: data => {},

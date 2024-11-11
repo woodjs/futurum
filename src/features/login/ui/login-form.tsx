@@ -39,7 +39,7 @@ export const LoginForm = () => {
         })
         .then(res => {
           Cookies.set(AUTH_TOKEN_KEY, JSON.stringify(res.data))
-
+          console.log(res.data)
           router.push('/profile')
         })
         .catch(error => {

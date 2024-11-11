@@ -1,5 +1,5 @@
 'use client'
-import { ActiveFormSchema, ActiveType, useCreateActive } from "@/entities/actives";
+import { ActiveFormSchema, ActiveType, ActiveType2, useCreateActive } from "@/entities/actives";
 import { useGetOrganizationList } from "@/entities/organization";
 import CollectionForm from "@/features/create-collection/ui/create-collection-form";
 import { Button, Container, Typography } from "@/shared/ui";
@@ -17,6 +17,13 @@ interface ButtonProps {
     uuid: string;
 }
 
+interface Collection {
+    id: string;
+    name: string;
+    color: string;
+    userId?: string;
+    __entity?: "Collection";
+}
 
 const ActiveForm = () => {
     const router = useRouter(); // Хук для навигации
@@ -37,46 +44,59 @@ const ActiveForm = () => {
     const [isdescription, setIsdescription] = useState();
     const [isactiveName, setIsactiveName] = useState();
     const [istags, setIstags] = useState<string>('');
+
+    const [price, setPrice] = useState<number>(0);
+    const [headline, setHeadline] = useState<string>('paragraph');
+    const [profitability, setProfitability] = useState<number>(0);
+    const [payoutFrequency, setPayoutFrequency] = useState<'once_a_month' | 'once_a_quarter' | 'once_a_half_year'>('once_a_month');
+    const [refund, setRefund] = useState<'in_a_year' | 'in_2_years' | 'in_3_years' | 'in_4_years' | 'in_5_years'>('in_a_year');
+    const [activityPeriod, setActivityPeriod] = useState<number>(1);
+
     const [isminContribution, setIsminContribution] = useState();
     const [ispurposeCollection, setIspurposeCollection] = useState();
     const [isendingDate, setIsendingDate] = useState();
+
+    const [withPossibilityOfExtension, setWithPossibilityOfExtension] = useState<boolean>(false);
+    const [additionalMaterials, setAdditionalMaterials] = useState<string>('');
+    const [fundUrl, setFundUrl] = useState<string>('');
+
     const [fileItems1, setUploadedFiles1] = useState<IFile[]>([]);
     const [fileItems2, setUploadedFiles2] = useState<IFile[]>([]);
     const [fileItems3, setUploadedFiles3] = useState<IFile[]>([]);
-    const [isselectedCollection, setIsselectedCollection] = useState<string | number>('');
+    const [isselectedCollection, setIsselectedCollection] = useState<Collection | null>(null);
 
     const [tags, setTags] = useState<string[]>([]);                 // Массив уникальных тегов
 
 
     // const logStateValues = () => {
-        // console.group("State Values");
-        // console.log("iscathegory:", iscathegory);
-        // console.log("isorganizationId:", isorganizationId);
-        // console.log("isdescription:", isdescription);
-        // console.log("isactiveName:", isactiveName);
-        // console.log("istags:", istags);
-        // console.log("isminContribution:", isminContribution);
-        // console.log("ispurposeCollection:", ispurposeCollection);
-        // console.log("isendingDate:", isendingDate);
-        // console.log("fileItems1:", fileItems1);
-        // console.log("fileItems2:", fileItems2);
-        // console.log("fileItems3:", fileItems3);
-        // console.log("isselectedCollection:", isselectedCollection);
-        // console.groupEnd();
+    // console.group("State Values");
+    // console.log("iscathegory:", iscathegory);
+    // console.log("isorganizationId:", isorganizationId);
+    // console.log("isdescription:", isdescription);
+    // console.log("isactiveName:", isactiveName);
+    // console.log("istags:", istags);
+    // console.log("isminContribution:", isminContribution);
+    // console.log("ispurposeCollection:", ispurposeCollection);
+    // console.log("isendingDate:", isendingDate);
+    // console.log("fileItems1:", fileItems1);
+    // console.log("fileItems2:", fileItems2);
+    // console.log("fileItems3:", fileItems3);
+    // console.log("isselectedCollection:", isselectedCollection);
+    // console.groupEnd();
     // };
 
 
     // ???
     const inputRef = useRef<HTMLInputElement>(null); // Референс на поле ввода
     const [istags2, setIstags2] = useState<string>(''); // Состояние для строки ввода
-    
+
     const handleInputChange = () => {
         const inputValue = inputRef.current?.value || ''; // Получаем текущее значение из input
-        
+
 
         // Разбиваем строку на теги, удаляем дубликаты
         const uniqueTags = Array.from(new Set(inputValue.trim().split(/\s+/).filter(Boolean)));
-        
+
         setTags(uniqueTags); // Обновляем массив уникальных тегов
     };
 
@@ -89,11 +109,11 @@ const ActiveForm = () => {
             .filter(tag => tag !== tagToRemove)
             .join(' ');
 
-            if (inputRef.current) {
-                
-                inputRef.current.value = newInputValue;
-            }
-            setIstags2(newInputValue); // Обновляем строку ввода
+        if (inputRef.current) {
+
+            inputRef.current.value = newInputValue;
+        }
+        setIstags2(newInputValue); // Обновляем строку ввода
         // setInputValue(newInputValue);
         setTags(tags.filter(tag => tag !== tagToRemove)); // Убираем тег из списка уникальных тегов
     };
@@ -116,25 +136,42 @@ const ActiveForm = () => {
     const { mutate: createActive } = useCreateActive();
 
     // console.log(getEnumOptions(ActiveType))
-    const activeCategoryList = getEnumOptions(ActiveType);
+    const activeCategoryList = getEnumOptions(ActiveType2);
 
     function handleSubmit(event: FormEvent<HTMLFormElement>): void {
         event.preventDefault();
         if (event) {
             const data = {
-                cathegory: iscathegory ?? ActiveType.BUSINESS,                       // ActiveType значение
+                cathegory: iscathegory ?? ActiveType2.BUSINESS,                       // ActiveType значение
                 organizationId: isorganizationId || '',   // ID организации
                 activeName: isactiveName || '',           // Название активности
                 headline: "",                                 // Если headline необязателен, можно оставить пустым
                 description: isdescription || '',         // Описание
                 tags: tags,                           // Теги как массив строк
+                
                 minContribution: Number(isminContribution) || 0,      // Минимальный вклад
-                purposeCollection: Number(ispurposeCollection) || 0,  // Цель сбора средств
+                purposeOfCollection: Number(ispurposeCollection) || 0,  // Цель сбора средств
                 endingDate: isendingDate || '',           // Дата завершения
                 documentIds: fileItems1.map(file => file.id), // Массив ID документов из fileItems1
                 nftId: fileItems2.length > 0 ? fileItems2[0].id.toString() : '',                               // Если nftId необязателен, оставьте пустым
                 galeryImagesIds: fileItems3.map(file => file.id), // Массив ID изображений галереи
-                collectionId: isselectedCollection.toString() || '',// ID коллекции
+                collection: typeof isselectedCollection === 'object' && isselectedCollection !== null
+            ? {
+                  id: isselectedCollection.id,
+                  name: isselectedCollection.name,
+                  color: isselectedCollection.color,
+                  __entity: "Collection" as const,
+              }
+            : undefined,
+
+                price: Number(price) || 0,
+                profitability: Number(profitability) || 0,
+                payoutFrequency: payoutFrequency,
+                refund: refund,
+                activityPeriod: Number(activityPeriod) || 0,
+                withPossibilityOfExtension: withPossibilityOfExtension || false,
+                additionalMaterials: additionalMaterials || '',
+                fundUrl: fundUrl || '',
             };
             try {
                 ActiveFormSchema.parse(data); // Валидация данных
@@ -179,6 +216,7 @@ const ActiveForm = () => {
     function handleFormDescription(data: { description?: any; }, info: any): void {
         if (data) {
             setIsdescription(data.description)
+
         } else {
             console.log("Описание не задана.");
         }
@@ -193,7 +231,7 @@ const ActiveForm = () => {
     }
 
 
-    
+
     function handleFormUpdateMinPurpDate(data: { minContribution?: any; purposeCollection?: any; endingDate?: any; }, info: any): void {
         if (data) {
             if (data.minContribution !== isminContribution) {
@@ -243,15 +281,15 @@ const ActiveForm = () => {
         setUploadedFiles3(fileItems3);
     };
 
-   
-    function handleCollectionSelect(selectedCollection: string | number): void {
+
+    function handleCollectionSelect(selectedCollection: Collection | null): void {
         if (selectedCollection) {
             setIsselectedCollection(selectedCollection)
         } else {
             console.log("Коллекция не задана.");
         }
     }
-    
+
     return (
         <>
 
@@ -272,6 +310,18 @@ const ActiveForm = () => {
                 {/* {selectedOption === 'option2' && (
                     <Typography className='text-[12px] text-[#2D3748] text-[700]'>Информация об организации</Typography>
                 )} */}
+                {iscathegory === 'business' && (
+                    <div>
+                        <label>Дополнительное поле для бизнеса:</label>
+                        <input type="text" placeholder="Введите данные для бизнеса" />
+                    </div>
+                )}
+                {iscathegory === 'startup' && (
+                    <div>
+                        <label>Дополнительное поле для стартапа:</label>
+                        <input type="text" placeholder="Введите данные для стартапа" />
+                    </div>
+                )}
                 <DynamicForm
                     fields={{
                         organizationId: {

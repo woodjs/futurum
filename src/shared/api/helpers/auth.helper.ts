@@ -47,7 +47,7 @@ export const errorHandler = (error: any) => {
 }
 
 export const errorClientHandler = (error: any) => {
-  const entries: [string, string][] = Object.entries(error)
+  const entries: [string, string][] = Object.entries(error || {});
 
   if (entries.length > 0) {
     for (let i = 0; i < 1; i += 1) {

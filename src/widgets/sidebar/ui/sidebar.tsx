@@ -15,7 +15,7 @@ import { useUser } from '../../../entities/user'
 
 const linkList = [
   {
-    href: Routes.MY_ASSETS,
+    href: Routes.MY_ACTIVES,
     name: 'MyAssets',
     disable: false,
     label: undefined,

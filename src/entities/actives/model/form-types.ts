@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ActiveType } from "./active-type";
+import { ActiveType, ActiveType2 } from "./active-type";
 
 // !!! NOTE : Перенести в schemas всю валидацию
 
@@ -30,3 +30,42 @@ export const activeTypeSchema = z.nativeEnum(ActiveType);
 export type ActiveTypeSchemaType = z.infer<typeof activeTypeSchema>;
 
 export type ActiveSchema = z.infer<typeof ActiveFormSchema>;
+
+
+
+export const ActiveFormSchema2 = z.object({
+  cathegory: z.nativeEnum(ActiveType2),               // Категория, как enum
+  organizationId: z.string(),                 // ID организации, строка UUID
+  activeName: z.string(),                     // Название активности, строка
+  headline: z.string(),                   // Заголовок, строка, необязательный
+  description: z.string(),                    // Описание, строка
+  tags: z.array(z.string()),                         // Теги, массив строк
+  price: z.number().nonnegative(),                   // Цена, неотрицательное число
+  profitability: z.number().nonnegative(),           // Доходность, неотрицательное число
+  payoutFrequency: z.enum(['once_a_month', 'once_a_quarter', 'once_a_half_year']),  // Частота выплат
+  refund: z.enum(['in_a_year', 'in_2_years', 'in_3_years', 'in_4_years', 'in_5_years']), // Срок возврата
+  activityPeriod: z.number().int().min(1).max(100),  // Период активности, целое число от 1 до 100
+  minContribution: z.number().nonnegative(),     // Минимальный взнос
+  purposeOfCollection: z.number().nonnegative(),     // Цель сбора средств
+  endingDate: z.string().refine((date) => !isNaN(Date.parse(date)), { message: "Invalid date format" }),  // Дата завершения, строка с валидацией
+  withPossibilityOfExtension: z.boolean(),           // Возможность продления, булево значение
+  additionalMaterials: z.string().min(1),            // Дополнительные материалы, строка
+  fundUrl: z.string(),              // URL фонда, строка URL
+  documentIds: z.array(z.string()),           // Массив ID документов, строки UUID
+  nftId: z.string(),               // ID NFT, строка UUID, необязательный
+  galeryImagesIds: z.array(z.string()),       // Массив ID изображений галереи, строки UUID
+  collection: z.object({                             // Вложенный объект коллекции
+    id: z.string().uuid(),
+    name: z.string(),
+    color: z.string(),
+    // userId: z.number(),
+    __entity: z.literal('Collection')
+  }).optional(),                                     // Коллекция, необязательная
+});
+
+
+
+export type ActiveSchema2 = z.infer<typeof ActiveFormSchema2>;
+
+
+
