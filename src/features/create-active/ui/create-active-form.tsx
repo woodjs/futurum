@@ -17,14 +17,18 @@ interface ButtonProps {
     uuid: string;
 }
 
-interface Collection {
-    id: string;
-    name: string;
-    color: string;
-    userId?: string;
-    __entity?: "Collection";
-}
-
+const activePayoutFrequencyList = [
+    { label: 'Раз в месяц', value: 'once_a_month' },
+    { label: 'Раз в квартал', value: 'once_a_quarter' },
+    { label: 'Раз в пол года', value: 'once_a_half_year' }
+];
+const activeRefundList = [
+    { label: 'Через год', value: 'in_a_year' },
+    { label: 'Через 2 года', value: 'in_2_years' },
+    { label: 'Через 3 года', value: 'in_3_years' },
+    { label: 'Через 4 года', value: 'in_4_years' },
+    { label: 'Через 5 лет', value: 'in_5_years' },
+];
 const ActiveForm = () => {
     const router = useRouter(); // Хук для навигации
 
@@ -38,6 +42,32 @@ const ActiveForm = () => {
     };
     const { data: organizationList, isLoading, isSuccess } = useGetOrganizationList({ my: true })
 
+    const initialFiles1: IFile[] = [
+        {
+          id: "file1",
+          name: "example1.jpg",
+          type: "image/jpeg",
+          url: "https://example.com/example1.jpg",
+        },
+      ];
+      
+      const initialFiles2: IFile[] = [
+        {
+          id: "file2",
+          name: "example2.jpg",
+          type: "image/jpeg",
+          url: "https://example.com/example2.jpg",
+        },
+      ];
+      
+      const initialFiles3: IFile[] = [
+        {
+          id: "file3",
+          name: "example3.jpg",
+          type: "image/jpeg",
+          url: "https://example.com/example3.jpg",
+        },
+      ];
 
     const [iscathegory, setIscathegory] = useState();
     const [isorganizationId, setIsorganizationId] = useState();
@@ -60,30 +90,12 @@ const ActiveForm = () => {
     const [additionalMaterials, setAdditionalMaterials] = useState<string>('');
     const [fundUrl, setFundUrl] = useState<string>('');
 
-    const [fileItems1, setUploadedFiles1] = useState<IFile[]>([]);
-    const [fileItems2, setUploadedFiles2] = useState<IFile[]>([]);
-    const [fileItems3, setUploadedFiles3] = useState<IFile[]>([]);
-    const [isselectedCollection, setIsselectedCollection] = useState<Collection | null>(null);
+    const [fileItems1, setUploadedFiles1] = useState<IFile[]>(initialFiles1);
+    const [fileItems2, setUploadedFiles2] = useState<IFile[]>(initialFiles2);
+    const [fileItems3, setUploadedFiles3] = useState<IFile[]>(initialFiles3);
+    const [isselectedCollection, setIsselectedCollection] = useState<string | number>('');
 
     const [tags, setTags] = useState<string[]>([]);                 // Массив уникальных тегов
-
-
-    // const logStateValues = () => {
-    // console.group("State Values");
-    // console.log("iscathegory:", iscathegory);
-    // console.log("isorganizationId:", isorganizationId);
-    // console.log("isdescription:", isdescription);
-    // console.log("isactiveName:", isactiveName);
-    // console.log("istags:", istags);
-    // console.log("isminContribution:", isminContribution);
-    // console.log("ispurposeCollection:", ispurposeCollection);
-    // console.log("isendingDate:", isendingDate);
-    // console.log("fileItems1:", fileItems1);
-    // console.log("fileItems2:", fileItems2);
-    // console.log("fileItems3:", fileItems3);
-    // console.log("isselectedCollection:", isselectedCollection);
-    // console.groupEnd();
-    // };
 
 
     // ???
@@ -138,40 +150,33 @@ const ActiveForm = () => {
     // console.log(getEnumOptions(ActiveType))
     const activeCategoryList = getEnumOptions(ActiveType2);
 
-    function handleSubmit(event: FormEvent<HTMLFormElement>): void {
+    const handleSubmit= (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         if (event) {
             const data = {
                 cathegory: iscathegory ?? ActiveType2.BUSINESS,                       // ActiveType значение
-                organizationId: isorganizationId || '',   // ID организации
-                activeName: isactiveName || '',           // Название активности
+                organizationId: isorganizationId || '237cc758-51df-4df4-8a0a-f8844a0692fb',   // ID организации
+                activeName: isactiveName || 'заглушка',           // Название активности
                 headline: "",                                 // Если headline необязателен, можно оставить пустым
-                description: isdescription || '',         // Описание
+                description: isdescription || 'заглушка',         // Описание
                 tags: tags,                           // Теги как массив строк
-                
-                minContribution: Number(isminContribution) || 0,      // Минимальный вклад
-                purposeOfCollection: Number(ispurposeCollection) || 0,  // Цель сбора средств
-                endingDate: isendingDate || '',           // Дата завершения
-                documentIds: fileItems1.map(file => file.id), // Массив ID документов из fileItems1
-                nftId: fileItems2.length > 0 ? fileItems2[0].id.toString() : '',                               // Если nftId необязателен, оставьте пустым
-                galeryImagesIds: fileItems3.map(file => file.id), // Массив ID изображений галереи
-                collection: typeof isselectedCollection === 'object' && isselectedCollection !== null
-            ? {
-                  id: isselectedCollection.id,
-                  name: isselectedCollection.name,
-                  color: isselectedCollection.color,
-                  __entity: "Collection" as const,
-              }
-            : undefined,
 
-                price: Number(price) || 0,
-                profitability: Number(profitability) || 0,
+                minContribution: Number(isminContribution) || 1,      // Минимальный вклад
+                purposeOfCollection: Number(ispurposeCollection) || 1,  // Цель сбора средств
+                endingDate: isendingDate || 'заглушка',           // Дата завершения
+                documentIds: fileItems1.map(file => file.id), // Массив ID документов из fileItems1
+                nftId: fileItems2.length > 0 ? fileItems2[0].id.toString() : '237cc758-51df-4df4-8a0a-f8844a0692fb',                               // Если nftId необязателен, оставьте пустым
+                galeryImagesIds: fileItems3.map(file => file.id), // Массив ID изображений галереи
+                collectionId: isselectedCollection.toString() || '237cc758-51df-4df4-8a0a-f8844a0692fb',// ID коллекции
+
+                price: Number(price) || 1,
+                profitability: Number(profitability) || 1,
                 payoutFrequency: payoutFrequency,
                 refund: refund,
-                activityPeriod: Number(activityPeriod) || 0,
+                activityPeriod: Number(activityPeriod) || 1,
                 withPossibilityOfExtension: withPossibilityOfExtension || false,
-                additionalMaterials: additionalMaterials || '',
-                fundUrl: fundUrl || '',
+                additionalMaterials: additionalMaterials || 'заглушка',
+                fundUrl: fundUrl || 'https://www.google.com',
             };
             try {
                 ActiveFormSchema.parse(data); // Валидация данных
@@ -191,7 +196,7 @@ const ActiveForm = () => {
             });
             event.preventDefault();
 
-            // router.push(`./`);
+            router.push(`./`);
         } else {
             console.log("Ошибка.");
         }
@@ -199,7 +204,7 @@ const ActiveForm = () => {
 
     function handleFormUpdateCathegory(data: { cathegory?: any; }, info: any): void {
         if (data) {
-            setIscathegory(data.cathegory.value)
+            setIscathegory(data.cathegory)
         } else {
             console.log("Категория не задана.");
         }
@@ -229,6 +234,13 @@ const ActiveForm = () => {
             console.log("Имя актива не задана.");
         }
     }
+    function handleUrlName(data: { fundUrl?: any; }, info: any): void {
+        if (data) {
+            setFundUrl(data.fundUrl)
+        } else {
+            console.log("Имя актива не задана.");
+        }
+    }
 
 
 
@@ -252,7 +264,41 @@ const ActiveForm = () => {
             console.log("Параметры не задана.");
         }
     }
+    function handleFormUpdateMinPurpDate2(data: {
+        price?: any; profitability?: any; payoutFrequency?: any; refund?: any;
+        activityPeriod?: any; endingDate?: any; withPossibilityOfExtension?: any; additionalMaterials?: any
+    }, info: any): void {
+        if (data) {
+            if (data.price !== price) {
+                setPrice(data.price);
+            }
+            if (data.profitability !== profitability) {
+                setProfitability(data.profitability);
+            }
+            if (data.payoutFrequency !== payoutFrequency) {
+                setPayoutFrequency(data.payoutFrequency);
+            }
+            if (data.refund !== refund) {
+                setRefund(data.refund);
+            }
+            if (data.activityPeriod !== activityPeriod) {
+                setActivityPeriod(data.activityPeriod);
+            }
+            if (data.endingDate !== isendingDate) {
+                setIsendingDate(data.endingDate);
+            }
+            if (data.withPossibilityOfExtension !== withPossibilityOfExtension) {
+                setWithPossibilityOfExtension(data.withPossibilityOfExtension);
+            }
+            if (data.additionalMaterials !== additionalMaterials) {
+                setAdditionalMaterials(data.additionalMaterials);
+            }
 
+            
+        } else {
+            console.log("Параметры не задана.");
+        }
+    }
     const handleFileUpload1 = (files: IFile[]) => {
         const fileItems1: IFile[] = files.map(fileItem => ({
             id: fileItem.id, // Существующий ID
@@ -282,7 +328,7 @@ const ActiveForm = () => {
     };
 
 
-    function handleCollectionSelect(selectedCollection: Collection | null): void {
+    function handleCollectionSelect(selectedCollection: string | number): void {
         if (selectedCollection) {
             setIsselectedCollection(selectedCollection)
         } else {
@@ -293,7 +339,7 @@ const ActiveForm = () => {
     return (
         <>
 
-            <form onSubmit={handleSubmit}>
+            {/* <form onSubmit={handleSubmit}> */}
                 <DynamicForm
                     fields={{
                         cathegory: {
@@ -307,21 +353,7 @@ const ActiveForm = () => {
                     onFormUpdate={handleFormUpdateCathegory}
                     renderFooter={form => <></>}
                 />
-                {/* {selectedOption === 'option2' && (
-                    <Typography className='text-[12px] text-[#2D3748] text-[700]'>Информация об организации</Typography>
-                )} */}
-                {iscathegory === 'business' && (
-                    <div>
-                        <label>Дополнительное поле для бизнеса:</label>
-                        <input type="text" placeholder="Введите данные для бизнеса" />
-                    </div>
-                )}
-                {iscathegory === 'startup' && (
-                    <div>
-                        <label>Дополнительное поле для стартапа:</label>
-                        <input type="text" placeholder="Введите данные для стартапа" />
-                    </div>
-                )}
+                
                 <DynamicForm
                     fields={{
                         organizationId: {
@@ -376,21 +408,7 @@ const ActiveForm = () => {
                         placeholder="Введите теги через пробел"
                         className="border border-gray-300 p-2 rounded-md w-full"
                     />
-                    {/* <DynamicForm
-                        fields={{
-                            tags: {
-                                name: 'tags',
-                                type: 'text',
-                                label: 'Теги',
-                                description: 'Осталось 100 символов',
-                                placeholder:
-                                    'Укажите теги, которые помогут при поиске, например #дизайн и т.д.',
-                                validation: z.string().max(100),
-                            }
-                        }}
-                        onFormUpdate={handleFormUpdateTags}
-                        renderFooter={form => <></>}
-                    /> */}
+
                     <div className="flex flex-wrap gap-2 mt-4">
                         {tags.map(tag => (
                             <span
@@ -407,88 +425,136 @@ const ActiveForm = () => {
                             </span>
                         ))}
                     </div>
-                    {/* <Textarea cols={3} label='Теги' placeholder='Укажите теги, которые помогут при поиске, например #корм и т.д.'/>
-                    <Divider /> */}
+
                     <div className='w-full border-b border-gray-300 my-4' ></div>
                     <Typography className='text-lg font-bold'>Параметры актива</Typography>
-                    <DynamicForm
-                        fields={{
-                            minContribution: {
-                                name: 'minContribution',
-                                type: 'number',
-                                label: 'Минимальный взносмость',
-                                placeholder: '$ 000',
-                                description: '',
-                                validation: z.number().min(1),
-                            }, purposeCollection: {
-                                name: 'purposeCollection',
-                                type: 'number',
-                                label: 'Цель сбора',
-                                placeholder: '$ 000',
-                                description: '',
-                                validation: z.number().min(1),
-                            },
-                            endingDate: {
-                                name: 'endingDate',
-                                type: 'text',
-                                label: 'Дата завершения',
-                                placeholder: '0 %',
-                                validation: z.number().nonnegative(),
-                            }
-                        }}
-                        onFormUpdate={handleFormUpdateMinPurpDate}
-                        renderFooter={form => <></>}
-                    />
-
+                    {(iscathegory === 'animal_help' || iscathegory === 'human_help') ? (
+                        <DynamicForm
+                            fields={{
+                                minContribution: {
+                                    name: 'minContribution',
+                                    type: 'number',
+                                    label: 'Минимальный взносмость',
+                                    placeholder: '$ 10',
+                                    description: '',
+                                    validation: z.number().min(1),
+                                }, purposeCollection: {
+                                    name: 'purposeCollection',
+                                    type: 'number',
+                                    label: 'Цель сбора',
+                                    placeholder: '$ 1000',
+                                    description: '',
+                                    validation: z.number().min(1),
+                                },
+                                endingDate: {
+                                    name: 'endingDate',
+                                    type: 'date',
+                                    label: 'Дата завершения',
+                                    placeholder: 'до 21.12.2024 |  00:00',
+                                    validation: z.number().nonnegative(),
+                                }
+                            }}
+                            onFormUpdate={handleFormUpdateMinPurpDate}
+                            renderFooter={form => <></>}
+                        />
+                    ) : (
+                        <DynamicForm
+                            fields={{
+                                price: {
+                                    name: 'price',
+                                    type: 'number',
+                                    label: 'Стоимость',
+                                    placeholder: '$ 50',
+                                    description: '',
+                                    validation: z.number().min(1),
+                                }, profitability: {
+                                    name: 'profitability',
+                                    type: 'number',
+                                    label: 'Доходность',
+                                    placeholder: '0 %',
+                                    description: '',
+                                    validation: z.number().min(1),
+                                },
+                                payoutFrequency: {
+                                    name: 'payoutFrequency',
+                                    type: 'select',
+                                    label: 'Частота выплат',
+                                    placeholder: 'выберите',
+                                    options: activePayoutFrequencyList,
+                                },
+                                refund: {
+                                    name: 'refund',
+                                    type: 'select',
+                                    label: 'Возврат средств',
+                                    placeholder: 'выберите',
+                                    options: activeRefundList,
+                                },
+                                activityPeriod: {
+                                    name: 'activityPeriod',
+                                    type: 'number',
+                                    label: 'Срок активности',
+                                    placeholder: '0 %',
+                                    description: '',
+                                    validation: z.number().min(1),
+                                },
+                                endingDate: {
+                                    name: 'endingDate',
+                                    type: 'date',
+                                    label: 'Дата завершения',
+                                    placeholder: 'до 21.12.2024 |  00:00',
+                                    description: '',
+                                    validation: z.number().min(1),
+                                },
+                                withPossibilityOfExtension: {
+                                    name: 'withPossibilityOfExtension',
+                                    type: 'checkbox',
+                                    label: 'С возможностью продления',
+                                    placeholder: 'С возможностью продления',
+                                    validation: z.number().nonnegative(),
+                                },
+                                additionalMaterials: {
+                                    name: 'additionalMaterials',
+                                    type: 'richText',
+                                    label: 'Доп. материалы',
+                                    placeholder: 'Это пользователь получит после приобретения NFT',
+                                    validation: z.number().nonnegative(),
+                                }
+                            }}
+                            onFormUpdate={handleFormUpdateMinPurpDate2}
+                            renderFooter={form => <></>}
+                        />
+                    )}
                     <div className='w-full border-b border-gray-300 my-4' ></div>
-                    {/* <DynamicForm
-                        fields={{
-                            back: {
-                                type: 'number',
-                                label: 'Возврат',
-                                placeholder: '$30',
-                                validation: z.string().max(500),
-                            },
-                            chast: {
-                                type: 'number',
-                                label: 'Частота выплат',
-                                placeholder: '0 %',
-                                validation: z.number().nonnegative(),
-                            },
-                            expiredAt: {
-                                type: 'date',
-                                label: 'Срок активности',
-                                placeholder: 'до 21.12.2024  00:00',
-                                validation: z.date(),
-                            },
-                        }}
-                        renderFooter={form => <></>}
-                    /> */}
-                    <Typography className='py-8 text-lg font-bold'>Документы</Typography>
 
-                    <FileUpload
-                        name='documentIds'
-                        label={'Загрузите документы, подтверждающие необходимость в пожертвованиях'}
-                        accept={'image/png, image/jpeg, image/jpg'}
-                        multiple={true}
-                        maxFiles={5}
-                        required={true}
-                        onChange={handleFileUpload1}
-                    />
-                    {/* <DynamicForm
-                        fields={{
-                            tags: {
-                                type: 'text',
-                                value: formsf.textUrl,
-                                onChange: handleInputChange,
-                                label: 'Ссылка на страницу с официального сайта фонда (если есть)',
-                                placeholder:
-                                    '1AmQ3l-zTTGxQTQHolWHxFRYdsy6NP2Xfwk6ajtI6w5A/edit',
-                                validation: z.string().max(100),
-                            }
-                        }}
-                        renderFooter={form => <></>}
-                    /> */}
+                    <Typography className='py-8 text-lg font-bold'>Документы</Typography>
+                    {(iscathegory === 'animal_help' || iscathegory === 'human_help') ? (
+                        <FileUpload
+                            name='documentIds'
+                            label={'Загрузите документы, подтверждающие необходимость в пожертвованиях'}
+                            accept={'image/png, image/jpeg, image/jpg'}
+                            multiple={true}
+                            maxFiles={5}
+                            required={true}
+                            onChange={handleFileUpload1}
+                        />
+
+
+                    ) : null}
+                    {(iscathegory === 'animal_help' || iscathegory === 'human_help') ? (
+                        <DynamicForm
+                            fields={{
+                                fundUrl: {
+                                    name: 'fundUrl',
+                                    type: 'text',
+                                    label: 'Ссылка на страницу с официального сайта фонда (если есть)',
+                                    placeholder: '1AmQ3l-zTTGxQTQHolWHxFRYdsy6NP2Xfwk6ajtI6w5A/edit',
+                                    validation: z.string().max(3000),
+                                }
+                            }}
+                            onFormUpdate={handleUrlName}
+                            renderFooter={form => <></>}
+                        />
+                    ) : null}
                     <FileUpload
                         name='nft'
                         label={'Загрузите изображение для NFT'}
@@ -519,11 +585,13 @@ const ActiveForm = () => {
                 </Container>
                 <div className="flex pt-6 space-x-9 w-full">
 
-                    <Button type="submit">
+                    <Button 
+                    type="button"
+                    onClick={handleSubmit}>
                         Создать актив
                     </Button>
                 </div>
-            </form>
+            {/* </form> */}
         </>
     )
 }

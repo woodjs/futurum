@@ -15,6 +15,7 @@ export interface IActiveListProps {
     nft: string;
     galeryImages: IActiveListGaleryImageLink[];
 }
+
 export interface IActiveData{
     data: IActiveListProps;
 }

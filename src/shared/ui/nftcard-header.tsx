@@ -6,6 +6,7 @@ interface IProps {
     textColor?: string;
     bgColor?: string;
     borderColor?: string;
+    
 }
 
 const NftcardHeader:FC<IProps> = ({content, textColor = 'text-black', bgColor = 'text-gray', borderColor = 'text-gray2'}) => {

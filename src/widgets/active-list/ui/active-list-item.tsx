@@ -1,18 +1,21 @@
 'use client'
-import { IActiveList, IActiveListDocLink, IActiveListGaleryImageLink, IActiveListTag } from "@/entities/actives";
+import { IActiveDN2, IActiveList, IActiveListDocLink, IActiveListGaleryImageLink, IActiveListTag } from "@/entities/actives";
 import ActiveItemLeftSide from "./active-item-left-side";
 import ActiveItemMain from "./active-item-main-side";
 import { IActiveData, ItemActiveProps } from "../types";
+import ActiveData from "./active-item-props";
 
 
-const ActivesListItem: React.FC<IActiveData> = ({ data }) => {
-    
+const ActivesListItem: React.FC<IActiveDN2> = ({ data }) => {
+
 
     return (
-        <div className="flex p-4 w-[736px]">
-            <ActiveItemLeftSide data={data}/>
-            <ActiveItemMain data={data}/>
-        </div>
+        <>
+            <div className="flex p-4 w-[736px]">
+                <ActiveItemLeftSide data={data} />
+                <ActiveItemMain data={data} />
+            </div>
+        </>
     )
 }
 

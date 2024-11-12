@@ -8,6 +8,7 @@ import { FC, useEffect, useState } from "react";
 import ActivePageLeftSide from "./active-page-left";
 import ActivePageMainSide from "./active-page-main";
 import ActivePageBottom from "./active-page-bottom";
+import ActiveData from "@/widgets/active-list/ui/active-item-props";
 
 interface ActiveHeaderProps {
     uuid: string
@@ -22,17 +23,17 @@ const MyActivePage: FC<ActiveHeaderProps> = ({ uuid }) => {
         return <p>Данные не найдены</p>;
     }
 
-    const { id, activeName, cathegory, description, documents, endingDate, galeryImages,
-        headline, minContribution, nft, organization, purposeCollection, tags, collection } = activepage;
+    // const { id, activeName, cathegory, description, documents, endingDate, galeryImages,
+    //     headline, minContribution, nft, organization, purposeCollection, tags, collection } = activepage;
 
-    console.log(id)
+    // console.log(id)
 
 
     return (
         <>
             <div className="flex max-w-[1070px] flex-col">
-                <GradientTypography variant="h2" className="text-lg mb-[34px]">{activepage.activeName}</GradientTypography>
-                <div className="flex">
+                <GradientTypography variant="h2" className="text-lg h-[40px] mb-[34px]">{activepage.activeName}</GradientTypography>
+                <div className="flex mt-[10px]">
                     <ActivePageLeftSide data={activepage}/>
                     <ActivePageMainSide data={activepage}/>
                 </div>

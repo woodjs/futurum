@@ -54,13 +54,7 @@ export const ActiveFormSchema2 = z.object({
   documentIds: z.array(z.string()),           // Массив ID документов, строки UUID
   nftId: z.string(),               // ID NFT, строка UUID, необязательный
   galeryImagesIds: z.array(z.string()),       // Массив ID изображений галереи, строки UUID
-  collection: z.object({                             // Вложенный объект коллекции
-    id: z.string().uuid(),
-    name: z.string(),
-    color: z.string(),
-    // userId: z.number(),
-    __entity: z.literal('Collection')
-  }).optional(),                                     // Коллекция, необязательная
+  collectionId: z.string()                                   // Коллекция, необязательная
 });
 
 

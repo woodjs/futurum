@@ -6,11 +6,12 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { ActiveDataIdProps } from "../typea";
 import { API_URL_FILE } from "@/shared/api/config";
+import { IActiveDN2, IActiveIdDN2 } from "@/entities/actives";
 
 
 
 
-const ActivePageBottom: React.FC<ActiveDataIdProps> = (data) => {
+const ActivePageBottom: React.FC<IActiveIdDN2> = (data) => {
 
     return (
         <>
@@ -31,25 +32,11 @@ const ActivePageBottom: React.FC<ActiveDataIdProps> = (data) => {
                                 </Image>
                             </div>
                         ))}
-                        <div className="w-[140px] bg-slate-400 h-[140px] rounded-lg">
-
-                        </div>
-                        <div className="w-[140px] bg-slate-400 h-[140px] rounded-lg">
-
-                        </div>
-                        <div className="w-[140px] bg-slate-400 h-[140px] rounded-lg">
-
-                        </div>
-                        <div className="w-[140px] bg-slate-400 h-[140px] rounded-lg">
-
-                        </div>
-                        <div className="w-[140px] bg-slate-400 h-[140px] rounded-lg">
-
-                        </div>
+                        
                     </div>
 
                 </div>
-                <div className="flex mt-[16px] flex-col">
+                <div className="flex mt-[26px] flex-col">
                     <span className="text-lg font-semibold">Комментарии</span>
                     <textarea className="mt-6px border-1 border-[#333333] rounded-xl bg-slate-100 border-collapse"></textarea>
                     <Button className="mt-[6px]">Отправить</Button>

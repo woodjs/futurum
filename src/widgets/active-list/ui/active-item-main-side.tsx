@@ -4,8 +4,9 @@ import { IActiveData } from "../types";
 
 import { format, parseISO } from 'date-fns';
 import { ru } from 'date-fns/locale'; // Локализация для русского языка
+import { IActiveDN2 } from "@/entities/actives";
 
-const ActiveItemMain: React.FC<IActiveData> = (data) => {
+const ActiveItemMain: React.FC<IActiveDN2> = (data) => {
 
   const date = parseISO(data.data.endingDate);
   const formattedDate = format(date, "d MMMM yyyy", { locale: ru });
@@ -15,7 +16,7 @@ const ActiveItemMain: React.FC<IActiveData> = (data) => {
         <div>{formattedDate}</div>
         <div className="mainmenu">...</div>
       </div>
-      <div className="flex mt-6">
+      <div className="flex h-[40px] mt-6">
         <GradientTypography variant="h3" className="text-lg">
           {data.data.activeName}
         </GradientTypography>
@@ -27,7 +28,7 @@ const ActiveItemMain: React.FC<IActiveData> = (data) => {
       </div>
       <div className="flex mt-6 flex-col">
         <div className="flex items-center mb-6">
-          <div className="flex rounded-full mr-3 text-white justify-center items-center text-sm w-4 h-4 bg-blue-500">i</div>
+          <div className="flex rounded-full mr-1 text-white justify-center items-center text-sm w-4 h-4 bg-blue-500">i</div>
           <span className="font-medium mr-3">В архиве</span>
         </div>
         <div className="flex gap-6">

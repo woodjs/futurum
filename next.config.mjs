@@ -2,6 +2,11 @@ import createNextIntlPlugin from 'next-intl/plugin'
 const withNextIntl = createNextIntlPlugin()
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  exports: {
+    experimental: {
+      serverComponents: false, 
+    },
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -17,6 +22,7 @@ const nextConfig = {
   //   ]
   // },
   images: {
+    domains: ['localhost'],
     remotePatterns: [
       {
         protocol: 'https',

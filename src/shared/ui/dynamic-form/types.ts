@@ -16,6 +16,7 @@ export type FieldType =
   | 'checkbox'
   | 'date'
   | 'richText'
+  | 'richText2'
   | 'custom'
 
 export interface FiledBase {
@@ -61,6 +62,9 @@ export interface FieldCustom extends FiledBase {
   type: 'custom'
   renderField: (data: any) => React.ReactElement
 }
+export interface FieldRichText2 extends FiledBase {
+  type: 'richText2'
+}
 
 export interface FieldRichText extends FiledBase {
   type: 'richText'
@@ -75,6 +79,7 @@ export type FieldMap = {
   checkbox: FieldCheckbox
   date: FieldDate
   richText: FieldRichText
+  richText2: FieldRichText2
   custom: FieldCustom
 }
 
@@ -90,9 +95,11 @@ type FieldValue<T extends FieldConfig> = T extends FieldInput
         ? Date | null
         : T extends FieldRichText
           ? string
-          : T extends FieldCustom
+          : T extends FieldRichText2
             ? any
-            : never
+            : T extends FieldCustom
+              ? any
+              : never
 
 export type FormData<T extends Record<string, FieldConfig>> = {
   [K in keyof T]: FieldValue<T[K]>

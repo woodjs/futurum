@@ -1,5 +1,5 @@
 'use client'
-import { IActiveByIdResponse, IActiveIdTag, IActiveListDocLink } from "@/entities/actives";
+import { IActiveByIdResponse, IActiveDN2, IActiveIdDN2, IActiveIdTag, IActiveListDocLink } from "@/entities/actives";
 import { Button } from "@/shared/ui";
 import { useLocale } from "next-intl";
 import Image from "next/image"
@@ -13,7 +13,7 @@ import { ru } from 'date-fns/locale'; // Локализация для русс�
 
 
 
-const ActivePageMainSide: React.FC<ActiveDataIdProps> = (data) => {
+const ActivePageMainSide: React.FC<IActiveIdDN2> = (data) => {
     const date = parseISO(data.data.endingDate);
     const formattedDate = format(date, "d MMMM yyyy", { locale: ru });
 
@@ -39,10 +39,10 @@ const ActivePageMainSide: React.FC<ActiveDataIdProps> = (data) => {
                 <div className="flex justify-between">
                     <div className="flex tracking-wider flex-col">
                         <span className="flex text-xl font-semibold">Параметры актива:</span>
-                        <span className="flex text-base mt-2 font-light">Стоимость {data.data.headline} USDT</span>
-                        <span className="flex text-base font-light">Доходность {data.data.purposeCollection}%</span>
-                        <span className="flex text-base font-light">Частота выплат: раз в месяц</span>
-                        <span className="flex text-base font-light">Возврат средств: через год</span>
+                        <span className="flex text-base mt-2 font-light">Стоимость {data.data.price} USDT</span>
+                        <span className="flex text-base font-light">Доходность {data.data.profitability}%</span>
+                        <span className="flex text-base font-light">Частота выплат: {data.data.payoutFrequency}</span>
+                        <span className="flex text-base font-light">Возврат средств: </span>
                         <span className="flex text-base font-light">Срок активности: до {formattedDate} </span>
                         <div className="flex mt-[16px] gap-6">
                             <Button
@@ -86,23 +86,23 @@ const ActivePageMainSide: React.FC<ActiveDataIdProps> = (data) => {
                 </div>
                 <div className="flex mt-[20px] flex-col">
                     <span className="text-lg font-semibold">Коллекция</span>
-                    <span className="text-sm text-blue-500 font-light">{data.data.collection.name}</span>
+                    <span className="text-sm text-cyan-600 underline font-light">{data.data.collection.name}</span>
                 </div>
                 <div className="flex mt-[20px] flex-col">
                     <span className="text-lg font-semibold">Теги</span>
                     <div className="flex">
                         {data?.data?.tags?.map((tag, index) => (
-                            <span key={index} className="text-sm ml-1 text-blue-500 font-light">
+                            <span key={index} className="text-sm ml-1 text-cyan-600 font-light">
                                 #{tag}
                             </span>
                         ))}
                     </div>
 
-                    <span className="text-sm text-blue-500 font-light"></span>
+                    {/* <span className="text-sm text-blue-500 font-light"></span> */}
                 </div>
                 <div className="flex">
-                    <Button className="mt-[20px]"
-                        variant={"secondary"}>
+                    <Button className="mt-[20px] border-slate-400"
+                        variant={"outline"}>
                         Документы компании
                     </Button>
 

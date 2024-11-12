@@ -50,7 +50,9 @@ export interface IActiveByIdResponse {
     tags: string[];
     collection: IActiveIdCollection;
 }
-
+export interface IActiveByIdResponseData {
+    data: IActiveByIdResponse;
+}
 export interface IActiveListTag {
     tag: string;
 }
@@ -87,4 +89,86 @@ export interface IActiveList {
 export interface IActiveListResponse{
     data: IActiveList[];
     hasNextPage: boolean;
+}
+
+export interface IActiveResponse2 {
+    id: string;
+    activeName: string;
+    cathegory: string;
+    description: string;
+    documentIds: string[];
+    endingDate: string;
+    galeryImagesIds: string;
+    headline: string;
+    minimumContribution: number | null; // Учитываем, что это может быть null
+    nft: string;
+    organizationId: string;
+    purposeOfCollection: number;
+    tags: string[];
+    collection: IActiveIdCollection;
+    price: number;
+    profitability: number;
+    payoutFrequency: string;
+    refund: string;
+    activityPeriod: number;
+    withPossibilityOfExtension: boolean;
+    additionalMaterials: string;
+    fundUrl: string;
+}
+
+export interface IActiveDN2{
+    data: IActiveResponse2;
+}
+
+export interface IActiveResponseDN2{
+    data: IActiveResponse2[];
+    hasNextPage: boolean;
+}
+
+
+export interface IOrganizationById {
+    id: string;
+    logoId: string;
+    position: string;
+    companyName: string;
+    ownershipForm: string;
+    country: string;
+    city: string;
+    address: string;
+    foundationYear: number;
+    description: string;
+    createdAt: string;
+    updatedAt: string;
+    categoryId: string;
+    userId: number;
+    __entity: "OrganizationEntity";
+  }
+
+export interface IActiveResponseById2 {
+    id: string;
+    activeName: string;
+    cathegory: string;
+    description: string;
+    documentIds: string[];
+    endingDate: string;
+    galeryImages: string[];
+    headline: string;
+    minimumContribution: number | null; // Учитываем, что это может быть null
+    nft: string;
+    organization: IOrganizationById;
+    purposeOfCollection: number;
+    tags: string[];
+    collection: IActiveIdCollection;
+    price: number;
+    profitability: number;
+    payoutFrequency: string;
+    refund: string;
+    activityPeriod: number;
+    withPossibilityOfExtension: boolean;
+    additionalMaterials: string;
+    fundUrl: string;
+}
+
+export interface IActiveIdDN2{
+    data: IActiveResponseById2;
 }

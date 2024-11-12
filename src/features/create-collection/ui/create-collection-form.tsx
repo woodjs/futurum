@@ -9,24 +9,14 @@ interface IOption {
     id?: string;
     name: string;
     color: string;
-    userId?: string;
-    __entity?: "Collection";
 }
 
 interface IOptionListProps {
     CollList: IOption[];
 }
 
-interface Collection {
-    id: string;
-    name: string;
-    color: string;
-    userId?: string;
-    __entity?: "Collection";
-}
-
 interface CollectionFormProps {
-    onCollectionSelect: (selectedCollection: Collection | null) => void;
+    onCollectionSelect: (selectedCollection: number | string) => void;
 }
 
 
@@ -51,16 +41,9 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ onCollectionSelect }) =
     const { mutate: createCollection } = useCreateCollection();
 
     const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const selectedId = event.target.value;
-        const selectedCollection = (collections || []).find(
-            (collection) => collection.id === selectedId
-          ) as Collection | null;
-          
-          // Теперь `selectedCollection` рассматривается как `Collection | null`
-          onCollectionSelect(selectedCollection);
-          
-        setSelectedCollection(selectedCollection?.id ?? '');
-        onCollectionSelect(selectedCollection); // Передача значения напрямую
+        const selectedValue = event.target.value;
+        setSelectedCollection(selectedValue);
+        onCollectionSelect(selectedValue); // Передача значения напрямую
     };
 
     const handleCreateCollection = () => {
@@ -110,7 +93,7 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ onCollectionSelect }) =
                     onClick={() => setIsDialogOpen(true)}
                     className="items-center "
                 >
-                    <span className='px-3 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 mr-2'>+</span><span>Создать коллекцию</span>
+                <span className='px-3 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 mr-2'>+</span><span>Создать коллекцию</span>
                 </button>
             </div>
 
