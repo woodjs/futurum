@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { CathegoryEndpoints, OrganizationEndpoints } from "../config";
-import { ICathegoryListResponse, IOrganizationListFilters, IOrganizationListResponse } from "../types";
-import { ICathegory, IOrganization } from '../../model';
+import { OrganizationEndpoints } from "../config";
+import { IOrganizationListFilters, IOrganizationListResponse } from "../types";
+import { IOrganization } from '../../model';
 import { protectedAPI } from '@/shared/api';
 
 export const getOrganizationList = async (filters: IOrganizationListFilters): Promise<IOrganizationListResponse> => {
@@ -21,14 +21,5 @@ export const getOrganizationById = async (id: string) => {
         return response.data;
     } catch (error) {
         throw new Error('Failed to fetch organization');
-    }
-}
-
-export const getCathegorieId = async (id: string): Promise<ICathegory> => {
-    try {
-        const response = await protectedAPI.get<ICathegory>(`${CathegoryEndpoints.CATHEGORIES}/${id}`);
-        return response.data;
-    } catch (error) {
-        throw new Error('Failed to fetch organization list');
     }
 }

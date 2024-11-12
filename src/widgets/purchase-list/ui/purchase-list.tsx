@@ -4,13 +4,9 @@ import Loader from '@/shared/ui/loader'
 import { Skeleton } from '@/shared/ui/skeleton'
 import { faker } from '@faker-js/faker'
 import Menu from './menu'
-import React, { useState, useEffect } from 'react';
-import type { NextApiRequest, NextApiResponse } from 'next';
-
 
 const generatePurchaseItems = (count: number): IPurchaseItem[] => {
   const purchaseItems: IPurchaseItem[] = []
-
 
   for (let i = 0; i < count; i++) {
     const purchaseItem: IPurchaseItem = {
@@ -54,10 +50,7 @@ const purchaseList: IPurchaseItem[] = generatePurchaseItems(30)
 const isLoading = false
 const isSuccess = true
 
-
-
 export const PurchaseList = () => {
-
   return (
     <div className={'flex flex-wrap gap-[24px]'}>
       {isLoading &&

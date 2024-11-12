@@ -201,6 +201,7 @@ const ActiveCreate: React.FC = () => {
         try {
             console.log(formData)
             await handleActive(); // Отправка данных на сервер после обновления состояния
+            router.push(`/profile/assets/`);
         } catch (error) {
             console.error('Ошибка при отправке:', error);
         }

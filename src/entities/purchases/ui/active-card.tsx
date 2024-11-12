@@ -9,7 +9,7 @@ import ActiveFooter from '@/shared/ui/active-footer'
 import { format } from 'date-fns'
 import { getDateLocale } from '@/shared/lib/get-date-locale'
 import { useLocale } from 'next-intl'
-import { Button, GradientTypography } from '@/shared/ui'
+import { Button, GradientTypography, Typography } from '@/shared/ui'
 import ActiveCardTimer from '@/shared/ui/active-timer'
 import Link from 'next/link'
 
@@ -21,8 +21,10 @@ const ActiveCard: FC<IProps> = ({
   id,
   tag,
   image,
+  endingDate,
   params,
   description,
+  minContribution,
   collection:color,
   price,
   purchaseDate,
@@ -39,13 +41,13 @@ const ActiveCard: FC<IProps> = ({
         <ActiveBodyCard
           Header={<NftcardHeader content={tag} />}
           Image={<NftImage imageSrc={image} />}
-          Content={<ActiveInnerContent />}
+          Content={<ActiveInnerContent minCont={minContribution} />}
           Footer={<ActiveFooter ButtonSlot={menuSlot} price={price.toString()} stylebg={colors}/>}
         />
-        <div className='flex flex-col justify-around '>
+        <div className='flex flex-col space-between justify-between '>
           <div className={'mt-2 text-xs text-slate-500 '}>
-            {format(purchaseDate, 'dd MMMM HH:MM', {
-              locale: getDateLocale(locale),
+            {format(endingDate || purchaseDate, 'dd MMMM HH:MM', {
+              locale: getDateLocale( locale),
             })}
           </div>
           <GradientTypography className=' text-4xl'>
@@ -53,10 +55,12 @@ const ActiveCard: FC<IProps> = ({
             {title}
             </Link>
           </GradientTypography>
-          <div className='w-[600px]'><p></p>
+
+          <div className='w-[600px]'>
             </div>
-            <div className='flex'><span>Активный</span><ActiveCardTimer content={'40d:12h:06m'} /></div>
-            <div>иконки</div>
+            <Typography className='py-4 text-lg'>{description}</Typography>
+            {/* <div className='flex'><span>Активный</span><ActiveCardTimer content={ endingDate || '40d:12h:06m'} /></div>
+            <div>иконки</div> */}
             <Button type='button' className='w-[320px]'>Поместить в Топ</Button>
           </div>
       </div>

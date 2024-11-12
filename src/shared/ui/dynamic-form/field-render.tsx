@@ -223,6 +223,28 @@ const FieldRenderer: React.FC<IFieldRendererProps> = ({
           )}
         />
       )
+    case 'richText2':
+      return (
+        <FormField
+          control={form.control}
+          name={name}
+          render={({ field: formField }) => (
+            <FormItem className={cn('col-span-12', className, field.className)}>
+              {field.label && <FormLabel>{field.label}</FormLabel>}
+              <FormControl>
+                <Editor
+                  content={formField.value}
+                  onContentChange={formField.onChange}
+                />
+              </FormControl>
+              {field.description && (
+                <FormDescription>{field.description}</FormDescription>
+              )}
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      )
     case 'custom':
       return (
         <FormField

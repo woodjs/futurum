@@ -1,4 +1,3 @@
-'use client'
 import { useTranslations } from 'next-intl'
 import { Container, GradientTypography } from '@/shared/ui'
 import React from 'react'
@@ -7,9 +6,9 @@ import { PurchaseFilterForm, StatusFilter } from '@/features/purchase-filter'
 import { PurchaseStatusFilter } from '@/entities/purchases/api'
 import { PurchaseList } from '@/widgets/purchase-list'
 
+PurchaseStatusFilter
 
 export default function Home() {
-  
   const t = useTranslations('Menu')
   return (
     <div className={'relative'}>

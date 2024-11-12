@@ -11,7 +11,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { API_URL } from '@/shared/api/config'
 import ActiveBigCard from '@/entities/purchases/ui/active-big-card';
 import { useGetAcitveById } from '@/entities/active/api/hooks/use-get-active-by-id';
-import { IActiveBaseData } from '@/entities/active';
+import { IActiveBaseData, IActiveBaseData2 } from '@/entities/active';
 import { GradientTypography } from '@/shared/ui';
 
 
@@ -21,12 +21,12 @@ import { GradientTypography } from '@/shared/ui';
 export const ActiveCard = ({ id }: { id: string }) => {
   console.log(id);
 
-  let purchaseItem: IActiveBaseData | undefined;
+  let purchaseItem: IActiveBaseData2 | undefined;
 
   const { data, isLoading, isSuccess } = useGetAcitveById(id ? `${id}` : '')
   console.log(data)
   if (isSuccess) {
-    const url = data.nft;
+    const url = data.nft || '/api/v1/files/9b46e8bfa13c53995f99c.png';
     const firstSlashIndex = url.indexOf('/');
     const secondSlashIndex = url.indexOf('/', firstSlashIndex + 1);
     const result_url_nft = url.slice(secondSlashIndex);

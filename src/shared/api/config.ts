@@ -9,5 +9,4 @@ export const AUTH_SIGN_UP = API_URL + '/v1/auth/email/register'
 export const AUTH_SIGN_IN = API_URL + '/v1/auth/email/login'
 export const AUTH_PASSWORD_CHANGE = API_URL + '/v1/users/{id}/change-password'
 export const AUTH_PROFILE = API_URL + '/v1/profile'
-export const CREATE_NFT = API_URL + '/v1/actives'
-export const GET_NFT = API_URL + '/v1/actives?id=3'
+export const API_URL_FILE = process.env.NEXT_PUBLIC_API_URL_FILE

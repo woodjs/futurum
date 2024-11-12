@@ -50,7 +50,7 @@ const ActiveBigCard: FC<IActiveBaseData2> = ({
       <div className='flex gap-6 w-full'>
         <ActiveBodyCardBig
           Header={<NftcardHeader content={tags} />}
-          Image={<NftImage imageSrc={nft} />}
+          Image={<NftImage imageSrc={nft } />}
           Footer={<ActiveFooter ButtonSlot={<Button className={'w-[105px] p-4 text-[14px]'}>Купить</Button>} price={purposeCollection.toString()} />}
         />
         <div className='flex flex-1 flex-col justify-around'>
@@ -124,7 +124,7 @@ const ActiveBigCard: FC<IActiveBaseData2> = ({
               'w-[120px] h-[120px] relative -top-[20px] -z-10 rounded-t-[14px] overflow-hidden'
             }
           >
-            <Image fill src={nft} alt={'nft card image'} />
+            <Image fill src={nft || ""} alt={'nft card image'} />
 
           </div>
           <div
@@ -132,7 +132,7 @@ const ActiveBigCard: FC<IActiveBaseData2> = ({
               'w-[120px] h-[120px] relative -top-[20px] -z-10 rounded-t-[14px] overflow-hidden'
             }
           >
-            <Image fill src={nft} alt={'nft card image'} />
+            <Image fill src={nft || ""} alt={'nft card image'} />
 
           </div>
         </div>
