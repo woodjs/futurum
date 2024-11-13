@@ -4,6 +4,9 @@ import { Button } from '@/shared/ui';
 import { useCreateCollection } from '@/entities/collections';
 import { ICollection } from '@/entities/collections/model';
 import { useGetCollectionList } from '@/entities/collections/api/hooks/use-get-collections-list';
+import { DynamicForm } from '@/shared/ui/dynamic-form';
+import AddCollectionIcon from '@/shared/icons/AddCollectionIcon';
+import DeleteFileIcon from '@/shared/icons/DeleteFileIcon';
 
 interface IOption {
     id?: string;
@@ -40,10 +43,10 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ onCollectionSelect }) =
     const [newCollectionColor, setNewCollectionColor] = useState('#000000');
     const { mutate: createCollection } = useCreateCollection();
 
-    const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const selectedValue = event.target.value;
+    const handleSelectChange = (data: { cathegory?: any }) => {
+        const selectedValue = data.cathegory;
         setSelectedCollection(selectedValue);
-        onCollectionSelect(selectedValue); // Передача значения напрямую
+        onCollectionSelect(selectedValue); // Passing the value directly
     };
 
     const handleCreateCollection = () => {
@@ -63,43 +66,51 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ onCollectionSelect }) =
                 console.error('Ошибка при создании коллекции:', error);
             },
         });
+        
     };
 
     return (
-        <div className="p-4">
+        <div className="">
             <div className="mb-4">
-                <label className="block mb-2 text-gray-700">Выберите коллекцию</label>
-                <select
-                    value={selectedCollection}
-                    onChange={handleSelectChange}
-                    className="w-full p-2 border border-gray-300 rounded-md"
-                >
-                    <option value="">Выберите коллекцию</option>
-                    {(collections || []).map((collection) => (
-                        <option
-                            key={collection.id}
-                            value={collection.id}
-                            style={{ color: collection.color }}
-                        >
-                            {collection.name}
-                        </option>
-                    ))}
-                </select>
+                <DynamicForm
+                    fields={{
+                        cathegory: {
+                            name: 'collection',
+                            type: 'select',
+                            label: 'Выбрать коллекцию',
+                            placeholder: 'Выберите коллекцию',
+                            options: collections?.map((collection) => ({
+                                label: collection.name, 
+                                value: collection.id!, 
+                            })) || [],
+                        }
+                    }}
+                    onFormUpdate={handleSelectChange}
+                    renderFooter={form => <></>}
+                />
             </div>
 
             <div className="flex items-center mb-4">
                 <button
                     type="button"
                     onClick={() => setIsDialogOpen(true)}
-                    className="items-center "
+                    className="flex flex-row items-center gap-[8px]"
                 >
-                <span className='px-3 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 mr-2'>+</span><span>Создать коллекцию</span>
+                    <AddCollectionIcon />
+                    <p className="text-[14px] font-[700] text-[#046EB5]">Новая коллекция</p>
                 </button>
             </div>
 
             {isDialogOpen && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                    <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+                    <div className="relative bg-white p-6 rounded-lg shadow-lg w-96">
+                        <button
+                            type='button'
+                            onClick={() => setIsDialogOpen(false)}
+                            className='absolute top-6 right-4 text-sm text-red-600 underline p-1'
+                        >
+                            <DeleteFileIcon />
+                        </button>
                         <h2 className="text-lg font-semibold mb-4">Создать новую коллекцию</h2>
                         <input
                             type="text"
@@ -118,15 +129,8 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ onCollectionSelect }) =
                         <div className="flex justify-end">
                             <Button
                                 type="button"
-                                onClick={() => setIsDialogOpen(false)}
-                                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md mr-2"
-                            >
-                                Отмена
-                            </Button>
-                            <Button
-                                type="button"
                                 onClick={handleCreateCollection}
-                                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                                className="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600"
                             >
                                 Сохранить
                             </Button>

@@ -21,8 +21,8 @@ const FormSelectTrigger = React.forwardRef<
     className={cn(
       `group/trigger box-border flex h-[40px] w-full items-center justify-between
       rounded-md border border-transparent-gray bg-white px-3 py-2 text-sm
-      placeholder:text-muted-foreground disabled:cursor-not-allowed
-      disabled:opacity-50 data-[state=open]:border-primary [&>span]:line-clamp-1`,
+      disabled:cursor-not-allowed disabled:opacity-50 data-[state=open]:border-primary [&>span]:line-clamp-1
+      placeholder:text-[#A0AEC0E5]`,
       className,
     )}
     {...props}

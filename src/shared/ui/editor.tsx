@@ -370,16 +370,11 @@ const Editor: React.FC<IEditorProps> = ({
   const innerId = useId()
   return (
     <div>
-      {label && (
-        <Label className='mb-2 inline-block' htmlFor={id || innerId}>
-          {label}
-        </Label>
-      )}
       <EditorProvider
         editorProps={{
           attributes: {
             class: cn(
-              'prose prose-sm box-border min-h-[40px] w-full max-w-none rounded-[6px] border border-transparent-gray bg-white px-[16px] py-[12px] sm:prose-base focus-within:border-primary focus:outline-none',
+              'prose prose-sm box-border min-h-[140px] w-full max-w-none rounded-[6px] border border-transparent-gray bg-white px-[16px] py-[12px] sm:prose-base focus-within:border-primary focus:outline-none',
               className,
             ),
             id: id || innerId,
@@ -397,13 +392,11 @@ const Editor: React.FC<IEditorProps> = ({
             }}
           />
         }
-        extensions={[...extensions, Placeholder.configure({ placeholder })]}
-        content={content}
-        {...props}
+        extensions={[...extensions, Placeholder.configure({ placeholder: "adadadada" })]}
       />
-      {description && (
-        <p className='mt-2 text-sm text-slate-400'>{description}</p>
-      )}
+      {/* {description && (
+        <p className='mt-2 text-[12px] text-[#A0AEC0E5]'>{description}</p>
+      )} */}
     </div>
   )
 }

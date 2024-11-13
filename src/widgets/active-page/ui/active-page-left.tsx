@@ -7,56 +7,79 @@ import Image from "next/image"
 import { useRouter } from "next/navigation";
 import { ActiveDataIdProps } from "../typea";
 import { ru } from "date-fns/locale";
-import { format, parseISO } from 'date-fns';
-import TextWrapper from "@/shared/ui/text-wrapper";
+import { differenceInMinutes, format, parseISO } from 'date-fns';
+import { useState, useEffect } from "react";
+import CheckMarkIcon from "@/shared/icons/CheckMarkIcon";
+import StarIcon from "@/shared/icons/StarIcon";
 
 
 
 const ActivePageLeftSide: React.FC<IActiveIdDN2> = (data) => {
-
     const date = parseISO(data.data.endingDate);
-const formattedDate = format(date, "d MMMM yyyy", { locale: ru });
+    const formattedDate = format(date, "d MMMM yyyy", { locale: ru });
+    const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0 });
+
+    useEffect(() => {
+        const updateCountdown = () => {
+            const now = new Date();
+            const minutesDifference = differenceInMinutes(date, now);
+            
+            if (minutesDifference > 0) {
+                const days = Math.floor(minutesDifference / (24 * 60));
+                const hours = Math.floor((minutesDifference % (24 * 60)) / 60);
+                const minutes = minutesDifference % 60;
+                setTimeLeft({ days, hours, minutes });
+            } else {
+                setTimeLeft({ days: 0, hours: 0, minutes: 0 });
+            }
+        };
+
+        updateCountdown();
+        const interval = setInterval(updateCountdown, 60000); 
+
+        return () => clearInterval(interval); 
+    }, []);
+    
     return (
         <>
             <div className="flex w-[300px] flex-col">
-                <div className="flex w-[300px] justify-center">
-                    <div className="flex relative flex-col w-[260px] h-[400px] border-2 border-slate-200 rounded-2xl bg-slate-100">
-                        <div className="flex z-10 justify-center border-2 border-slate-200 items-center w-[118px] h-[26px] bg-white rounded-[13px] absolute left-1/2 -translate-x-1/2 -top-[10px]">
-                            <span className="text-xs text-slate-500">#{data.data.tags[0]}</span>
-                        </div>
-                        <div className="flex w-full h-[310px] relative rounded-t-2xl   rt-[8px]">
-                            <Image
-                                src={API_URL_FILE + data.data.nft}
-                                alt={'Картинка'}
-                                layout="fill"
-                                objectFit="cover"
-                                className="rounded-t-2xl"
-                            >
-                            </Image>
-                            <div className="flex flex-col text-sm w-[235px] border-2 border-slate-200 bg-opacity-50 bg-white-transparent rounded-lg  absolute left-1/2 -translate-x-1/2 bottom-[26px]">
-                                <div className="flex pt-2 justify-between">
-                                    <span className="flex text-sm pl-2">Доходность</span><span className="flex text-sm pr-2">{data.data.purposeOfCollection}%</span>
-                                </div>
-                                <div className="flex justify-between">
-                                    <span className="flex text-sm p-2">Доход за год</span><span className="flex text-sm p-2">{data.data.minimumContribution} USDT</span>
-                                </div>
-                                <div className="flex justify-between">
-                                    <span className="flex text-sm pl-2">Доход за период</span><span className="flex text-sm pr-2">{data.data.minimumContribution} USDT</span>
-                                </div>
+                <div className="flex relative flex-col w-[280px] h-[344px] border-2 border-slate-200 rounded-2xl bg-slate-100">
+                    <div className="flex z-10 justify-center items-center w-[118px] h-[26px] border-2 border-slate-200 bg-slate-100 border-gray-800 rounded-[13px] absolute left-1/2 -translate-x-1/2 -top-[10px]">
+                        <span className="text-xs text-[#2D3748] font-[600]">#{data.data.tags[0]}</span>
+                    </div>
+                    <div className="flex w-full h-[260px] rounded-t-2xl relative rt-[8px]">
+                        <Image
+                            src={API_URL_FILE + data.data.nft}
+                            alt={'Картинка'}
+                            layout="fill"
+                            objectFit="cover"
+                            className="rounded-t-2xl"
+                        />
+                        <div className="flex flex-col text-sm w-[243px] backdrop-blur-[4px] bg-white bg-opacity-40 rounded-lg absolute left-1/2 -translate-x-1/2 bottom-[26px] p-[4px] pl-[8px] pr-[8px]">
+                            <div className="flex justify-between mb-[2px]">
+                                <span className="flex text-start text-[10px] font-[700] text-[#2D3748]">Доходность</span><span className="flex text-end text-[12px] font-[700] text-[#2D3748]">{data.data.purposeOfCollection}%</span>
+                            </div>
+                            <div className="flex justify-between mb-[2px]">
+                                <span className="flex text-start text-[10px] font-[700] text-[#2D3748]">Доход за год</span><span className="flex text-end text-[12px] font-[700] text-[#2D3748]">{data.data.minimumContribution} USDT</span>
+                            </div>
+                            <div className="flex justify-between mb-[2px]">
+                                <span className="flex text-start text-[10px] font-[700] text-[#2D3748]">Доход за период</span><span className="flex text-end text-[12px] font-[700] text-[#2D3748]">{data.data.minimumContribution} USDT</span>
                             </div>
                         </div>
-                        <div className="flex relative w-full h-[87px] rounded-b-2xl">
-                            <div className="flex z-10 justify-center items-center w-[118px] h-[26px] bg-white border-2 border-slate-200 rounded-[13px] absolute left-1/2 -translate-x-1/2 -top-[10px]">
-                                <span className="text-xs  text-slate-500">{formattedDate}</span>
+                    </div>
+                    <div className="flex relative w-full h-[75px] rounded-b-2xl">
+                        <div className="flex z-10 justify-center items-center w-[118px] h-[26px] bg-slate-100 border-2 border-slate-200 rounded-[13px] absolute left-1/2 -translate-x-1/2 -top-[10px]">
+                            <span className="text-xs text-slate-500">
+                                {timeLeft.days}d:{timeLeft.hours}h:{timeLeft.minutes}m
+                            </span>
+                        </div>
+                        <div className="flex w-full border-t-2 border-slate-200 justify-between items-end">
+                            <div className="flex flex-col font-semibold p-2">
+                                <span className="text-sm text-slate-400">Цена</span>
+                                <span className="flex text-sm ">{data.data.price}&nbsp;USDT</span>
                             </div>
-                            <div className="flex justify-between border-t-2 border-slate-200 mt-4 items-center w-full ">
-                                <div className="flex flex-col place-items-start font-semibold p-4">
-                                    <span className="text-sm text-slate-600">Цена</span>
-                                    <span className="flex text-lg ">{data.data.price}&nbsp;SDT</span>
-                                </div>
-                                <div className="flex">
-                                    <Button className="w-[115px] h-[38px] text-xs m-4 ">Купить</Button>
-                                </div>
+                            <div className="flex">
+                                <Button className="w-[120px] h-[38px] text-xs m-2 ">Купить</Button>
                             </div>
                         </div>
                     </div>
@@ -70,34 +93,33 @@ const formattedDate = format(date, "d MMMM yyyy", { locale: ru });
                             height={110}
                             layout="fixed"
                             // objectFit="cover"
-                            className="rounded-full w-[110px] h-[110px]"
+                            className="relative box-border flex size-[100px] shrink-0 items-center justify-center
+                            overflow-hidden rounded-full bg-gradient-to-r from-gradient-accent-start
+                            to-gradient-accent-end p-[4px]"
                         >
                         </Image>
                     </div>
                     <div className="flex flex-col ">
                         <div className="flex items-center">
-                            <span className="text-2xl font-semibold pr-2">{data.data.organization.companyName}</span><div className="w-[20px] h-[20px] rounded-full bg-blue-800"></div>
+                            <span className="text-2xl font-semibold pr-2">{data.data.organization.companyName}</span><CheckMarkIcon />
                         </div>
-                        <div className="text-transparent-gray font-semibold  text-xs"><span><TextWrapper maxLength={20} placeholder="..">деятельность компании</TextWrapper></span></div>
-                        <div className="">
-                            <div className="mr-[6px] w-[13px] h-[10px] bg-slate-400"></div>
-                            <div className="text-slate-400" ><span className="Text-transparent-gray text-xs">{data.data.organization.country}, {data.data.organization.city}</span></div>
+                        <div className="text-[#A0AEC0E5] text-[12px] font-[700] mt-[8px]"><span>деятельность компании</span></div>
+                        <div className="text-[#A0AEC0E5] text-[12px] font-[400] mt-[8px]" ><span className="Text-transparent-gray text-xs">{data.data.organization.country}, {data.data.organization.city}</span></div>
+                        <div className="flex items-center gap-[4px] mt-[10px]">
+                            <span className="text-[12px] text-[#2D3748] font-[700]">157</span>
+                            <div className="w-[10px] h-[10px] bg-[#A0AEC0E5] rounded-full"></div>
+                            <div className="w-[10px] h-[10px] bg-[#A0AEC0E5] rounded-full"></div>
+                            <div className="w-[10px] h-[10px] bg-[#A0AEC0E5] rounded-full"></div>
+                            <div className="w-[10px] h-[10px] bg-[#A0AEC0E5] rounded-full"></div>
+                            <div className="w-[10px] h-[10px] bg-[#A0AEC0E5] rounded-full"></div>
                         </div>
-                        <div className="flex items-center gap-3">
-                            <span>157</span>
-                            <div className="w-[10px] h-[10px] bg-black rounded-full"></div>
-                            <div className="w-[10px] h-[10px] bg-black rounded-full"></div>
-                            <div className="w-[10px] h-[10px] bg-black rounded-full"></div>
-                            <div className="w-[10px] h-[10px] bg-black rounded-full"></div>
-                            <div className="w-[10px] h-[10px] bg-black rounded-full"></div>
-                        </div>
-                        <div className="flex items-center gap-3">
-                            <span>5.0</span>
-                            <div className="w-[10px] h-[10px] bg-yellow-300 rounded-full"></div>
-                            <div className="w-[10px] h-[10px] bg-yellow-300 rounded-full"></div>
-                            <div className="w-[10px] h-[10px] bg-yellow-300 rounded-full"></div>
-                            <div className="w-[10px] h-[10px] bg-yellow-300 rounded-full"></div>
-                            <div className="w-[10px] h-[10px] bg-yellow-300 rounded-full"></div>
+                        <div className="flex items-center ">
+                            <span className="text-[12px] text-[#2D3748] font-[700] mr-[4px]">5.0</span>
+                            <StarIcon />
+                            <StarIcon />
+                            <StarIcon />
+                            <StarIcon />
+                            <StarIcon />
                         </div>
                     </div>
                 </div>

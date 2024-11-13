@@ -10,6 +10,7 @@ import { useLocale } from "next-intl";
 import Image from "next/image"
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
 import { z } from "zod";
 
 
@@ -17,17 +18,23 @@ interface ButtonProps {
     uuid: string;
 }
 
-const activePayoutFrequencyList = [
+export const activePayoutFrequencyList = [
     { label: 'Раз в месяц', value: 'once_a_month' },
     { label: 'Раз в квартал', value: 'once_a_quarter' },
     { label: 'Раз в пол года', value: 'once_a_half_year' }
 ];
-const activeRefundList = [
+export const activeRefundList = [
     { label: 'Через год', value: 'in_a_year' },
     { label: 'Через 2 года', value: 'in_2_years' },
     { label: 'Через 3 года', value: 'in_3_years' },
     { label: 'Через 4 года', value: 'in_4_years' },
     { label: 'Через 5 лет', value: 'in_5_years' },
+];
+export const activeCategoryList = [
+    {label: "Бизнес", value: 'business'},
+    {label: "Стартап", value: 'startup'},
+    {label: "Помощь животным", value: 'animal_help'},
+    {label: "Помощь людям", value: 'human_help'},
 ];
 const ActiveForm = () => {
     const router = useRouter(); // Хук для навигации
@@ -37,14 +44,14 @@ const ActiveForm = () => {
     const getEnumOptions = (enumObj: Record<string, string>) => {
         return Object.entries(enumObj).map(([key, value]) => ({
             label: key.replace(/_/g, ' ').toLowerCase(), // Преобразуем ключ в человекочитаемый формат
-            value, // Значение для поля value
+            value // Значение для поля value
         }));
     };
     const { data: organizationList, isLoading, isSuccess } = useGetOrganizationList({ my: true })
 
     const initialFiles1: IFile[] = [
         {
-          id: "file1",
+          id: "ac7be448-fb18-40c1-9a41-5e107a57468c",
           name: "example1.jpg",
           type: "image/jpeg",
           url: "https://example.com/example1.jpg",
@@ -53,7 +60,7 @@ const ActiveForm = () => {
       
       const initialFiles2: IFile[] = [
         {
-          id: "file2",
+          id: "46ca396c-4c14-47f9-81a7-224a1345628b",
           name: "example2.jpg",
           type: "image/jpeg",
           url: "https://example.com/example2.jpg",
@@ -62,17 +69,17 @@ const ActiveForm = () => {
       
       const initialFiles3: IFile[] = [
         {
-          id: "file3",
+          id: "204a4109-0932-4688-92cd-cb5b5019e095",
           name: "example3.jpg",
           type: "image/jpeg",
           url: "https://example.com/example3.jpg",
         },
       ];
 
-    const [iscathegory, setIscathegory] = useState();
+    const [iscathegory, setIscathegory] = useState<string>();
     const [isorganizationId, setIsorganizationId] = useState();
-    const [isdescription, setIsdescription] = useState();
-    const [isactiveName, setIsactiveName] = useState();
+    const [isdescription, setIsdescription] = useState<string>();
+    const [isactiveName, setIsactiveName] = useState<string>();
     const [istags, setIstags] = useState<string>('');
 
     const [price, setPrice] = useState<number>(0);
@@ -84,7 +91,7 @@ const ActiveForm = () => {
 
     const [isminContribution, setIsminContribution] = useState();
     const [ispurposeCollection, setIspurposeCollection] = useState();
-    const [isendingDate, setIsendingDate] = useState();
+    const [isendingDate, setIsendingDate] = useState<Date>();
 
     const [withPossibilityOfExtension, setWithPossibilityOfExtension] = useState<boolean>(false);
     const [additionalMaterials, setAdditionalMaterials] = useState<string>('');
@@ -99,7 +106,7 @@ const ActiveForm = () => {
 
 
     // ???
-    const inputRef = useRef<HTMLInputElement>(null); // Референс на поле ввода
+    const inputRef = useRef<HTMLTextAreaElement>(null); // Референс на поле ввода
     const [istags2, setIstags2] = useState<string>(''); // Состояние для строки ввода
 
     const handleInputChange = () => {
@@ -138,23 +145,17 @@ const ActiveForm = () => {
         const uniqueTags = Array.from(new Set(inputTags.trim().split(/\s+/).filter(Boolean)));
         setTags(uniqueTags);
     };
-    // ???
-    useEffect(() => {
-        // logStateValues();
-    }, [iscathegory, isorganizationId, isdescription, isactiveName, istags, isminContribution,
-        ispurposeCollection, isendingDate, fileItems1, fileItems2, fileItems3, isselectedCollection
-    ]); // Указываем зависимости
-
+    
     const { mutate: createActive } = useCreateActive();
 
     // console.log(getEnumOptions(ActiveType))
-    const activeCategoryList = getEnumOptions(ActiveType2);
+    // const activeCategoryList = getEnumOptions(ActiveType2);
 
     const handleSubmit= (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         if (event) {
             const data = {
-                cathegory: iscathegory ?? ActiveType2.BUSINESS,                       // ActiveType значение
+                cathegory: iscathegory ?? "Бизнес",                       // ActiveType значение
                 organizationId: isorganizationId || '237cc758-51df-4df4-8a0a-f8844a0692fb',   // ID организации
                 activeName: isactiveName || 'заглушка',           // Название активности
                 headline: "",                                 // Если headline необязателен, можно оставить пустым
@@ -163,7 +164,7 @@ const ActiveForm = () => {
 
                 minContribution: Number(isminContribution) || 1,      // Минимальный вклад
                 purposeOfCollection: Number(ispurposeCollection) || 1,  // Цель сбора средств
-                endingDate: isendingDate || 'заглушка',           // Дата завершения
+                endingDate: isendingDate!.toString() || 'заглушка',           // Дата завершения
                 documentIds: fileItems1.map(file => file.id), // Массив ID документов из fileItems1
                 nftId: fileItems2.length > 0 ? fileItems2[0].id.toString() : '237cc758-51df-4df4-8a0a-f8844a0692fb',                               // Если nftId необязателен, оставьте пустым
                 galeryImagesIds: fileItems3.map(file => file.id), // Массив ID изображений галереи
@@ -178,25 +179,28 @@ const ActiveForm = () => {
                 additionalMaterials: additionalMaterials || 'заглушка',
                 fundUrl: fundUrl || 'https://www.google.com',
             };
+            console.log(data)
             try {
                 ActiveFormSchema.parse(data); // Валидация данных
                 // console.log('Данные прошли валидацию:', data);
                 // Отправьте данные на сервер
+                createActive(data, {
+                    onSuccess: () => {
+                        console.log('Ура мы создали новый актив');
+                        router.push(`./`);
+                    },
+                    onError: (error) => {
+                        console.error('Ошибка при создании коллекции:', error);
+                        toast.error("Ошибка при создании коллекции")
+                    },
+                });
+                event.preventDefault();
             } catch (error) {
                 console.error('Ошибка валидации:', error);
+                toast.error('Ошибка валидации')
             }
 
-            createActive(data, {
-                onSuccess: () => {
-                    console.log('Ура мы создали новый актив');
-                },
-                onError: (error) => {
-                    console.error('Ошибка при создании коллекции:', error);
-                },
-            });
-            event.preventDefault();
 
-            router.push(`./`);
         } else {
             console.log("Ошибка.");
         }
@@ -204,7 +208,8 @@ const ActiveForm = () => {
 
     function handleFormUpdateCathegory(data: { cathegory?: any; }, info: any): void {
         if (data) {
-            setIscathegory(data.cathegory)
+            console.log(activeCategoryList.find(category => category.value === data.cathegory)?.label)
+            setIscathegory(activeCategoryList.find(category => category.value === data.cathegory)?.label)
         } else {
             console.log("Категория не задана.");
         }
@@ -290,9 +295,6 @@ const ActiveForm = () => {
             if (data.withPossibilityOfExtension !== withPossibilityOfExtension) {
                 setWithPossibilityOfExtension(data.withPossibilityOfExtension);
             }
-            if (data.additionalMaterials !== additionalMaterials) {
-                setAdditionalMaterials(data.additionalMaterials);
-            }
 
             
         } else {
@@ -375,18 +377,39 @@ const ActiveForm = () => {
 
                     <DynamicForm
                         fields={{
+                            organizationId: {
+                                name: 'organizationId',
+                                type: 'select',
+                                label: 'Организация',
+                                placeholder: 'Выберите вашу организацию',
+                                options: organizationList?.data?.map((organization) => ({
+                                    label: organization.companyName, // Имя категории для отображения
+                                    value: organization.id, // Уникальный идентификатор категории
+                                })) || [],
+                            }
+                        }}
+                        onFormUpdate={handleFormUpdateOrganization}
+                        renderFooter={form => <></>}
+                    />
+
+                    <DynamicForm
+                        fields={{
                             activeName: {
                                 name: 'activeName',
                                 type: 'text',
                                 label: 'Название актива',
                                 placeholder: 'Hello',
                                 description: 'Осталось 50 символов',
-                                validation: z.string().min(3),
+                                validation: z.string().max(50),
                             }
                         }}
                         onFormUpdate={handleFormUpdateActiveName}
                         renderFooter={form => <></>}
                     />
+                    {isactiveName && isactiveName.length > 50 && (
+                        <p className="text-[14px] text-red-500">Название актива не может быть больше 50 cимволов</p>
+                    )}
+
                     <DynamicForm
                         fields={{
                             description: {
@@ -401,13 +424,20 @@ const ActiveForm = () => {
                         onFormUpdate={handleFormDescription}
                         renderFooter={form => <></>}
                     />
-                    <input
-                        type="text"
+                    {isdescription && isdescription.length > 3000 && (
+                        <p className="text-[14px] text-red-500">Описание актива не может быть больше 3000 cимволов</p>
+                    )}
+                    <p className="text-[14px] font-[700] text-[#2D3748] mb-[8px]">Теги</p>
+                    <textarea
                         ref={inputRef} // Привязываем референс к полю ввода
                         onChange={handleInputChange} // Обновляем массив тегов при изменении
-                        placeholder="Введите теги через пробел"
-                        className="border border-gray-300 p-2 rounded-md w-full"
+                        placeholder="Укажите теги, которые помогут при поиске, например #корм и т.д."
+                        className="border border-[#A0AEC0E5] p-2 rounded-md w-full h-[140px] max-h-[140px] text-[14px]"
                     />
+                    <p className="font-[400] text-[12px] text-[#A0AEC0E5]">Осталось 100 символов</p>
+                    {inputRef.current?.value && inputRef.current?.value.length > 100 && (
+                        <p className="text-[14px] text-red-500">Поле с тегами не может быть больше 100 символов</p>
+                    )}
 
                     <div className="flex flex-wrap gap-2 mt-4">
                         {tags.map(tag => (
@@ -427,120 +457,155 @@ const ActiveForm = () => {
                     </div>
 
                     <div className='w-full border-b border-gray-300 my-4' ></div>
-                    <Typography className='text-lg font-bold'>Параметры актива</Typography>
-                    {(iscathegory === 'animal_help' || iscathegory === 'human_help') ? (
-                        <DynamicForm
-                            fields={{
-                                minContribution: {
-                                    name: 'minContribution',
-                                    type: 'number',
-                                    label: 'Минимальный взносмость',
-                                    placeholder: '$ 10',
-                                    description: '',
-                                    validation: z.number().min(1),
-                                }, purposeCollection: {
-                                    name: 'purposeCollection',
-                                    type: 'number',
-                                    label: 'Цель сбора',
-                                    placeholder: '$ 1000',
-                                    description: '',
-                                    validation: z.number().min(1),
-                                },
-                                endingDate: {
-                                    name: 'endingDate',
-                                    type: 'date',
-                                    label: 'Дата завершения',
-                                    placeholder: 'до 21.12.2024 |  00:00',
-                                    validation: z.number().nonnegative(),
-                                }
-                            }}
-                            onFormUpdate={handleFormUpdateMinPurpDate}
-                            renderFooter={form => <></>}
-                        />
+                    <Typography className='text-lg font-bold mb-[16px]'>Параметры актива</Typography>
+                    {(iscathegory === ActiveType2.ANIMAL_HELP || iscathegory === ActiveType2.HUMAN_HELP) ? (
+                        <>
+                            <DynamicForm
+                                fields={{
+                                    minContribution: {
+                                        name: 'minContribution',
+                                        type: 'number',
+                                        label: 'Минимальный взнос',
+                                        placeholder: '$ 000',
+                                        description: '',
+                                        validation: z.number().max(50),
+                                    }, purposeCollection: {
+                                        name: 'purposeCollection',
+                                        type: 'number',
+                                        label: 'Цель сбора',
+                                        placeholder: '$ 000',
+                                        description: '',
+                                        validation: z.number().max(1000),
+                                    },
+                                    endingDate: {
+                                        name: 'endingDate',
+                                        type: 'date',
+                                        label: 'Дата завершения',
+                                        placeholder: 'Выберите дату завершения',
+                                        validation: z.number().nonnegative(),
+                                    }
+                                }}
+                                onFormUpdate={handleFormUpdateMinPurpDate}
+                                renderFooter={form => <></>}
+                            />
+                            {isminContribution && isminContribution < 50 && (
+                                <p className="text-[14px] text-red-500">Минимальный взнос не может быть ниже 50$</p>
+                            )}
+                        
+                            {ispurposeCollection && ispurposeCollection < 1000 && (
+                                <p className="text-[14px] text-red-500">Цель сбора не может быть ниже 1000$</p>
+                            )}
+                        </>
                     ) : (
-                        <DynamicForm
-                            fields={{
-                                price: {
-                                    name: 'price',
-                                    type: 'number',
-                                    label: 'Стоимость',
-                                    placeholder: '$ 50',
-                                    description: '',
-                                    validation: z.number().min(1),
-                                }, profitability: {
-                                    name: 'profitability',
-                                    type: 'number',
-                                    label: 'Доходность',
-                                    placeholder: '0 %',
-                                    description: '',
-                                    validation: z.number().min(1),
-                                },
-                                payoutFrequency: {
-                                    name: 'payoutFrequency',
-                                    type: 'select',
-                                    label: 'Частота выплат',
-                                    placeholder: 'выберите',
-                                    options: activePayoutFrequencyList,
-                                },
-                                refund: {
-                                    name: 'refund',
-                                    type: 'select',
-                                    label: 'Возврат средств',
-                                    placeholder: 'выберите',
-                                    options: activeRefundList,
-                                },
-                                activityPeriod: {
-                                    name: 'activityPeriod',
-                                    type: 'number',
-                                    label: 'Срок активности',
-                                    placeholder: '0 %',
-                                    description: '',
-                                    validation: z.number().min(1),
-                                },
-                                endingDate: {
-                                    name: 'endingDate',
-                                    type: 'date',
-                                    label: 'Дата завершения',
-                                    placeholder: 'до 21.12.2024 |  00:00',
-                                    description: '',
-                                    validation: z.number().min(1),
-                                },
-                                withPossibilityOfExtension: {
-                                    name: 'withPossibilityOfExtension',
-                                    type: 'checkbox',
-                                    label: 'С возможностью продления',
-                                    placeholder: 'С возможностью продления',
-                                    validation: z.number().nonnegative(),
-                                },
-                                additionalMaterials: {
-                                    name: 'additionalMaterials',
-                                    type: 'richText',
-                                    label: 'Доп. материалы',
-                                    placeholder: 'Это пользователь получит после приобретения NFT',
-                                    validation: z.number().nonnegative(),
-                                }
-                            }}
-                            onFormUpdate={handleFormUpdateMinPurpDate2}
-                            renderFooter={form => <></>}
-                        />
+                        <>
+                            <DynamicForm
+                                fields={{
+                                    price: {
+                                        name: 'price',
+                                        type: 'number',
+                                        label: 'Стоимость',
+                                        placeholder: '$ 50',
+                                        description: 'Указывайте цену, учитывая комиссию в N%  ',
+                                        validation: z.number().min(1),
+                                    }, 
+                                    profitability: {
+                                        name: 'profitability',
+                                        type: 'number',
+                                        label: 'Доходность',
+                                        placeholder: '0 %',
+                                        description: '',
+                                        validation: z.number().min(1),
+                                    },
+                                    payoutFrequency: {
+                                        name: 'payoutFrequency',
+                                        type: 'select',
+                                        label: 'Частота выплат',
+                                        placeholder: 'выберите',
+                                        options: activePayoutFrequencyList,
+                                    },
+                                    refund: {
+                                        name: 'refund',
+                                        type: 'select',
+                                        label: 'Возврат средств',
+                                        placeholder: 'выберите',
+                                        options: activeRefundList,
+                                    },
+                                    activityPeriod: {
+                                        name: 'activityPeriod',
+                                        type: 'number',
+                                        label: 'Срок активности',
+                                        placeholder: '0 %',
+                                        description: '',
+                                        validation: z.number().min(1),
+                                    },
+                                    endingDate: {
+                                        name: 'endingDate',
+                                        type: 'date',
+                                        label: 'Дата завершения',
+                                        placeholder: 'Выберите дату завершения',
+                                        description: '',
+                                        validation: z.number().min(1),
+                                    },
+                                    withPossibilityOfExtension: {
+                                        name: 'withPossibilityOfExtension',
+                                        type: 'checkbox',
+                                        label: 'С возможностью продления',
+                                        placeholder: 'С возможностью продления',
+                                        validation: z.number().nonnegative(),
+                                    }
+                                }}
+                                onFormUpdate={handleFormUpdateMinPurpDate2}
+                                renderFooter={form => <></>}
+                            />
+                                {price && price < 50 ? (
+                                    <p className="text-[14px] text-red-500 mb-[8px]">Стоимость не может быть ниже 50$</p>
+                                ) : ""}
+                            
+                                {profitability && profitability < 1 ? (
+                                    <p className="text-[14px] text-red-500 mb-[8px]">Доходность не может быть ниже 1%</p>
+                                ) : ""}
+                        </>
                     )}
-                    <div className='w-full border-b border-gray-300 my-4' ></div>
 
-                    <Typography className='py-8 text-lg font-bold'>Документы</Typography>
-                    {(iscathegory === 'animal_help' || iscathegory === 'human_help') ? (
-                        <FileUpload
-                            name='documentIds'
-                            label={'Загрузите документы, подтверждающие необходимость в пожертвованиях'}
-                            accept={'image/png, image/jpeg, image/jpg'}
-                            multiple={true}
-                            maxFiles={5}
-                            required={true}
-                            onChange={handleFileUpload1}
-                        />
-
+                    {(iscathegory === ActiveType2.STARTUP || iscathegory === ActiveType2.BUSINESS) && (
+                        <>
+                            <p className="text-[14px] font-[700] text-[#2D3748] mb-[8px]">Доп. материалы</p>
+                            <textarea
+                                onChange={(e) => setAdditionalMaterials(e.target.value)}
+                                placeholder="Это пользователь получит после приобретения NFT"
+                                className="border border-[#A0AEC0E5] p-2 rounded-md w-full h-[140px] max-h-[140px] text-[14px]"
+                            />
+                            <p className="font-[400] text-[12px] text-[#A0AEC0E5] mb-[24px]">Осталось 500 символов</p>
+                            {additionalMaterials && additionalMaterials.length > 500 && (
+                                    <p className="text-[14px] text-red-500">Доп. материалы не могут быть больше 500</p>
+                                )}
+                        </>
+                    )}
+                    
+                    {(iscathegory === ActiveType2.ANIMAL_HELP || iscathegory === ActiveType2.HUMAN_HELP) && (
+                        <>
+                            <div className='w-full border-b border-gray-300' ></div>
+                            <Typography className='text-lg font-bold mt-[16px] mb-[16px]'>Документы</Typography>
+                        </>
+                    )}
+                    {(iscathegory === ActiveType2.ANIMAL_HELP || iscathegory === ActiveType2.HUMAN_HELP) ? (
+                        <>
+                            <FileUpload
+                                name='documentIds'
+                                label={'Загрузите документы, подтверждающие необходимость в пожертвованиях'}
+                                accept={'application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/msword, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, application/pdf, application/vnd.openxmlformats-officedocument.presentationml.presentation'}
+                                multiple={true}
+                                maxFiles={10}
+                                required={true}
+                                onChange={handleFileUpload1}
+                            />
+                            <Typography className='text-[12px] font-[400] text-[#A0AEC0E5] mb-[16px] mt-[16px]'>
+                                Вы можете загрузить до 10 файлов PDF, Word, Exel и т.д.
+                            </Typography>
+                        </>
 
                     ) : null}
-                    {(iscathegory === 'animal_help' || iscathegory === 'human_help') ? (
+                    {(iscathegory === ActiveType2.ANIMAL_HELP || iscathegory === ActiveType2.HUMAN_HELP) ? (
                         <DynamicForm
                             fields={{
                                 fundUrl: {
@@ -564,27 +629,31 @@ const ActiveForm = () => {
                         required={true}
                         onChange={handleFileUpload2}
                     />
-                    <Typography className='text-sm text-muted-foreground'>
-                        Обратите внимание, что изображение должно быть вертикальным, так как оно обрежется под формат NFT.
+                    <Typography className='text-[12px] font-[400] text-[#A0AEC0E5] mb-[16px] mt-[16px]'>
+                    Обратите внимание, что изображение должно быть вертикальным, так как оно обрежется под формат NFT. Рекомендуем использовать фотографии, сделанные непосредственно вами, или картинки, сгенерированные нейросетью.
+Не рекомендуем использовать чужие изображения, взятые со стоков.
                     </Typography>
                     <FileUpload
                         name='galeryImagesIds'
                         label={'Загрузите изображения для галереи'}
                         accept={'image/png, image/jpeg, image/jpg'}
                         multiple={true}
-                        maxFiles={10}
+                        maxFiles={20}
                         required={true}
                         onChange={handleFileUpload3}
                     />
-                    <div className='w-full border-b border-gray-300 my-4' ></div>
-                    <Typography className='text-lg font-bold'>Разместить в коллекции</Typography>
-                    <CollectionForm onCollectionSelect={handleCollectionSelect} />
-
-
-
+                    <Typography className='text-[12px] font-[400] text-[#A0AEC0E5] mb-[16px] mt-[16px]'>
+                        Вы можете загрузить до 20 изображений.
+                    </Typography>
                 </Container>
-                <div className="flex pt-6 space-x-9 w-full">
 
+                <Typography className='text-lg font-bold mt-[28px] mb-[12px]'>Разместить в коллекции</Typography>
+
+                <Container className="p-8 bg-slate-100 rounded-lg">
+                    <CollectionForm onCollectionSelect={handleCollectionSelect} />
+                </Container>
+
+                <div className="flex pt-6 space-x-9 w-full">
                     <Button 
                     type="button"
                     onClick={handleSubmit}>

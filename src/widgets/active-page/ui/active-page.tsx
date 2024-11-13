@@ -17,6 +17,7 @@ interface ActiveHeaderProps {
 const MyActivePage: FC<ActiveHeaderProps> = ({ uuid }) => {
 
     const { data: activepage, isLoading, isSuccess } = useGetActiveById(uuid as string)
+    console.log(activepage)
 
     if (!activepage) {
         console.log("No active page")
@@ -32,7 +33,9 @@ const MyActivePage: FC<ActiveHeaderProps> = ({ uuid }) => {
     return (
         <>
             <div className="flex max-w-[1070px] flex-col">
-                <GradientTypography variant="h2" className="text-lg h-[40px] mb-[34px]">{activepage.activeName}</GradientTypography>
+                <GradientTypography variant="h2" className="text-[42px] mt-[62px] mb-[24px]">          
+                    {activepage.activeName.charAt(0).toUpperCase() + activepage.activeName.slice(1)}
+                </GradientTypography>
                 <div className="flex mt-[10px]">
                     <ActivePageLeftSide data={activepage}/>
                     <ActivePageMainSide data={activepage}/>
