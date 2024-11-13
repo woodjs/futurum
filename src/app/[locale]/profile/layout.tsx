@@ -8,6 +8,7 @@ import Menu from '@/screens/main/header/Menu'
 import Footer from '@/screens/main/footer'
 import { Header } from '@/widgets/header'
 import AuthProvider from '../../../shared/auth/auth-provider'
+import { Toaster } from 'react-hot-toast';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -34,7 +35,7 @@ export default function RootLayout({
         <NextIntlClientProvider
           locale={params?.locale || 'en'}
           messages={messages}
-        >
+          >
           <AuthProvider>
             <Menu />
             <Header />

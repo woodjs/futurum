@@ -23,7 +23,7 @@ import {
 } from '../form-select'
 import { Popover, PopoverContent, PopoverTrigger } from '../popover'
 import { Calendar } from '../calendar'
-import { format } from 'date-fns'
+import { format, startOfToday } from 'date-fns'
 import Editor from '../editor'
 
 interface IFieldRendererProps {
@@ -136,7 +136,7 @@ const FieldRenderer: React.FC<IFieldRendererProps> = ({
                       )}
                     >
                       {formField.value ? (
-                        format(formField.value, 'PPP')
+                        `до ${format(formField.value, 'dd.MM.yyyy HH:mm')}`
                       ) : (
                         <span>{field.placeholder}</span>
                       )}
@@ -147,11 +147,7 @@ const FieldRenderer: React.FC<IFieldRendererProps> = ({
                 <PopoverContent className='w-auto p-0' align='start'>
                   <Calendar
                     mode='single'
-                    fromDate={
-                      typeof field.fromDate === 'function'
-                        ? field.fromDate(form.watch)
-                        : field.fromDate
-                    }
+                    fromDate={startOfToday()}
                     toDate={
                       typeof field.toDate === 'function'
                         ? field.toDate(form.watch)
@@ -178,25 +174,23 @@ const FieldRenderer: React.FC<IFieldRendererProps> = ({
           name={name}
           render={({ field: formField }) => {
             return (
-              <FormItem
-                className={cn(
-                  'col-span-12 flex flex-row items-center space-x-3 space-y-0',
-                  className,
-                  field.className,
-                )}
-              >
-                <FormControl>
-                  <Checkbox
-                    autoFocus={autoFocus}
-                    onCheckedChange={formField.onChange}
-                    checked={formField.value}
+              <div className="col-span-12 flex flex-row items-center gap-[8px]">
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    onChange={formField.onChange}
+                    className="sr-only peer"
                   />
-                </FormControl>
-                <div className='w-full'>
-                  <FormLabel className='font-normal'>{field.label}</FormLabel>
-                  <FormMessage />
-                </div>
-              </FormItem>
+                  <div
+                    className="w-8 h-4 bg-[#CBD5E0] rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300
+                              dark:peer-focus:ring-blue-800 peer-checked:bg-blue-600 peer-checked:after:translate-x-4
+                              after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white
+                              after:rounded-full after:h-3 after:w-3
+                              after:transition-all peer-checked:after:bg-white"
+                  ></div>
+                </label>
+                <span className="text-[14px] font-[700] text-[#2D3748]">{field.label}</span>
+              </div>
             )
           }}
         />
@@ -216,7 +210,9 @@ const FieldRenderer: React.FC<IFieldRendererProps> = ({
                 />
               </FormControl>
               {field.description && (
-                <FormDescription>{field.description}</FormDescription>
+                <FormDescription>
+                  {field.description}
+                </FormDescription>
               )}
               <FormMessage />
             </FormItem>

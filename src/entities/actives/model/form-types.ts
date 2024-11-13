@@ -4,14 +4,14 @@ import { ActiveType, ActiveType2 } from "./active-type";
 // !!! NOTE : Перенести в schemas всю валидацию
 
 export const ActiveFormSchema = z.object({
-  cathegory: z.nativeEnum(ActiveType),
+  cathegory: z.string(),
   organizationId: z.string(),
   activeName: z.string(),
   headline: z.string(),
   description: z.string(),
   tags: z.array(z.string()),
   minContribution: z.number().nonnegative(), // Неотрицательное число
-  purposeCollection: z.number().nonnegative(), // Неотрицательное число
+  purposeCollection: z.any(), // Неотрицательное число
   endingDate: z.string().refine((date) => !isNaN(Date.parse(date)), {
     message: "Invalid date format",
   }), // Строка, которая должна быть датой
@@ -34,7 +34,7 @@ export type ActiveSchema = z.infer<typeof ActiveFormSchema>;
 
 
 export const ActiveFormSchema2 = z.object({
-  cathegory: z.nativeEnum(ActiveType2),               // Категория, как enum
+  cathegory: z.string(),               // Категория, как enum
   organizationId: z.string(),                 // ID организации, строка UUID
   activeName: z.string(),                     // Название активности, строка
   headline: z.string(),                   // Заголовок, строка, необязательный

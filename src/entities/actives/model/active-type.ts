@@ -11,8 +11,8 @@ export enum ActiveType {
 }
 
 export enum ActiveType2 {
-    BUSINESS = 'business',
-    STARTUP = 'startup',
-    ANIMAL_HELP = 'animal_help',
-    HUMAN_HELP = 'human_help'
+    BUSINESS = 'Бизнес',
+    STARTUP = 'Стартап',
+    ANIMAL_HELP = 'Помощь животным',
+    HUMAN_HELP = 'Помощь людям'
 }

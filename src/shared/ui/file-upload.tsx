@@ -11,6 +11,8 @@ import { z } from 'zod'
 import { Progress } from './progress'
 import { protectedAPI } from '../api'
 import { useTranslations } from 'next-intl'
+import DeleteFileIcon from '../icons/DeleteFileIcon'
+import AddFileIcon from '../icons/AddFileIcon'
 
 const shortTypes = {
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
@@ -258,24 +260,22 @@ const FileUpload: React.FC<FileUploadProps> = ({
   return (
     <div className='form-item'>
       {label && (
-        <label className='mb-3 block text-base font-semibold text-slate-800'>
+        <label className='block text-[14px] font-[700] text-slate-800 mb-[8px]'>
           {label}
         </label>
       )}
 
       <div
         className={cn(
-          'drop-zone rounded-xl border-2 border-dashed p-4 text-center',
-          isDragOver ? 'border-blue-500 bg-blue-100' : 'border-slate-300',
+          'drop-zone rounded-xl',
+          isDragOver ? 'border-blue-500 bg-blue-100 p-4' : 'border-slate-300',
         )}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
       >
-        {fileList.length === 0 ? (
-          <p>{placeholder || t('labels.addFile')}</p>
-        ) : (
-          <div className='flex flex-wrap gap-8'>
+        {fileList.length !== 0 && (
+          <div className='flex flex-wrap gap-[16px]'>
             {fileList.map(fileItem => (
               <div
                 key={fileItem.id}
@@ -283,7 +283,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
               >
                 {fileItem.status === 'uploading' && (
                   <div className='flex flex-col items-center'>
-                    <div className='size-40 rounded-md bg-slate-100 text-black'>
+                    <div className='size-[140px] rounded-md bg-slate-100 text-black'>
                       {t('labels.loading')}
                     </div>
                     <Progress
@@ -294,30 +294,32 @@ const FileUpload: React.FC<FileUploadProps> = ({
                 )}
                 {fileItem.status === 'uploaded' && fileItem.iFile && (
                   <>
-                    {fileItem.iFile.type.includes('image') ? (
-                      <img
-                        src={fileItem.iFile.url}
-                        alt={fileItem.iFile.name}
-                        className='size-40 rounded-md object-cover'
-                      />
-                    ) : (
-                      <div className='flex size-40 items-center justify-center rounded-md bg-slate-200 text-black'>
-                        {/* @ts-ignore */}
-                        {shortTypes[fileItem.iFile.type] ||
-                          fileItem.iFile.type ||
-                          t('labels.file')}
-                      </div>
-                    )}
-                    <span className='w-40 truncate text-black'>
-                      {fileItem.iFile.name}
-                    </span>
-                    <button
-                      type='button'
-                      onClick={() => removeFile(fileItem.id)}
-                      className='text-sm text-red-600 underline'
-                    >
-                      {t('labels.delete')}
-                    </button>
+                    <div className='relative flex size-[140px] items-center justify-center rounded-md bg-[#D9D9D9] text-black'>
+                      {fileItem.iFile.type.includes('image') ? (
+                        <img
+                          src={fileItem.iFile.url}
+                          alt={fileItem.iFile.name}
+                          className='size-[140px] rounded-md object-cover'
+                        />
+                      ) : (
+                        <div className='flex size-[140px] items-center justify-center rounded-md bg-[#D9D9D9] text-black'>
+                          {/* @ts-ignore */}
+                          {shortTypes[fileItem.iFile.type] ||
+                            fileItem.iFile.type ||
+                            t('labels.file')}
+                        </div>
+                      )}
+                      <button
+                        type='button'
+                        onClick={() => removeFile(fileItem.id)}
+                        className='absolute top-0 right-0 text-sm text-red-600 underline p-1'
+                      >
+                        <DeleteFileIcon />
+                      </button>
+                    </div>
+                      <span className='text-[14px] font-[700] truncate max-w-[140px]'>
+                        {fileItem.iFile.name}
+                      </span>
                   </>
                 )}
               </div>
@@ -325,10 +327,10 @@ const FileUpload: React.FC<FileUploadProps> = ({
             {fileList.length < maxFiles && (
               <button
                 type='button'
-                className='size-40 rounded-md bg-slate-50 text-black hover:bg-slate-100'
+                className='size-[140px] rounded-md bg-[#DFF1FF] text-black flex items-center justify-center'
                 onClick={() => inputRef.current?.click()}
               >
-                {t('labels.addFile')}
+                <AddFileIcon />
               </button>
             )}
           </div>
@@ -338,7 +340,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
           <NormalButton
             type='button'
             onClick={() => inputRef.current?.click()}
-            className='mt-2'
+            className=''
           >
             {t('labels.addFile')}
           </NormalButton>
@@ -355,13 +357,13 @@ const FileUpload: React.FC<FileUploadProps> = ({
       </div>
 
       {validationError && (
-        <span className='mt-2 block text-sm font-medium text-red-600'>
+        <span className='mt-2 block text-[14px] text-red-500'>
           {validationError}
         </span>
       )}
 
       {error && (
-        <span className='mt-2 block text-sm font-medium text-red-600'>
+        <span className='mt-2 block text-[14px] text-red-500'>
           {error}
         </span>
       )}

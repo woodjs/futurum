@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google'
 import { NextIntlClientProvider, useMessages } from 'next-intl'
 import './globals.css'
 import { AppProvider } from '../providers'
+import { Toaster } from 'react-hot-toast'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -32,6 +33,7 @@ export default function RootLayout({
           messages={messages}
         >
           <AppProvider>{children}</AppProvider>
+          <Toaster/>
         </NextIntlClientProvider>
       </body>
     </html>
