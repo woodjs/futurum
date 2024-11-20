@@ -18,6 +18,7 @@ const DynamicForm = <T extends Record<keyof T, FieldConfig>>({
   renderFooter,
   onFormUpdate,
   refine,
+  defaultValue,
 }: FormProps<T>) => {
   const fieldKeys = useMemo(() => {
     return Object.keys(fields) as (keyof T)[]
@@ -75,6 +76,7 @@ const DynamicForm = <T extends Record<keyof T, FieldConfig>>({
               field={field}
               form={form}
               autoFocus={autoFocusField === key}
+              defaultValue={defaultValue}
             />
           )
         })}

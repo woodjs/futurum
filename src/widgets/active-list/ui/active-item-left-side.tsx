@@ -40,7 +40,7 @@ const ActiveItemLeftSide: React.FC<IActiveDN2> = (data) => {
     }, []);
 
     const handleClick = () => {
-        router.push(`actives/${data.data.id}`);
+        router.push(`actives/edit/${data.data.id}`);
     };
 
     return (
@@ -54,7 +54,8 @@ const ActiveItemLeftSide: React.FC<IActiveDN2> = (data) => {
                     alt={'Картинка'}
                     layout="fill"
                     objectFit="cover"
-                    className="rounded-t-2xl"
+                    className="rounded-t-2xl cursor-pointer"
+                    onClick={() => router.push(`actives/${data.data.id}`)}
                 />
                 <div className="flex flex-col text-sm w-[180px] backdrop-blur-[4px] bg-white bg-opacity-40 rounded-lg absolute left-1/2 -translate-x-1/2 bottom-[26px] p-[4px] pl-[8px] pr-[8px]">
                     <div className="flex justify-between mb-[2px]">

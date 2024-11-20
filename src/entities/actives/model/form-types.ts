@@ -10,14 +10,14 @@ export const ActiveFormSchema = z.object({
   headline: z.string(),
   description: z.string(),
   tags: z.array(z.string()),
-  minContribution: z.number().nonnegative(), // Неотрицательное число
+  minimumContribution: z.number().nonnegative(), // Неотрицательное число
   purposeCollection: z.any(), // Неотрицательное число
   endingDate: z.string().refine((date) => !isNaN(Date.parse(date)), {
     message: "Invalid date format",
   }), // Строка, которая должна быть датой
-  documentIds: z.array(z.string()), // Массив строк
-  nftId: z.string(),
-  galeryImagesIds: z.array(z.string()), // Массив строк
+  documentIds: z.any(), // Массив строк
+  nftId: z.any(),
+  galeryImagesIds: z.array(z.string()) || z.undefined(), // Массив строк
   collectionId: z.string(),
 });
 
@@ -45,15 +45,15 @@ export const ActiveFormSchema2 = z.object({
   payoutFrequency: z.enum(['once_a_month', 'once_a_quarter', 'once_a_half_year']),  // Частота выплат
   refund: z.enum(['in_a_year', 'in_2_years', 'in_3_years', 'in_4_years', 'in_5_years']), // Срок возврата
   activityPeriod: z.number().int().min(1).max(100),  // Период активности, целое число от 1 до 100
-  minContribution: z.number().nonnegative(),     // Минимальный взнос
+  minimumContribution: z.number().nonnegative(),     // Минимальный взнос
   purposeOfCollection: z.number().nonnegative(),     // Цель сбора средств
   endingDate: z.string().refine((date) => !isNaN(Date.parse(date)), { message: "Invalid date format" }),  // Дата завершения, строка с валидацией
   withPossibilityOfExtension: z.boolean(),           // Возможность продления, булево значение
   additionalMaterials: z.string().min(1),            // Дополнительные материалы, строка
   fundUrl: z.string(),              // URL фонда, строка URL
-  documentIds: z.array(z.string()),           // Массив ID документов, строки UUID
-  nftId: z.string(),               // ID NFT, строка UUID, необязательный
-  galeryImagesIds: z.array(z.string()),       // Массив ID изображений галереи, строки UUID
+  documentIds: z.any(),           // Массив ID документов, строки UUID
+  nftId: z.any(),               // ID NFT, строка UUID, необязательный
+  galeryImagesIds: z.any(),       // Массив ID изображений галереи, строки UUID
   collectionId: z.string()                                   // Коллекция, необязательная
 });
 

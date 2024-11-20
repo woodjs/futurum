@@ -149,12 +149,12 @@ export interface IActiveResponseById2 {
     activeName: string;
     cathegory: string;
     description: string;
-    documentIds: string[];
+    documents: IFile[];
     endingDate: string;
-    galeryImages: string[];
+    galeryImages: IFile[];
     headline: string;
     minimumContribution: number | null; // Учитываем, что это может быть null
-    nft: string;
+    nft: IFile;
     organization: IOrganizationById;
     purposeOfCollection: number;
     tags: string[];

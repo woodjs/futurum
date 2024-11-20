@@ -29,7 +29,7 @@ import {
 import Link from '@tiptap/extension-link'
 import StarterKit from '@tiptap/starter-kit'
 import TextAlign from '@tiptap/extension-text-align'
-import React, { FC, useCallback, useEffect, useId } from 'react'
+import React, { FC, useCallback, useEffect, useId, useState } from 'react'
 import { cn } from '../lib/utils'
 
 import {
@@ -354,6 +354,7 @@ interface IEditorProps {
   description?: string
   id?: string
   placeholder?: string
+  defaultValue?: string
 }
 
 const Editor: React.FC<IEditorProps> = ({
@@ -365,12 +366,22 @@ const Editor: React.FC<IEditorProps> = ({
   onContentChange,
   onUpdate,
   placeholder,
+  defaultValue,
   ...props
 }) => {
-  const innerId = useId()
+  const innerId = useId();
+  const [key, setKey] = useState(0);
+
+  useEffect(() => {
+    setKey((prev) => prev + 1);
+  }, [defaultValue]);
+
   return (
     <div>
       <EditorProvider
+        key={key}
+        content={defaultValue}
+        enableContentCheck={true}
         editorProps={{
           attributes: {
             class: cn(
@@ -382,7 +393,7 @@ const Editor: React.FC<IEditorProps> = ({
         }}
         slotBefore={
           <MenuBar
-            onUpdate={(props: EditorEvents['update']) => {
+          onUpdate={(props: EditorEvents['update']) => {
               if (typeof onContentChange === 'function') {
                 onContentChange(props.editor.getHTML())
               }
