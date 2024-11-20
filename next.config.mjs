@@ -1,0 +1,44 @@
+import createNextIntlPlugin from 'next-intl/plugin'
+const withNextIntl = createNextIntlPlugin()
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  exports: {
+    experimental: {
+      serverComponents: false, 
+    },
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: '/api/:path*',
+  //       destination: `${process.env.NEXT_MAIN_API_URL}/:path*`, // Proxy to Backend
+  //     },
+  //   ]
+  // },
+  images: {
+    domains: ['localhost'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'loremflickr.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'backend.futurum.city',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
+  // i18n: i18n.i18n,
+}
+
+export default withNextIntl(nextConfig)

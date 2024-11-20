@@ -1,0 +1,70 @@
+import { cn } from '@/shared/lib/utils'
+import { FC } from 'react'
+import { Button } from '@/shared/ui/button'
+import ActiveCardTimer from '@/shared/ui/nft-timer'
+import { useTranslations } from 'next-intl'
+
+interface IProps {
+  ButtonSlot?: React.ReactNode
+  Description?: React.ReactNode
+  bgColor?: string
+  stylebg?: string
+  borderColor?: string
+  endingDate?: string
+  height?: 'h-[149px]' | 'h-[75px]'
+  price: string
+  priceColor?: string
+}
+
+const ActiveFooter: FC<IProps> = ({
+  bgColor = 'bg-gray',
+  borderColor,
+  endingDate,
+  Description,
+  stylebg,
+  ButtonSlot,
+  height = 'h-[75px]',
+  price,
+  priceColor = 'text-black',
+}) => {
+  const t = useTranslations('default.Home.Categories')
+
+  return (
+    <div
+    style={{background: stylebg}}
+      className={cn(
+        'relative -top-[22px] w-full rounded-b-[14px] border border-solid pl-2 pr-2',
+        bgColor,
+        borderColor,
+        height,
+      )}
+    >
+      <div className={'absolute -top-[12px] left-1/2 z-10 -translate-x-1/2'}>
+        <ActiveCardTimer content={ endingDate || '40d:12h:06m'} />
+      </div>
+      {Description && (
+        <div className={'mb-[12px] mt-[16px]'}>{Description}</div>
+      )}
+      <div
+        className={cn(
+          'flex items-center justify-between',
+          !Description && 'h-full',
+        )}
+      >
+        <div>
+          <p className={cn('text-[12px] font-bold', priceColor)}>
+            Цена
+          </p>
+          <p className={cn('text-[12px] font-bold', priceColor)}>{price} USDT</p>
+        </div>
+        <div>
+          {ButtonSlot || (
+            <Button className={'w-[115px] p-2 text-[12px]'}>Редактировать</Button>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default ActiveFooter
