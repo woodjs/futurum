@@ -49,7 +49,7 @@ const ActivePageLeftSide: React.FC<IActiveIdDN2> = (data) => {
                     </div>
                     <div className="flex w-full h-[260px] rounded-t-2xl relative rt-[8px]">
                         <Image
-                            src={API_URL_FILE + data.data.nft}
+                            src={data.data.nft.path}
                             alt={'Картинка'}
                             layout="fill"
                             objectFit="cover"
@@ -87,7 +87,7 @@ const ActivePageLeftSide: React.FC<IActiveIdDN2> = (data) => {
                 <div className="flex mt-[16px] justify-start">
                     <div className="w-[110px] h-[110px] rounded-full mr-[16px]">
                         <Image
-                            src={API_URL_FILE + data.data.nft}
+                            src={data.data.nft.path}
                             alt={'Картинка'}
                             width={110}
                             height={110}

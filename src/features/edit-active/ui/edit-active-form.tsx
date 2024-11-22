@@ -1,15 +1,15 @@
 'use client'
-import { ActiveFormSchema, ActiveType, ActiveType2, useCreateActive } from "@/entities/actives";
+import { ActiveFormSchema, ActiveSchema2, ActiveType, ActiveType2, IActiveResponseById2, useCreateActive } from "@/entities/actives";
+import { useEditActive } from "@/entities/actives/api/hooks/use-edit-active";
+import { useGetActiveById } from "@/entities/actives/api/hooks/use-get-active-by-id";
 import { useGetOrganizationList } from "@/entities/organization";
 import CollectionForm from "@/features/create-collection/ui/create-collection-form";
 import { Button, Container, Typography } from "@/shared/ui";
 import { DynamicForm } from "@/shared/ui/dynamic-form";
 import { IFile } from "@/shared/ui/file-list";
 import FileUpload from "@/shared/ui/file-upload";
-import { useLocale } from "next-intl";
-import Image from "next/image"
 import { useRouter } from "next/navigation";
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { z } from "zod";
 
@@ -36,48 +36,17 @@ export const activeCategoryList = [
     {label: "Помощь животным", value: 'animal_help'},
     {label: "Помощь людям", value: 'human_help'},
 ];
-const ActiveForm = () => {
-    const router = useRouter(); // Хук для навигации
 
-    // const { data: cetegory, isLoading, isSuccess, isError } = useGetOrganizationById(id)
-    // Преобразование enum ActiveType в массив объектов для select options
-    const getEnumOptions = (enumObj: Record<string, string>) => {
-        return Object.entries(enumObj).map(([key, value]) => ({
-            label: key.replace(/_/g, ' ').toLowerCase(), // Преобразуем ключ в человекочитаемый формат
-            value // Значение для поля value
-        }));
-    };
-    const { data: organizationList, isLoading, isSuccess } = useGetOrganizationList({ my: true })
+interface ActiveHeaderProps {
+    uuid: string
+}
 
-    const initialFiles1: IFile[] = [
-        {
-          id: "ac7be448-fb18-40c1-9a41-5e107a57468c",
-          name: "example1.jpg",
-          type: "image/jpeg",
-          path: "https://example.com/example1.jpg",
-        },
-      ];
-      
-      const initialFiles2: IFile[] = [
-        {
-          id: "46ca396c-4c14-47f9-81a7-224a1345628b",
-          name: "example2.jpg",
-          type: "image/jpeg",
-          path: "https://example.com/example2.jpg",
-        },
-      ];
-      
-      const initialFiles3: IFile[] = [
-        {
-          id: "204a4109-0932-4688-92cd-cb5b5019e095",
-          name: "example3.jpg",
-          type: "image/jpeg",
-          path: "https://example.com/example3.jpg",
-        },
-      ];
+const EditActiveForm: FC<ActiveHeaderProps> = ({ uuid }) => {
+    const router = useRouter(); 
+    const { data: organizationList, isLoading, isSuccess } = useGetOrganizationList({ my: true });
 
     const [iscathegory, setIscathegory] = useState<string>();
-    const [isorganizationId, setIsorganizationId] = useState();
+    const [isorganizationId, setIsorganizationId] = useState<string>();
     const [isdescription, setIsdescription] = useState<string>();
     const [isactiveName, setIsactiveName] = useState<string>();
     const [istags, setIstags] = useState<string>('');
@@ -85,12 +54,12 @@ const ActiveForm = () => {
     const [price, setPrice] = useState<number>(0);
     const [headline, setHeadline] = useState<string>('paragraph');
     const [profitability, setProfitability] = useState<number>(0);
-    const [payoutFrequency, setPayoutFrequency] = useState<'once_a_month' | 'once_a_quarter' | 'once_a_half_year'>('once_a_month');
+    const [payoutFrequency, setPayoutFrequency] = useState<'once_a_month' | 'once_a_quarter' | 'once_a_half_year'>();
     const [refund, setRefund] = useState<'in_a_year' | 'in_2_years' | 'in_3_years' | 'in_4_years' | 'in_5_years'>('in_a_year');
     const [activityPeriod, setActivityPeriod] = useState<number>(1);
 
-    const [isminContribution, setIsminContribution] = useState();
-    const [ispurposeCollection, setIspurposeCollection] = useState();
+    const [isminContribution, setIsminContribution] = useState<number | null>(0);
+    const [ispurposeCollection, setIspurposeCollection] = useState<number | null>(0);
     const [isendingDate, setIsendingDate] = useState<Date>();
 
     const [withPossibilityOfExtension, setWithPossibilityOfExtension] = useState<boolean>(false);
@@ -98,16 +67,18 @@ const ActiveForm = () => {
     const [fundUrl, setFundUrl] = useState<string>('');
 
     const [fileItems1, setUploadedFiles1] = useState<IFile[]>();
-    const [fileItems2, setUploadedFiles2] = useState<IFile[]>(initialFiles2);
-    const [fileItems3, setUploadedFiles3] = useState<IFile[]>(initialFiles3);
+    const [fileItems2, setUploadedFiles2] = useState<IFile[]>();
+    const [fileItems3, setUploadedFiles3] = useState<IFile[]>();
     const [isselectedCollection, setIsselectedCollection] = useState<string | number>('');
-
+    
     const [tags, setTags] = useState<string[]>([]);                 // Массив уникальных тегов
-
-
-    // ???
+    
     const inputRef = useRef<HTMLTextAreaElement>(null); // Референс на поле ввода
     const [istags2, setIstags2] = useState<string>(''); // Состояние для строки ввода
+    
+    
+    const currentActiveData = useGetActiveById(uuid);
+    console.log(currentActiveData)
 
     const handleInputChange = () => {
         const inputValue = inputRef.current?.value || ''; // Получаем текущее значение из input
@@ -118,6 +89,24 @@ const ActiveForm = () => {
 
         setTags(uniqueTags); // Обновляем массив уникальных тегов
     };
+
+    useEffect(() => {
+        if (currentActiveData.data) {
+            setIsactiveName(currentActiveData.data.activeName)
+            setTags(currentActiveData.data.tags)
+            setIscathegory(currentActiveData.data.cathegory)
+            setIsorganizationId(currentActiveData.data.organization.id)
+            setIsdescription(currentActiveData.data.description)
+            setIsselectedCollection(currentActiveData.data.collection.id)
+            setPayoutFrequency(currentActiveData.data?.payoutFrequency as 'once_a_month' | 'once_a_quarter' | 'once_a_half_year');
+            setRefund(currentActiveData.data?.refund as 'in_a_year' | 'in_2_years' | 'in_3_years' | 'in_4_years' | 'in_5_years');
+            setIsendingDate(new Date(currentActiveData.data.endingDate));
+            setWithPossibilityOfExtension(currentActiveData.data.withPossibilityOfExtension);
+            setUploadedFiles1(currentActiveData.data.documents);
+            setUploadedFiles2([currentActiveData.data.nft]);
+            setUploadedFiles3(currentActiveData.data.galeryImages);
+        }
+    }, [currentActiveData.data]);
 
 
     const handleRemoveTag = (tagToRemove: string) => {
@@ -133,7 +122,6 @@ const ActiveForm = () => {
             inputRef.current.value = newInputValue;
         }
         setIstags2(newInputValue); // Обновляем строку ввода
-        // setInputValue(newInputValue);
         setTags(tags.filter(tag => tag !== tagToRemove)); // Убираем тег из списка уникальных тегов
     };
 
@@ -146,14 +134,12 @@ const ActiveForm = () => {
         setTags(uniqueTags);
     };
     
-    const { mutate: createActive } = useCreateActive();
-
-    // console.log(getEnumOptions(ActiveType))
-    // const activeCategoryList = getEnumOptions(ActiveType2);
+    const { mutate: editActive } = useEditActive();
 
     const handleSubmit= (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         if (event) {
+            console.log(isendingDate)
             const data = {
                 cathegory: iscathegory ?? "Бизнес",                       // ActiveType значение
                 organizationId: isorganizationId || '237cc758-51df-4df4-8a0a-f8844a0692fb',   // ID организации
@@ -165,29 +151,28 @@ const ActiveForm = () => {
                 minimumContribution: Number(isminContribution) || 1,      // Минимальный вклад
                 purposeOfCollection: Number(ispurposeCollection) || 1,  // Цель сбора средств
                 endingDate: isendingDate!.toString() || 'заглушка',           // Дата завершения
-                documentIds: fileItems1 ? fileItems1.map(file => file.id) : undefined, // Массив ID документов из fileItems1
-                nftId: fileItems2.length > 0 ? fileItems2[0].id.toString() : '237cc758-51df-4df4-8a0a-f8844a0692fb',                               // Если nftId необязателен, оставьте пустым
-                galeryImagesIds: fileItems3.map(file => file.id), // Массив ID изображений галереи
+                documentIds: fileItems1 && fileItems1.length > 0 ? fileItems1.map(file => file.id) : undefined, // Массив ID документов из fileItems1
+                nftId: fileItems2?.map(file => file.id)[0],                               // Если nftId необязателен, оставьте пустым
+                galeryImagesIds: fileItems3?.map(file => file.id), // Массив ID изображений галереи
                 collectionId: isselectedCollection.toString() || '237cc758-51df-4df4-8a0a-f8844a0692fb',// ID коллекции
 
                 price: Number(price) || 1,
                 profitability: Number(profitability) || 1,
-                payoutFrequency: payoutFrequency,
+                payoutFrequency: payoutFrequency || 'once_a_month',
                 refund: refund,
                 activityPeriod: Number(activityPeriod) || 1,
                 withPossibilityOfExtension: withPossibilityOfExtension || false,
                 additionalMaterials: additionalMaterials || 'заглушка',
-                fundUrl: fundUrl || '',
+                fundUrl: fundUrl || 'https://www.google.com',
             };
             console.log(data)
             try {
                 ActiveFormSchema.parse(data); // Валидация данных
-                // console.log('Данные прошли валидацию:', data);
                 // Отправьте данные на сервер
-                createActive(data, {
+                editActive({data, uuid}, {
                     onSuccess: () => {
-                        console.log('Ура мы создали новый актив');
-                        router.push(`./`);
+                        console.log('Ура мы отредактировали актив');
+                        router.push(`/en/actives`);
                     },
                     onError: (error) => {
                         console.error('Ошибка при создании коллекции:', error);
@@ -251,15 +236,17 @@ const ActiveForm = () => {
 
     function handleFormUpdateMinPurpDate(data: { minContribution?: any; purposeCollection?: any; endingDate?: any; }, info: any): void {
         if (data) {
-            console.log(data)
-                // console.log("minContribution обновлено:", data.minContribution);
+            if (data.minContribution !== isminContribution) {
                 setIsminContribution(data.minContribution);
+            }
 
-                // console.log("purposeCollection обновлено:", data.purposeCollection);
+            if (data.purposeCollection !== ispurposeCollection) {
                 setIspurposeCollection(data.purposeCollection);
+            }
 
-                // console.log("endingDate обновлено:", data.endingDate);
+            if (data.endingDate !== isendingDate) {
                 setIsendingDate(data.endingDate);
+            }
         } else {
             console.log("Параметры не задана.");
         }
@@ -269,25 +256,25 @@ const ActiveForm = () => {
         activityPeriod?: any; endingDate?: any; withPossibilityOfExtension?: any; additionalMaterials?: any
     }, info: any): void {
         if (data) {
-            if (data.price !== price) {
+            if (data.price) {
                 setPrice(data.price);
             }
-            if (data.profitability !== profitability) {
+            if (data.profitability) {
                 setProfitability(data.profitability);
             }
-            if (data.payoutFrequency !== payoutFrequency) {
+            if (data.payoutFrequency) {
                 setPayoutFrequency(data.payoutFrequency);
             }
-            if (data.refund !== refund) {
+            if (data.refund) {
                 setRefund(data.refund);
             }
-            if (data.activityPeriod !== activityPeriod) {
+            if (data.activityPeriod) {
                 setActivityPeriod(data.activityPeriod);
             }
-            if (data.endingDate !== isendingDate) {
+            if (data.endingDate) {
                 setIsendingDate(data.endingDate);
             }
-            if (data.withPossibilityOfExtension !== withPossibilityOfExtension) {
+            if (data.withPossibilityOfExtension) {
                 setWithPossibilityOfExtension(data.withPossibilityOfExtension);
             }
 
@@ -306,6 +293,7 @@ const ActiveForm = () => {
         setUploadedFiles1(fileItems1);
     };
     const handleFileUpload2 = (files: IFile[]) => {
+        console.log(files)
         const fileItems2: IFile[] = files.map(fileItem => ({
             id: fileItem.id, // Существующий ID
             name: fileItem.name,
@@ -335,8 +323,6 @@ const ActiveForm = () => {
 
     return (
         <>
-
-            {/* <form onSubmit={handleSubmit}> */}
                 <DynamicForm
                     fields={{
                         cathegory: {
@@ -348,6 +334,7 @@ const ActiveForm = () => {
                         }
                     }}
                     onFormUpdate={handleFormUpdateCathegory}
+                    defaultValue={iscathegory}
                     renderFooter={form => <></>}
                 />
                 
@@ -365,6 +352,7 @@ const ActiveForm = () => {
                         }
                     }}
                     onFormUpdate={handleFormUpdateOrganization}
+                    defaultValue={organizationList ? (organizationList.data.find(org => org.id === isorganizationId))?.companyName : ""}
                     renderFooter={form => <></>}
                 />
                 <Typography className='py-4 text-lg font-bold'>Информация об организации</Typography>
@@ -383,6 +371,7 @@ const ActiveForm = () => {
                                 })) || [],
                             }
                         }}
+                        defaultValue={organizationList ? (organizationList.data.find(org => org.id === isorganizationId))?.companyName : ""}
                         onFormUpdate={handleFormUpdateOrganization}
                         renderFooter={form => <></>}
                     />
@@ -399,6 +388,7 @@ const ActiveForm = () => {
                             }
                         }}
                         onFormUpdate={handleFormUpdateActiveName}
+                        defaultValue={isactiveName}
                         renderFooter={form => <></>}
                     />
                     {isactiveName && isactiveName.length > 50 && (
@@ -417,6 +407,7 @@ const ActiveForm = () => {
                             }
                         }}
                         onFormUpdate={handleFormDescription}
+                        defaultValue={currentActiveData.data?.description}
                         renderFooter={form => <></>}
                     />
                     {isdescription && isdescription.length > 3000 && (
@@ -428,6 +419,7 @@ const ActiveForm = () => {
                         onChange={handleInputChange} // Обновляем массив тегов при изменении
                         placeholder="Укажите теги, которые помогут при поиске, например #корм и т.д."
                         className="border border-[#A0AEC0E5] p-2 rounded-md w-full h-[140px] max-h-[140px] text-[14px]"
+                        defaultValue={currentActiveData.data?.tags.join(" ")}
                     />
                     <p className="font-[400] text-[12px] text-[#A0AEC0E5]">Осталось 100 символов</p>
                     {inputRef.current?.value && inputRef.current?.value.length > 100 && (
@@ -459,19 +451,34 @@ const ActiveForm = () => {
                                 fields={{
                                     minContribution: {
                                         name: 'minContribution',
-                                        type: 'number',
+                                        type: 'text',
                                         label: 'Минимальный взнос',
                                         placeholder: '$ 000',
                                         description: '',
                                         validation: z.number().max(50),
-                                    }, purposeCollection: {
+                                    }
+                                }}
+                                onFormUpdate={handleFormUpdateMinPurpDate}
+                                defaultValue={currentActiveData.data?.minimumContribution!}
+                                renderFooter={form => <></>}
+                            />
+                            <DynamicForm
+                                fields={{
+                                    purposeCollection: {
                                         name: 'purposeCollection',
-                                        type: 'number',
+                                        type: 'text',
                                         label: 'Цель сбора',
                                         placeholder: '$ 000',
                                         description: '',
                                         validation: z.number().max(1000),
-                                    },
+                                    }
+                                }}
+                                onFormUpdate={handleFormUpdateMinPurpDate}
+                                defaultValue={currentActiveData.data?.purposeOfCollection}
+                                renderFooter={form => <></>}
+                            />
+                            <DynamicForm
+                                fields={{
                                     endingDate: {
                                         name: 'endingDate',
                                         type: 'date',
@@ -481,6 +488,7 @@ const ActiveForm = () => {
                                     }
                                 }}
                                 onFormUpdate={handleFormUpdateMinPurpDate}
+                                defaultValue={currentActiveData.data?.endingDate}
                                 renderFooter={form => <></>}
                             />
                             {isminContribution && isminContribution < 50 && (
@@ -493,24 +501,38 @@ const ActiveForm = () => {
                         </>
                     ) : (
                         <>
+                                <DynamicForm
+                                    fields={{
+                                        price: {
+                                            name: 'price',
+                                            type: 'text',
+                                            label: 'Стоимость',
+                                            placeholder: '$ 50',
+                                            description: 'Указывайте цену, учитывая комиссию в N%  ',
+                                            validation: z.number().min(1),
+                                        }, 
+                                    }}
+                                    onFormUpdate={handleFormUpdateMinPurpDate2}
+                                    defaultValue={currentActiveData.data?.price}
+                                    renderFooter={form => <></>}
+                                />
                             <DynamicForm
                                 fields={{
-                                    price: {
-                                        name: 'price',
-                                        type: 'number',
-                                        label: 'Стоимость',
-                                        placeholder: '$ 50',
-                                        description: 'Указывайте цену, учитывая комиссию в N%  ',
-                                        validation: z.number().min(1),
-                                    }, 
                                     profitability: {
                                         name: 'profitability',
-                                        type: 'number',
+                                        type: 'text',
                                         label: 'Доходность',
                                         placeholder: '0 %',
                                         description: '',
                                         validation: z.number().min(1),
                                     },
+                                }}
+                                onFormUpdate={handleFormUpdateMinPurpDate2}
+                                defaultValue={currentActiveData.data?.profitability}
+                                renderFooter={form => <></>}
+                            />
+                            <DynamicForm
+                                fields={{
                                     payoutFrequency: {
                                         name: 'payoutFrequency',
                                         type: 'select',
@@ -518,6 +540,13 @@ const ActiveForm = () => {
                                         placeholder: 'выберите',
                                         options: activePayoutFrequencyList,
                                     },
+                                }}
+                                defaultValue={activePayoutFrequencyList ? (activePayoutFrequencyList.find(item => item.value === payoutFrequency))?.label : ""}
+                                onFormUpdate={handleFormUpdateMinPurpDate2}
+                                renderFooter={form => <></>}
+                            />
+                            <DynamicForm
+                                fields={{
                                     refund: {
                                         name: 'refund',
                                         type: 'select',
@@ -525,14 +554,28 @@ const ActiveForm = () => {
                                         placeholder: 'выберите',
                                         options: activeRefundList,
                                     },
+                                }}
+                                defaultValue={activeRefundList ? (activeRefundList.find(item => item.value === refund))?.label : ""}
+                                onFormUpdate={handleFormUpdateMinPurpDate2}
+                                renderFooter={form => <></>}
+                            />
+                            <DynamicForm
+                                fields={{
                                     activityPeriod: {
                                         name: 'activityPeriod',
-                                        type: 'number',
+                                        type: 'text',
                                         label: 'Срок активности',
                                         placeholder: '0 %',
                                         description: '',
                                         validation: z.number().min(1),
                                     },
+                                }}
+                                onFormUpdate={handleFormUpdateMinPurpDate2}
+                                defaultValue={currentActiveData.data?.activityPeriod}
+                                renderFooter={form => <></>}
+                            />
+                            <DynamicForm
+                                fields={{
                                     endingDate: {
                                         name: 'endingDate',
                                         type: 'date',
@@ -541,6 +584,13 @@ const ActiveForm = () => {
                                         description: '',
                                         validation: z.number().min(1),
                                     },
+                                }}
+                                onFormUpdate={handleFormUpdateMinPurpDate2}
+                                defaultValue={currentActiveData.data?.endingDate}
+                                renderFooter={form => <></>}
+                            />
+                            <DynamicForm
+                                fields={{
                                     withPossibilityOfExtension: {
                                         name: 'withPossibilityOfExtension',
                                         type: 'checkbox',
@@ -549,6 +599,7 @@ const ActiveForm = () => {
                                         validation: z.number().nonnegative(),
                                     }
                                 }}
+                                defaultValue={withPossibilityOfExtension}
                                 onFormUpdate={handleFormUpdateMinPurpDate2}
                                 renderFooter={form => <></>}
                             />
@@ -569,6 +620,7 @@ const ActiveForm = () => {
                                 onChange={(e) => setAdditionalMaterials(e.target.value)}
                                 placeholder="Это пользователь получит после приобретения NFT"
                                 className="border border-[#A0AEC0E5] p-2 rounded-md w-full h-[140px] max-h-[140px] text-[14px]"
+                                defaultValue={currentActiveData.data?.additionalMaterials}
                             />
                             <p className="font-[400] text-[12px] text-[#A0AEC0E5] mb-[24px]">Осталось 500 символов</p>
                             {additionalMaterials && additionalMaterials.length > 500 && (
@@ -593,6 +645,7 @@ const ActiveForm = () => {
                                 maxFiles={10}
                                 required={true}
                                 onChange={handleFileUpload1}
+                                value={fileItems1}
                             />
                             <Typography className='text-[12px] font-[400] text-[#A0AEC0E5] mb-[16px] mt-[16px]'>
                                 Вы можете загрузить до 10 файлов PDF, Word, Exel и т.д.
@@ -611,6 +664,7 @@ const ActiveForm = () => {
                                     validation: z.string().max(3000),
                                 }
                             }}
+                            defaultValue={currentActiveData.data?.fundUrl}
                             onFormUpdate={handleUrlName}
                             renderFooter={form => <></>}
                         />
@@ -623,6 +677,7 @@ const ActiveForm = () => {
                         maxFiles={1}
                         required={true}
                         onChange={handleFileUpload2}
+                        value={fileItems2}
                     />
                     <Typography className='text-[12px] font-[400] text-[#A0AEC0E5] mb-[16px] mt-[16px]'>
                     Обратите внимание, что изображение должно быть вертикальным, так как оно обрежется под формат NFT. Рекомендуем использовать фотографии, сделанные непосредственно вами, или картинки, сгенерированные нейросетью.
@@ -636,6 +691,7 @@ const ActiveForm = () => {
                         maxFiles={20}
                         required={true}
                         onChange={handleFileUpload3}
+                        value={fileItems3}
                     />
                     <Typography className='text-[12px] font-[400] text-[#A0AEC0E5] mb-[16px] mt-[16px]'>
                         Вы можете загрузить до 20 изображений.
@@ -645,19 +701,18 @@ const ActiveForm = () => {
                 <Typography className='text-lg font-bold mt-[28px] mb-[12px]'>Разместить в коллекции</Typography>
 
                 <Container className="p-8 bg-slate-100 rounded-lg">
-                    <CollectionForm onCollectionSelect={handleCollectionSelect} />
+                    <CollectionForm onCollectionSelect={handleCollectionSelect} currentActiveData={currentActiveData} isselectedCollection={isselectedCollection} />
                 </Container>
 
                 <div className="flex pt-6 space-x-9 w-full">
                     <Button 
                     type="button"
                     onClick={handleSubmit}>
-                        Создать актив
+                        Редактировать
                     </Button>
                 </div>
-            {/* </form> */}
         </>
     )
 }
 
-export default ActiveForm;
+export default EditActiveForm;

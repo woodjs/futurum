@@ -7,6 +7,8 @@ import { useGetCollectionList } from '@/entities/collections/api/hooks/use-get-c
 import { DynamicForm } from '@/shared/ui/dynamic-form';
 import AddCollectionIcon from '@/shared/icons/AddCollectionIcon';
 import DeleteFileIcon from '@/shared/icons/DeleteFileIcon';
+import { IActiveResponseById2 } from '@/entities/actives';
+import { UseQueryResult } from '@tanstack/react-query';
 
 interface IOption {
     id?: string;
@@ -20,12 +22,14 @@ interface IOptionListProps {
 
 interface CollectionFormProps {
     onCollectionSelect: (selectedCollection: number | string) => void;
+    currentActiveData?: UseQueryResult<IActiveResponseById2, Error>;
+    isselectedCollection?: string | number
 }
 
 
-const CollectionForm: React.FC<CollectionFormProps> = ({ onCollectionSelect }) => {
+const CollectionForm: React.FC<CollectionFormProps> = ({ onCollectionSelect, currentActiveData, isselectedCollection }) => {
     const { register, handleSubmit, setValue } = useForm();
-    const { data: collectionData, isLoading } = useGetCollectionList({});
+    const { data: collectionData, isLoading, refetch } = useGetCollectionList({});
 
 
     const [collections, setCollections] = useState<IOption[]>();
@@ -61,6 +65,7 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ onCollectionSelect }) =
                 setIsDialogOpen(false);
                 setNewCollectionName('');
                 setNewCollectionColor('#000000');
+                refetch()
             },
             onError: (error) => {
                 console.error('Ошибка при создании коллекции:', error);
@@ -86,6 +91,7 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ onCollectionSelect }) =
                         }
                     }}
                     onFormUpdate={handleSelectChange}
+                    defaultValue={collections ? (collections.find(collection => collection.id === isselectedCollection))?.name : ""}
                     renderFooter={form => <></>}
                 />
             </div>

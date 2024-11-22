@@ -51,7 +51,7 @@ interface IFile {
   id: string
   name: string
   type: string
-  url: string
+  path: string
 }
 
 interface FileItem {
@@ -116,6 +116,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
             },
         )
         .filter(file => file)
+        console.log()
       setFileList(initialFileItems)
     }
   }, [value])
@@ -190,7 +191,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
         id: response.data.file.id,
         name: response.data.file.name,
         type: response.data.file.type,
-        url: response.data.file.path,
+        path: response.data.file.path,
       }
       // @ts-ignore
       setFileList(prevList => {
@@ -203,6 +204,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
         const uploadedFiles = newList
           .filter(item => item.status === 'uploaded')
           .map(item => item.iFile!)
+
         onChange?.(uploadedFiles)
 
         return newList
@@ -297,7 +299,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
                     <div className='relative flex size-[140px] items-center justify-center rounded-md bg-[#D9D9D9] text-black'>
                       {fileItem.iFile.type.includes('image') ? (
                         <img
-                          src={fileItem.iFile.url}
+                          src={fileItem.iFile.path}
                           alt={fileItem.iFile.name}
                           className='size-[140px] rounded-md object-cover'
                         />
