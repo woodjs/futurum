@@ -1,6 +1,6 @@
 'use client'
-import React from 'react'
-import { Controller, useController } from 'react-hook-form'
+import React, { useEffect } from 'react'
+import { Controller, UseFormReturn, useController } from 'react-hook-form'
 import {
   FormField,
   FormItem,
@@ -28,10 +28,11 @@ import Editor from '../editor'
 
 interface IFieldRendererProps {
   field: FieldConfig
-  form: any
+  form: UseFormReturn<any>
   name: string
   className?: string
   autoFocus?: boolean
+  defaultValue?: string | number | boolean
 }
 
 const FieldRenderer: React.FC<IFieldRendererProps> = ({
@@ -40,9 +41,11 @@ const FieldRenderer: React.FC<IFieldRendererProps> = ({
   name,
   className,
   autoFocus,
+  defaultValue,
 }) => {
-  const { control } = form
-  // Логика для маски полей типа "input"
+  const { control } = form;
+
+
   const renderInputField = () => (
     <FormField
       control={control}
@@ -55,6 +58,7 @@ const FieldRenderer: React.FC<IFieldRendererProps> = ({
               type={field.type}
               autoFocus={autoFocus}
               placeholder={field.placeholder}
+              defaultValue={typeof defaultValue === 'boolean' ? defaultValue.toString() : defaultValue}
               {...formField}
             />
           </FormControl>
@@ -78,19 +82,22 @@ const FieldRenderer: React.FC<IFieldRendererProps> = ({
       return (
         <FormField
           control={control}
+          defaultValue={defaultValue}
           name={name}
           render={({ field: formField }) => (
             <FormItem className={cn('col-span-12', className, field.className)}>
               {field.label && <FormLabel>{field.label}</FormLabel>}
               <FormSelect
                 onValueChange={formField.onChange}
-                defaultValue={formField.value}
+                // defaultValue={formField.value}
               >
                 <FormControl>
                   <FormSelectTrigger autoFocus={autoFocus}>
-                    <FormSelectValue
-                      placeholder={field.placeholder || 'Select...'}
-                    />
+                    {defaultValue ? defaultValue : (
+                      <FormSelectValue
+                        placeholder={field.placeholder || 'Select...'}
+                      /> 
+                    )}
                   </FormSelectTrigger>
                 </FormControl>
                 <FormSelectContent>
@@ -137,7 +144,8 @@ const FieldRenderer: React.FC<IFieldRendererProps> = ({
                     >
                       {formField.value ? (
                         `до ${format(formField.value, 'dd.MM.yyyy HH:mm')}`
-                      ) : (
+                      ) : defaultValue && typeof defaultValue !== 'boolean' ? `до ${format(defaultValue, 'dd.MM.yyyy HH:mm')}` 
+                      : (
                         <span>{field.placeholder}</span>
                       )}
                       <CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
@@ -168,6 +176,7 @@ const FieldRenderer: React.FC<IFieldRendererProps> = ({
         />
       )
     case 'checkbox':
+      console.log(typeof defaultValue === 'boolean')
       return (
         <FormField
           control={form.control}
@@ -180,6 +189,8 @@ const FieldRenderer: React.FC<IFieldRendererProps> = ({
                     type="checkbox"
                     onChange={formField.onChange}
                     className="sr-only peer"
+                    defaultChecked={typeof defaultValue === 'boolean' ? defaultValue : undefined}
+                    // defaultValue={defaultValue}
                   />
                   <div
                     className="w-8 h-4 bg-[#CBD5E0] rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300
@@ -207,6 +218,7 @@ const FieldRenderer: React.FC<IFieldRendererProps> = ({
                 <Editor
                   content={formField.value}
                   onContentChange={formField.onChange}
+                  defaultValue={defaultValue?.toString()}
                 />
               </FormControl>
               {field.description && (

@@ -45,8 +45,8 @@ const ActivePageMainSide: React.FC<IActiveIdDN2> = (data) => {
     }, [isExpanded, text]);
     return (
         <>
-            <div className="flex ml-[30px] flex-col w-full">
-                <div className="flex justify-between">
+            <div className="flex ml-[30px] flex-col">
+                <div className="flex justify-between gap-[200px]">
                     <div className="flex tracking-wider flex-col">
                         <span className="flex text-xl font-semibold">Параметры актива:</span>
                         <span className="flex text-base mt-2 font-light">Стоимость {data.data.price} USDT</span>
@@ -61,7 +61,7 @@ const ActivePageMainSide: React.FC<IActiveIdDN2> = (data) => {
                             <Button className="w-[160px]">Купить</Button>
                         </div>
                     </div>
-                    <div className="flex flex-col items-end justify-start	 gap-2">
+                    <div className="flex flex-col items-end justify-start gap-2">
                         <div className="flex gap-2 cursor-pointer">
                             <span className="text-[14px] text-[#A0AEC0E5] font-[700]">В избранное</span>
                             <LikeIcon />

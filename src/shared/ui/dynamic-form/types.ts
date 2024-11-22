@@ -118,4 +118,5 @@ export interface FormProps<T extends Record<string, FieldConfig>> {
   renderFooter?: (form: UseFormReturn<FormData<T>>) => React.ReactNode
   onFormUpdate?: (data: DeepPartial<FormData<T>>, info: any) => void
   refine?: (data: any) => void
+  defaultValue?: string | number | boolean
 }

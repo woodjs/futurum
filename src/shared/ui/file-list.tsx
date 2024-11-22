@@ -5,7 +5,7 @@ export interface IFile {
   id: string
   name: string
   type: string
-  url: string
+  path: string
 }
 
 interface IFileListProps {
@@ -41,14 +41,14 @@ const FileList: React.FC<IFileListProps> = ({ files }) => {
     >
       {files.map((file, index) => (
         <Link
-          href={file.url}
+          href={file.path}
           target='_blank'
           key={index}
           className='flex flex-col items-center justify-center'
         >
           {file.type.includes('image') ? (
             <img
-              src={file.url}
+              src={file.path}
               alt={file.name}
               className='size-40 rounded-md object-cover'
             />

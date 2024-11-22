@@ -32,7 +32,7 @@ const ActivePageBottom: React.FC<IActiveIdDN2> = (data) => {
                             {data.data.galeryImages.slice(0, isExpanded ? data.data.galeryImages.length : initialImageCount).map((img, index) => (
                             <div key={index} className="w-[140px] bg-slate-400 h-[140px] rounded-lg">
                                 <Image
-                                src={API_URL_FILE + img}
+                                src={img.path}
                                 alt={'Картинка'}
                                 objectFit="cover"
                                 width={140}
