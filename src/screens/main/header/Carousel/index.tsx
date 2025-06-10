@@ -9,6 +9,8 @@ import { useTranslations } from 'next-intl'
 export default function CarouselHeader() {
   const t = useTranslations('default.Home.FeaturesSlider')
   const plugin = useRef(Autoplay({ delay: 2000, playOnInit: false }))
+
+  console.log(t('slideOne'))
   return (
     <Section className='mt-[24px] lg:mt-[64px]'>
       <Carousel

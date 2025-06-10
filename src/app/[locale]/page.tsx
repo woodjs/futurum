@@ -40,7 +40,7 @@ export default function Home({ params: { locale } }) {
         <CarouselDigital />
         <CommunitySection />
         <CarouselToday />
-        <GameSection />
+        {/* <GameSection /> */}
       </Container>
       <ScrollToTop />
       <Footer />

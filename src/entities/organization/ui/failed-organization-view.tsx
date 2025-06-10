@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 'use client'
 import { Link } from '@/i18n/routing'
 import { NormalButton } from '@/shared/ui/normal-button'
