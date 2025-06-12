@@ -144,7 +144,6 @@ const FeatureSection: FC<FeatureSectionProps> = () => {
             }
           />
           <FeatureCard
-            className='blur-sm'
             Title={
               <span className='block max-w-[105px] font-bold lg:text-[18px] xl:text-[20px]'>
                 {t('Categories.BooksAndMusic')}
@@ -152,6 +151,15 @@ const FeatureSection: FC<FeatureSectionProps> = () => {
             }
             Image={
               <>
+                <div className='absolute inset-0 z-10 flex items-center justify-center bg-[#ccc]/50'>
+                  <span
+                    className='absolute bottom-0 left-0 px-2 text-left text-sm font-semibold opacity-50
+                      lg:text-base'
+                  >
+                    Скоро
+                  </span>
+                </div>
+
                 <div className='z-1 absolute right-0 top-0 hidden w-[90px] lg:block'>
                   <img
                     src={BookIcon.src}
@@ -168,7 +176,7 @@ const FeatureSection: FC<FeatureSectionProps> = () => {
             }
           />
           <FeatureCard
-            className='justify-end pb-0 blur-sm'
+            className='justify-end pb-0'
             Title={
               <span className='block max-w-[179px] font-bold lg:text-[18px] xl:text-[20px]'>
                 {t('Categories.EventTickets')}
@@ -176,6 +184,15 @@ const FeatureSection: FC<FeatureSectionProps> = () => {
             }
             Image={
               <>
+                <div className='absolute inset-0 z-10 flex items-center justify-center bg-[#ccc]/50'>
+                  <span
+                    className='absolute bottom-0 left-0 px-2 text-left text-sm font-semibold opacity-50
+                      lg:text-base'
+                  >
+                    Скоро
+                  </span>
+                </div>
+
                 <div className='z-1 absolute right-0 top-0 hidden w-[90px] lg:block'>
                   <img
                     src={TicketIcon.src}
@@ -192,7 +209,6 @@ const FeatureSection: FC<FeatureSectionProps> = () => {
             }
           />
           <FeatureCard
-            className='blur-sm'
             Title={
               <span className='block max-w-[156] font-bold lg:text-[18px] xl:text-[20px]'>
                 {t('Categories.EducationCourses')}
@@ -200,6 +216,15 @@ const FeatureSection: FC<FeatureSectionProps> = () => {
             }
             Image={
               <>
+                <div className='absolute inset-0 z-10 flex items-center justify-center bg-[#ccc]/50'>
+                  <span
+                    className='absolute bottom-0 left-0 px-2 text-left text-sm font-semibold opacity-50
+                      lg:text-base'
+                  >
+                    Скоро
+                  </span>
+                </div>
+
                 <div className='z-1 absolute right-0 top-0 hidden w-[120px] lg:block'>
                   <img
                     src={BlogIcon.src}
@@ -216,7 +241,7 @@ const FeatureSection: FC<FeatureSectionProps> = () => {
             }
           />
           <FeatureCard
-            className='justify-end pb-0 blur-sm'
+            className='justify-end pb-0'
             Title={
               <span className='block max-w-[115px] font-bold lg:text-[18px] xl:text-[20px]'>
                 {t('Categories.NFTArts')}
@@ -224,6 +249,15 @@ const FeatureSection: FC<FeatureSectionProps> = () => {
             }
             Image={
               <>
+                <div className='absolute inset-0 z-10 flex items-center justify-center bg-[#ccc]/50'>
+                  <span
+                    className='absolute bottom-0 left-0 px-2 text-left text-sm font-semibold opacity-50
+                      lg:text-base'
+                  >
+                    Скоро
+                  </span>
+                </div>
+
                 <div className='z-1 absolute right-0 top-0 hidden w-[90px] lg:block'>
                   <img
                     src={YetiIcon.src}
@@ -240,7 +274,7 @@ const FeatureSection: FC<FeatureSectionProps> = () => {
             }
           />
           <FeatureCard
-            className='blur-sm'
+            className='relative' // убрал blur-sm
             Title={
               <span className='block max-w-[141px] font-bold lg:text-[18px] xl:text-[20px]'>
                 {t('Categories.ReferralPrograms')}
@@ -248,7 +282,17 @@ const FeatureSection: FC<FeatureSectionProps> = () => {
             }
             Image={
               <>
-                <div className='z-1 absolute right-0 top-0 hidden w-[90px] lg:block'>
+                {/* Затемнение и надпись "Скоро" */}
+                <div className='absolute inset-0 z-10 flex items-center justify-center bg-[#ccc]/50'>
+                  <span
+                    className='absolute bottom-0 left-0 px-2 text-left text-sm font-semibold opacity-50
+                      lg:text-base'
+                  >
+                    Скоро
+                  </span>
+                </div>
+
+                <div className='absolute right-0 top-0 z-0 hidden w-[90px] lg:block'>
                   <img
                     src={MessageIcon.src}
                     alt=''
@@ -258,7 +302,7 @@ const FeatureSection: FC<FeatureSectionProps> = () => {
                 <img
                   src='/images/features/message-mobile.png'
                   alt=''
-                  className='block h-[48px] w-[60px] lg:hidden'
+                  className='z-0 block h-[48px] w-[60px] lg:hidden'
                 />
               </>
             }
