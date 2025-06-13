@@ -34,7 +34,7 @@ const FeatureSection: FC<FeatureSectionProps> = () => {
             lg:gap-[24px]'
         >
           <FeatureCard
-            isActive
+            // isActive
             Title={
               <span className='block font-bold lg:text-[18px] xl:text-[20px]'>
                 {t('Categories.GainIncome')}
